@@ -41,44 +41,61 @@ internal static class Program
 {
     static void Main(string[] args)
     {
-        Directory.CreateDirectory("out");
-        foreach (var file in Directory.GetFiles(@"C:\Users\Helco\Downloads\PITFALL The Lost Expedition PC\PITFALL The Lost Expedition\Game\data\textures"))
+        if (args.Length < 1 || args.Length > 2)
         {
+            Console.WriteLine("usage: TexConvert.exe <input directory or file> [output directory]");
+            return;
+        }
+
+        var inputFiles = Directory.Exists(args[0])
+            ? Directory.GetFiles(args[0])
+            : new[] { args[0] };
+        var output = args.Length > 1 ? args[1] : ".";
+        if (!Directory.Exists(output))
+            Directory.CreateDirectory(output);
+        
+        foreach (var inFile in inputFiles)
+        {
+            var name = Path.GetFileName(inFile);
+            Console.Write("Converting " + name);
             try
             {
-                Convert(file);
+                Convert(inFile, Path.Join(output, name + ".dds"));
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                Console.WriteLine($"{Path.GetFileNameWithoutExtension(file)}: {e.Message}");
+                Console.Write(" - " + e.Message);
             }
-        }
+            Console.WriteLine();
+        }   
     }
 
-    private static void Convert(string inFile)
+    private static void Convert(string inFile, string outFile)
     {
-        var name = Path.GetFileNameWithoutExtension(inFile);
         using var reader = new BinaryReader(new FileStream(inFile, FileMode.Open, FileAccess.Read));
         if (reader.ReadUInt32() != 0x4C465854)
             throw new Exception("Invalid magic");
 
         while (reader.ReadByte() != 0) ;
 
-        IPixelFormat format = reader.ReadUInt16() switch
+        var formatId = reader.ReadUInt16();
+        var width = reader.ReadUInt16();
+        var height = reader.ReadUInt16();
+        reader.ReadUInt16();
+        reader.ReadUInt16();
+        var flags = reader.ReadUInt32();
+        var mipmaps = reader.ReadInt32();
+        reader.ReadUInt16();
+
+        IPixelFormat format = formatId switch
         {
             0x48E => new DXT1(),
             0x890 => new DXT2(),
+            0x88D when (flags & 0x20) > 0 => new MipMappedBytePalette(mipmaps),
             0x88D => new BytePalette(),
             0x208C => new RGBA32(),
             var f => throw new Exception($"Unknown format {f:X4}")
         };
-
-        var width = reader.ReadUInt16();
-        var height = reader.ReadUInt16();
-        reader.ReadUInt16();
-        reader.ReadUInt32();
-        reader.ReadUInt32();
-        reader.ReadUInt32();
         var data = reader.ReadBytes(format.GetSize(width, height));
 
         var dds = new DDSHeader()
@@ -93,13 +110,9 @@ internal static class Program
             ddspf = format.PixelFormat
         };
         var ddsSpan = MemoryMarshal.CreateSpan(ref dds, 1);
-
-        var outFile = Path.Join("out", format.GetType().Name, name + ".dds");
-        Directory.CreateDirectory(Path.Join("out", format.GetType().Name));
         using var writer = new BinaryWriter(new FileStream(outFile, FileMode.Create, FileAccess.Write));
         writer.Write(MemoryMarshal.Cast<DDSHeader, byte>(ddsSpan));
         writer.Write(format.Transform(width, height, data));
-        //Console.WriteLine($"{name} SUCCESS!");
     }
 
     // https://www.codeproject.com/Articles/10613/C-RIFF-Parser
@@ -197,11 +210,11 @@ class BytePalette : IPixelFormat
         dwABitMask = 0xFF_00_00_00,
     };
     public uint Flag => 8;
-    public int GetSize(int width, int height) => width * height + 256 * 4;
+    public virtual int GetSize(int width, int height) => width * height + 256 * 4;
     public uint GetPitchOrLinear(int width, int height) => (uint)(width * 4);
     public byte[] Transform(int width, int height, byte[] data)
     {
-        var palette = data.AsSpan(width * height);
+        var palette = data[^(256 * 4)..];
         var output = new byte[width * height * 4];
         for (int i = 0; i < width * height; i++)
         {
@@ -216,6 +229,24 @@ class BytePalette : IPixelFormat
     }
 }
 
+class MipMappedBytePalette : BytePalette
+{
+    private readonly int mipmaps;
+
+    public MipMappedBytePalette(int mipmaps) => this.mipmaps = mipmaps;
+
+    public override int GetSize(int width, int height)
+    {
+        int result = 256 * 4;
+        for (int i = 0; i < mipmaps; i++)
+        {
+            result += width * height;
+            width /= 2;
+            height /= 2;
+        }
+        return result;
+    }
+}
 
 class RGBA32 : IPixelFormat
 {
