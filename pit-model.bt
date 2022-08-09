@@ -1,0 +1,46 @@
+//------------------------------------------------
+//--- 010 Editor v9.0.2 Binary Template
+//
+//      File: 
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: 
+// File Mask: 
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+struct Vec4f
+{
+  float x, y, z, w;
+};
+struct Vec3f
+{
+  float x, y, z;
+};
+struct Vec2f
+{
+  float x, y;
+};
+
+byte zero[6];
+string name;
+byte b0;
+float f0;
+int i1;
+int i2;
+int i3;
+byte unk[13];
+
+
+uint vertexCount;
+Vec4f pos[vertexCount];
+Vec2f uv[vertexCount];
+uint colors[vertexCount] <format=hex>;
+
+uint indexCount;
+ushort indices[indexCount];
+
+uint faceCount;
+byte unk2;
+Vec3f normals[faceCount];

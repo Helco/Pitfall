@@ -1,0 +1,30 @@
+//------------------------------------------------
+//--- 010 Editor v9.0.2 Binary Template
+//
+//      File: 
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: 
+// File Mask: 
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+struct Bone
+{
+  int parent;
+  uint childCount;
+  if (childCount > 0)
+    uint children[childCount];
+  float pos[3];
+  float rot[4];
+  byte b0;
+  float m0[16];
+  float m1[16];
+  string name;
+};
+
+string name;
+uint boneCount;
+Bone bones[boneCount] <optimize=false>;
+float closingFloats[5];
