@@ -136,6 +136,15 @@ internal static class Program
         return x | (y << 1);
     }
 
+    public static uint zorder2DIndex(int i, int width, int height)
+    {
+        int x = i % width;
+        int y = i / width;
+        if (height > width)
+            (x, y) = (y, x);
+        return zorder2D((uint)x, (uint)y);
+    }
+
 }
 
 interface IPixelFormat
@@ -196,9 +205,7 @@ class BytePalette : IPixelFormat
         var output = new byte[width * height * 4];
         for (int i = 0; i < width * height; i++)
         {
-            int x = i % width;
-            int y = i / width;
-            int j = (int)zorder2D((uint)x, (uint)y);
+            uint j = zorder2DIndex(i, width, height);
 
             output[i * 4 + 0] = palette[data[j] * 4 + 0];
             output[i * 4 + 1] = palette[data[j] * 4 + 1];
@@ -230,9 +237,7 @@ class RGBA32 : IPixelFormat
         var output = new byte[width * height * 4];
         for (int i = 0; i < width * height; i++)
         {
-            int x = i % width;
-            int y = i / width;
-            int j = (int)zorder2D((uint)x, (uint)y);
+            uint j = zorder2DIndex(i, width, height);
 
             output[i * 4 + 0] = data[j * 4 + 0];
             output[i * 4 + 1] = data[j * 4 + 1];
