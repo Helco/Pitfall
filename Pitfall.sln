@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TexConvert", "TexConvert\TexConvert.csproj", "{690A288B-72BF-4B39-8E9E-DA93F2B69184}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TexConvert", "TexConvert\TexConvert.csproj", "{690A288B-72BF-4B39-8E9E-DA93F2B69184}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelConvert", "ModelConvert\ModelConvert.csproj", "{BCE174C4-15CF-4104-82CA-BA302FE8BCF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{690A288B-72BF-4B39-8E9E-DA93F2B69184}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{690A288B-72BF-4B39-8E9E-DA93F2B69184}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{690A288B-72BF-4B39-8E9E-DA93F2B69184}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCE174C4-15CF-4104-82CA-BA302FE8BCF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCE174C4-15CF-4104-82CA-BA302FE8BCF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCE174C4-15CF-4104-82CA-BA302FE8BCF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCE174C4-15CF-4104-82CA-BA302FE8BCF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

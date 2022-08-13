@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using static TexConvert.Program;
+using static TexConvert.TexConvert;
 
 namespace TexConvert;
 
@@ -37,7 +37,7 @@ struct DDSPixelFormat
     public uint dwABitMask;
 }
 
-internal static class Program
+internal static class TexConvert
 {
     static void Main(string[] args)
     {
