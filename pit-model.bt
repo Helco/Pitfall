@@ -10,6 +10,8 @@
 //  ID Bytes: 
 //   History: 
 //------------------------------------------------
+LittleEndian();
+
 struct Vec4f
 {
   float x, y, z, w;
@@ -28,52 +30,61 @@ string name;
 byte zero; // no model in models.arc that has that one set
 float floatOne;
 
-int count1; // just a guess. _camera has none, most have 1, higher ups are characters and level models
+int subModelCount; // just a guess. _camera has none, most have 1, higher ups are characters and level models
 int i2; // most -1, some higher ups, one negative outlier
-int count2; // most 1 lesser the higher up it goes, cameras have 0
-uint id <format=hex>; // bits are distributed too regularly to have meaningful data
-ushort vertexFlags <format=binary>; // only a few bits but very few outliers...
-ushort pageSize1; // either 8192 or 0, not very interesting
-int lodCount; // more creatures have values != 1 but all 0- characters are 1
-byte b1; // either 0 1 2 4 - no bone count
-if (b1 != 0 && b1 != 4)
-  int cflags1; // seems like flags
-if (b1 == 4)
-  byte sum;
+int variantCount; // most 1 lesser the higher up it goes, cameras have 0
 
-struct LOD
+//int lodCount; // more creatures have values != 1 but all 0- characters are 1
+
+struct LOD(ushort vertexFlags)
 {
+    byte b1; // either 0 1 2 4 - no bone count
+    if (b1 != 0 && b1 != 4)
+      int cflags1; // seems like flags
+    if (b1 == 4)
+      byte sum;
+
     uint vertexCount;
     Vec4f pos[vertexCount];
-    Vec2f uv[vertexCount];
+    if (vertexFlags & 2)
+      Vec2f uv[vertexCount];
     if (vertexFlags & 4)
       uint attr4B_1[vertexCount] <format=hex>;
     if (vertexFlags & 8)
       uint attr4B_2[vertexCount] <format=hex>;
-    if (vertexFlags & 0x40)
-      uint attr4B_3[vertexCount] <format=hex>;
+    //if (vertexFlags & 0x40)
+    //  uint attr4B_3[vertexCount] <format=hex>;
     if (vertexFlags & 0x20)
     {
       uint indexCount;
       ushort indices[indexCount];
     }
 };
-struct Extra
+
+struct Variant
 {
-  string value;
+    uint id <format=hex>; // bits are distributed too regularly to have meaningful data
+    uint vertexFlags <format=binary>; // only a few bits but very few outliers...
+
+    local int i;
+    //for (i = 0; i < lodCount; i++)
+    //{        
+      LOD lod(vertexFlags);
+    //}
+
+    byte materialType; // just a guess that this is material related
 };
 
 struct SubModel
 {
-    local int i;
-    for (i = 0; i < lodCount; i++)
-    {        
-      LOD lod;
-      Extra extra;
-    }
-} subModels[count1] <optimize=false>;
+    Variant variants[variantCount] <optimize=false>;
+    float matrix[16];
+    uint unknown[5];
+} subModels[subModelCount] <optimize=false>;
 
-
+local int64 pos = FTell();
+local int64 left = FileSize() - pos;
+Printf("Got %d bytes left\n", left);
 
 
 //ushort faceCount;
