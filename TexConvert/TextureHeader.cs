@@ -6,6 +6,7 @@ readonly struct TextureHeader
     public ushort FormatId { get; init; }
     public ushort Width { get; init; }
     public ushort Height { get; init; }
+    public int PixelCount => Width * Height;
     public uint Flags { get; init; }
     public bool HasMipmaps => (Flags & 0x20) > 0;
     public uint Mipmaps { get; init; }
@@ -25,5 +26,6 @@ readonly struct TextureHeader
         reader.Skip(4);
         Flags = reader.ReadUInt32();
         Mipmaps = reader.ReadUInt32();
+        reader.Skip(2);
     }
 }

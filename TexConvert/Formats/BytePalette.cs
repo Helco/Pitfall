@@ -7,7 +7,7 @@ class BytePalette : IPixelFormat
     public DDSPixelFormat PixelFormat => new()
     {
         dwSize = 32,
-        dwFlags = 1 | 0x40,
+        dwFlags = DDSPixelFlags.AlphaPixels | DDSPixelFlags.RGB,
         dwRGBBitCount = 32,
         dwRBitMask = 0x00_00_00_FF,
         dwGBitMask = 0x00_00_FF_00,

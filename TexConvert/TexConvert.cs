@@ -1,12 +1,21 @@
 ﻿using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace TexConvert;
 
 internal static class TexConvert
 {
-    static void Main(string[] args)
+    static void Main(string[] args) => MainScan(args);
+
+    static void MainSingle(string[] args)
+    {
+        ConvertToPNG(@"C:\dev\Pitfall\game\wii\textures\a_kg_fernleaf01", "out.png");
+    }
+
+    static void MainScan(string[] args)
     {
         var baseDir = @"C:\dev\Pitfall\game";
         var dirs = new[] { "pc", "wii", "gc", "ps2" };
@@ -20,11 +29,12 @@ internal static class TexConvert
             {
                 using var reader = new EndianReader(new FileStream(f, FileMode.Open, FileAccess.Read));
                 var header = new TextureHeader(reader);
-                return header.FormatId;
+                return (path: f, format: header.FormatId);
             })
-            .Distinct()
-            .ToArray();
-        Array.ForEach(distinctFormats, f => Console.WriteLine(f.ToString("X4")));
+            .ToLookup(t => t.format, t => t.path);
+
+        foreach (var path in distinctFormats[0x8804])
+            Console.WriteLine(path);
     }
 
     static void Main2(string[] args)
@@ -58,12 +68,31 @@ internal static class TexConvert
         }   
     }
 
+    private static void ConvertToPNG(string inFile, string outFile)
+    {
+        using var reader = new EndianReader(new FileStream(inFile, FileMode.Open, FileAccess.Read));
+        var header = new TextureHeader(reader);
+        IPixelFormat format = SelectPixelFormat(header);
+        var size = format.GetSize(header);
+        var data = reader.ReadBytes(size);
+        if (data.Length != size)
+            throw new InvalidDataException($"Could only read {data.Length} out of {size} expected bytes");
+
+        using var image = format.Convert(header, data);
+        if (image == null)
+            throw new NotSupportedException("Pixel format does not support proper conversion yet");
+        image.SaveAsPng(outFile);
+    }
+
     private static void Convert(string inFile, string outFile)
     {
         using var reader = new EndianReader(new FileStream(inFile, FileMode.Open, FileAccess.Read));
         var header = new TextureHeader(reader);
         IPixelFormat format = SelectPixelFormat(header);
-        var data = reader.ReadBytes(format.GetSize(header));
+        var size = format.GetSize(header);
+        var data = reader.ReadBytes(size);
+        if (data.Length != size)
+            throw new InvalidDataException($"Could only read {data.Length} out of {size} expected bytes");
 
         using BinaryWriter writer = WriteDDS(outFile, header, format, data);
     }
@@ -90,13 +119,18 @@ internal static class TexConvert
 
     private static IPixelFormat SelectPixelFormat(in TextureHeader hdr) => hdr.FormatId switch
     {
+        // done
         0x048E => new Formats.DXT1(),
         0x0890 => new Formats.DXT2(),
         0x088D when hdr.HasMipmaps => new Formats.MipMappedBytePalette((int)hdr.Mipmaps),
         0x088D => new Formats.BytePalette(),
         0x208C => new Formats.RGBA32(),
-        0x8904 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"),
-        0x8804 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"),
+
+        // not ready
+        0x8904 => new Formats.NibblePalette(),
+
+        // unknown
+        0x8804 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // some block compression with effective 8 bit, CMPR with mipmaps?
         0x8408 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"),
         0x8104 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"),
         0x8A08 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"),
@@ -142,6 +176,7 @@ internal static class TexConvert
         return x | (y << 1);
     }
 
+    public static uint zorder2DIndex(int i, in TextureHeader hdr) => zorder2DIndex(i, hdr.Width, hdr.Height);
     public static uint zorder2DIndex(int i, int width, int height)
     {
         int x = i % width;
@@ -150,5 +185,61 @@ internal static class TexConvert
             (x, y) = (y, x);
         return zorder2D((uint)x, (uint)y);
     }
+
+    public static int block2DIndex(int i, in TextureHeader header, int blockSize)
+    {
+        int texX = i % header.Width;
+        int texY = i / header.Width;
+        int blockX = texX / blockSize;
+        int blockY = texY / blockSize;
+        int innerX = texX % blockSize;
+        int innerY = texY % blockSize;
+        int blockWidth = (header.Width + blockSize - 1) / blockSize;
+        return (blockY * blockWidth + blockX) * blockSize * blockSize + innerY * blockSize + innerX;
+    }
+
+    public static byte Expand(byte b, int fromBits)
+    {
+        if (fromBits < 4 || fromBits > 7)
+            throw new ArgumentOutOfRangeException("Does not support this bit count for expansion");
+        var bitsLeft = 8 - fromBits;
+        return (byte)((b << bitsLeft) | ((b >> (4 - bitsLeft)) & ((1 << bitsLeft) -1)));
+    }
+
+    public static byte Expand1(byte b) => (byte)(((b & 1) == 0) ? 0 : 0xff);
+    public static byte Expand3(byte b)
+    {
+        b &= 7;
+        return (byte)((b << 5) | (b << 2) | (b >> 1));
+    }
+    public static byte Expand4(byte b) => Expand(b, 4);
+    public static byte Expand5(byte b) => Expand(b, 5);
+    public static byte Expand6(byte b) => Expand(b, 6);
+    public static byte Expand7(byte b) => Expand(b, 7);
+
+    public static Rgba32 Convert565(ushort c) => new Rgba32(
+        Expand5((byte)(c >> 11)),
+        Expand6((byte)(c >> 5)),
+        Expand5((byte)(c >> 0)),
+        0xff);
+
+    public static Rgba32 Convert5551(ushort c) => new Rgba32(
+        Expand5((byte)(c >> 0)),
+        Expand6((byte)(c >> 5)),
+        Expand5((byte)(c >> 10)),
+        Expand1((byte)(c >> 15)));
+
+    public static Rgba32 Convert5553(ushort c)
+    {
+        if ((c & 0x8000) > 0)
+            return Convert5551(c);
+        return new Rgba32(
+            Expand4((byte)(c >> 8)),
+            Expand4((byte)(c >> 4)),
+            Expand4((byte)(c >> 0)),
+            Expand3((byte)(c >> 12)));
+    }
+
+    public static ushort Swap(ushort raw) => (ushort) ((raw << 8) | (raw >> 8));
 
 }

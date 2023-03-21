@@ -7,7 +7,7 @@ class DXT1 : IPixelFormat
     public DDSPixelFormat PixelFormat => new()
     {
         dwSize = 32,
-        dwFlags = 4,
+        dwFlags = DDSPixelFlags.FourCC,
         dwFourCC = ToFourCC("DXT1")
     };
     public uint Flag => 0x80000;

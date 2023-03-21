@@ -22,11 +22,19 @@ unsafe struct DDSHeader
     public uint dwReserved2;
 };
 
+[Flags]
+enum DDSPixelFlags : uint
+{
+    AlphaPixels = 1,
+    FourCC = 0x4,
+    RGB = 0x40
+}
+
 [StructLayout(LayoutKind.Sequential, Pack = 4)]
 struct DDSPixelFormat
 {
     public uint dwSize;
-    public uint dwFlags;
+    public DDSPixelFlags dwFlags;
     public uint dwFourCC;
     public uint dwRGBBitCount;
     public uint dwRBitMask;
