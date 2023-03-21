@@ -1,45 +1,33 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using static TexConvert.TexConvert;
 
 namespace TexConvert;
-
-[StructLayout(LayoutKind.Sequential, Pack = 4)]
-unsafe struct DDSHeader
-{
-    public uint magic;
-    public uint dwSize;
-    public uint dwFlags;
-    public uint dwHeight;
-    public uint dwWidth;
-    public uint dwPitchOrLinearSize;
-    public uint dwDepth;
-    public uint dwMipMapCount;
-    public fixed uint dwReserved1[11];
-    public DDSPixelFormat ddspf;
-    public uint dwCaps;
-    public uint dwCaps2;
-    public uint dwCaps3;
-    public uint dwCaps4;
-    public uint dwReserved2;
-};
-
-[StructLayout(LayoutKind.Sequential, Pack = 4)]
-struct DDSPixelFormat
-{
-    public uint dwSize;
-    public uint dwFlags;
-    public uint dwFourCC;
-    public uint dwRGBBitCount;
-    public uint dwRBitMask;
-    public uint dwGBitMask;
-    public uint dwBBitMask;
-    public uint dwABitMask;
-}
 
 internal static class TexConvert
 {
     static void Main(string[] args)
+    {
+        var baseDir = @"C:\dev\Pitfall\game";
+        var dirs = new[] { "pc", "wii", "gc", "ps2" };
+        var texDir = "textures";
+
+        var distinctFormats = dirs
+            .Select(d => Path.Combine(baseDir, d, texDir))
+            .SelectMany(Directory.GetFiles)
+            .Where(f => Path.GetFileName(f) != "files.list")
+            .Select(f =>
+            {
+                using var reader = new EndianReader(new FileStream(f, FileMode.Open, FileAccess.Read));
+                var header = new TextureHeader(reader);
+                return header.FormatId;
+            })
+            .Distinct()
+            .ToArray();
+        Array.ForEach(distinctFormats, f => Console.WriteLine(f.ToString("X4")));
+    }
+
+    static void Main2(string[] args)
     {
         if (args.Length < 1 || args.Length > 2)
         {
@@ -72,48 +60,53 @@ internal static class TexConvert
 
     private static void Convert(string inFile, string outFile)
     {
-        using var reader = new BinaryReader(new FileStream(inFile, FileMode.Open, FileAccess.Read));
-        if (reader.ReadUInt32() != 0x4C465854)
-            throw new Exception("Invalid magic");
+        using var reader = new EndianReader(new FileStream(inFile, FileMode.Open, FileAccess.Read));
+        var header = new TextureHeader(reader);
+        IPixelFormat format = SelectPixelFormat(header);
+        var data = reader.ReadBytes(format.GetSize(header));
 
-        while (reader.ReadByte() != 0) ;
+        using BinaryWriter writer = WriteDDS(outFile, header, format, data);
+    }
 
-        var formatId = reader.ReadUInt16();
-        var width = reader.ReadUInt16();
-        var height = reader.ReadUInt16();
-        reader.ReadUInt16();
-        reader.ReadUInt16();
-        var flags = reader.ReadUInt32();
-        var mipmaps = reader.ReadInt32();
-        reader.ReadUInt16();
-
-        IPixelFormat format = formatId switch
-        {
-            0x48E => new DXT1(),
-            0x890 => new DXT2(),
-            0x88D when (flags & 0x20) > 0 => new MipMappedBytePalette(mipmaps),
-            0x88D => new BytePalette(),
-            0x208C => new RGBA32(),
-            var f => throw new Exception($"Unknown format {f:X4}")
-        };
-        var data = reader.ReadBytes(format.GetSize(width, height));
-
+    private static BinaryWriter WriteDDS(string outFile, in TextureHeader header, IPixelFormat format, byte[] data)
+    {
         var dds = new DDSHeader()
         {
             magic = 0x20534444,
             dwSize = 124,
             dwFlags = 1 | 2 | 4 | 0x1000 | format.Flag,
-            dwHeight = height,
-            dwWidth = width,
+            dwHeight = header.Height,
+            dwWidth = header.Width,
             dwMipMapCount = 1,
-            dwPitchOrLinearSize = format.GetPitchOrLinear(width, height),
+            dwPitchOrLinearSize = format.GetPitchOrLinear(header),
             ddspf = format.PixelFormat
         };
         var ddsSpan = MemoryMarshal.CreateSpan(ref dds, 1);
-        using var writer = new BinaryWriter(new FileStream(outFile, FileMode.Create, FileAccess.Write));
+        var writer = new BinaryWriter(new FileStream(outFile, FileMode.Create, FileAccess.Write));
         writer.Write(MemoryMarshal.Cast<DDSHeader, byte>(ddsSpan));
-        writer.Write(format.Transform(width, height, data));
+        writer.Write(format.Transform(header, data));
+        return writer;
     }
+
+    private static IPixelFormat SelectPixelFormat(in TextureHeader hdr) => hdr.FormatId switch
+    {
+        0x048E => new Formats.DXT1(),
+        0x0890 => new Formats.DXT2(),
+        0x088D when hdr.HasMipmaps => new Formats.MipMappedBytePalette((int)hdr.Mipmaps),
+        0x088D => new Formats.BytePalette(),
+        0x208C => new Formats.RGBA32(),
+        0x8904 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"),
+        0x8804 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"),
+        0x8408 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"),
+        0x8104 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"),
+        0x8A08 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"),
+        0x0120 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"),
+        0x8304 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"),
+        0x0800 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"),
+        0x0400 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"),
+        0x2001 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"),
+        _ => throw new Exception($"Unknown format {hdr.FormatId:X4}")
+    };
 
     // https://www.codeproject.com/Articles/10613/C-RIFF-Parser
     public static uint ToFourCC(string FourCC)
@@ -158,123 +151,4 @@ internal static class TexConvert
         return zorder2D((uint)x, (uint)y);
     }
 
-}
-
-interface IPixelFormat
-{
-    DDSPixelFormat PixelFormat { get; }
-    uint Flag { get; }
-    int GetSize(int width, int height);
-    uint GetPitchOrLinear(int width, int height);
-    byte[] Transform(int width, int height, byte[] data);
-}
-
-class DXT1 : IPixelFormat
-{
-    public DDSPixelFormat PixelFormat => new()
-    {
-        dwSize = 32,
-        dwFlags = 4,
-        dwFourCC = ToFourCC("DXT1")
-    };
-    public uint Flag => 0x80000;
-    public int GetSize(int width, int height) => width * height * 8 / 4 / 4;
-    public uint GetPitchOrLinear(int width, int height) => (uint)GetSize(width, height);
-    public byte[] Transform(int width, int height, byte[] data) => data;
-}
-
-class DXT2 : IPixelFormat
-{
-    public DDSPixelFormat PixelFormat => new()
-    {
-        dwSize = 32,
-        dwFlags = 4,
-        dwFourCC = ToFourCC("DXT2")
-    };
-    public uint Flag => 0x80000;
-    public int GetSize(int width, int height) => width * height * 16 / 4 / 4;
-    public uint GetPitchOrLinear(int width, int height) => (uint)GetSize(width, height);
-    public byte[] Transform(int width, int height, byte[] data) => data;
-}
-
-class BytePalette : IPixelFormat
-{
-    public DDSPixelFormat PixelFormat => new()
-    {
-        dwSize = 32,
-        dwFlags = 1 | 0x40,
-        dwRGBBitCount = 32,
-        dwRBitMask = 0x00_00_00_FF,
-        dwGBitMask = 0x00_00_FF_00,
-        dwBBitMask = 0x00_FF_00_00,
-        dwABitMask = 0xFF_00_00_00,
-    };
-    public uint Flag => 8;
-    public virtual int GetSize(int width, int height) => width * height + 256 * 4;
-    public uint GetPitchOrLinear(int width, int height) => (uint)(width * 4);
-    public byte[] Transform(int width, int height, byte[] data)
-    {
-        var palette = data[^(256 * 4)..];
-        var output = new byte[width * height * 4];
-        for (int i = 0; i < width * height; i++)
-        {
-            uint j = zorder2DIndex(i, width, height);
-
-            output[i * 4 + 0] = palette[data[j] * 4 + 0];
-            output[i * 4 + 1] = palette[data[j] * 4 + 1];
-            output[i * 4 + 2] = palette[data[j] * 4 + 2];
-            output[i * 4 + 3] = palette[data[j] * 4 + 3];
-        }
-        return output;
-    }
-}
-
-class MipMappedBytePalette : BytePalette
-{
-    private readonly int mipmaps;
-
-    public MipMappedBytePalette(int mipmaps) => this.mipmaps = mipmaps;
-
-    public override int GetSize(int width, int height)
-    {
-        int result = 256 * 4;
-        for (int i = 0; i < mipmaps; i++)
-        {
-            result += width * height;
-            width /= 2;
-            height /= 2;
-        }
-        return result;
-    }
-}
-
-class RGBA32 : IPixelFormat
-{
-    public DDSPixelFormat PixelFormat => new()
-    {
-        dwSize = 32,
-        dwFlags = 1 | 0x40,
-        dwRGBBitCount = 32,
-        dwRBitMask = 0x00_00_00_FF,
-        dwGBitMask = 0x00_00_FF_00,
-        dwBBitMask = 0x00_FF_00_00,
-        dwABitMask = 0xFF_00_00_00,
-    };
-    public uint Flag => 8;
-    public int GetSize(int width, int height) => width * height * 4;
-    public uint GetPitchOrLinear(int width, int height) => (uint)(width * 4);
-    public byte[] Transform(int width, int height, byte[] data)
-    {
-        var output = new byte[width * height * 4];
-        for (int i = 0; i < width * height; i++)
-        {
-            uint j = zorder2DIndex(i, width, height);
-
-            output[i * 4 + 0] = data[j * 4 + 0];
-            output[i * 4 + 1] = data[j * 4 + 1];
-            output[i * 4 + 2] = data[j * 4 + 2];
-            output[i * 4 + 3] = data[j * 4 + 3];
-        }
-        return output;
-    }
 }

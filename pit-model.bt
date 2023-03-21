@@ -39,10 +39,13 @@ int variantCount; // most 1 lesser the higher up it goes, cameras have 0
 struct LOD(ushort vertexFlags)
 {
     byte b1; // either 0 1 2 4 - no bone count
-    if (b1 != 0 && b1 != 4)
-      int cflags1; // seems like flags
-    if (b1 == 4)
-      byte sum;
+    if (b1 == 0) {}
+    else if (b1 == 1)
+      int cflags1;
+    else if (b1 == 4)
+      byte cbyte1;
+    else if (b1 > 4)
+      byte weirdstuff[8];
 
     uint vertexCount;
     Vec4f pos[vertexCount];

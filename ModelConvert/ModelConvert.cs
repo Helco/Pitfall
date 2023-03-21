@@ -29,20 +29,20 @@ internal class Program
         var lists = new string[32];
         var nlists = new string[32];
         var counts = new int[32];
-        void addByBit(string name, uint val, int i)
+        /*void addByBit(string name, uint val, int i)
         {
             
             if ((val & (1 << i)) > 0)
             {
-                counts[i]++;
-                if (lists[i] == null)
+                counts![i]++;
+                if (lists![i] == null)
                     lists[i] = name;
                 else
                     lists[i] += "\n" + name;
             }
             else
             {
-                if (nlists[i] == null)
+                if (nlists![i] == null)
                     nlists[i] = name;
                 else
                     nlists[i] += "\n" + name;
@@ -54,11 +54,11 @@ internal class Program
             {
                 addByBit(name, val, i);
             }
-        }
+        }*/
 
         var t = 0;
-        var min = 1000;
-        var max = -10000;
+        //var min = 1000;
+        //var max = -10000;
         var set = new Dictionary<int, int>();
 
         var f = new Dictionary<string, uint>();
