@@ -55,7 +55,7 @@ class NibblePalette : IPixelFormat
 
         for (int i = 0; i < header.PixelCount; i++)
         {
-            var index = data[block2DIndex(i, header, 8) / 2];
+            var index = data[Block2DIndex(i, header.Width, 8, 8) / 2];
             if (i % 2 == 1)
                 index &= 0xf;
             else

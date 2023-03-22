@@ -23,7 +23,7 @@ class BytePalette : IPixelFormat
         var output = new byte[width * height * 4];
         for (int i = 0; i < width * height; i++)
         {
-            uint j = zorder2DIndex(i, width, height);
+            uint j = ZOrder2DIndex(i, width, height);
 
             output[i * 4 + 0] = palette[data[j] * 4 + 0];
             output[i * 4 + 1] = palette[data[j] * 4 + 1];

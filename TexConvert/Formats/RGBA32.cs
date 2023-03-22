@@ -22,7 +22,7 @@ class RGBA32 : IPixelFormat
         var output = new byte[width * height * 4];
         for (int i = 0; i < width * height; i++)
         {
-            uint j = zorder2DIndex(i, width, height);
+            uint j = ZOrder2DIndex(i, width, height);
 
             output[i * 4 + 0] = data[j * 4 + 0];
             output[i * 4 + 1] = data[j * 4 + 1];

@@ -26,7 +26,7 @@ class NintendoC4 : IPixelFormat
         var output = new byte[width * height * 4];
         for (int i = 0; i < width * height; i++)
         {
-            uint j = zorder2DIndex(i, width, height);
+            uint j = ZOrder2DIndex(i, width, height);
 
             output[i * 4 + 0] = palette[data[j] * 4 + 0];
             output[i * 4 + 1] = palette[data[j] * 4 + 1];
@@ -42,7 +42,7 @@ class NintendoC4 : IPixelFormat
         var palette = MemoryMarshal.Cast<byte, ushort>(data[^(16 * 2)..]);
         for (int i = 0; i < header.PixelCount; i++)
         {
-            var j = block2DIndex(i, header, 8);
+            var j = Block2DIndex(i, header.Width, 8, 8);
             var palI = i % 2 == 1
                 ? data[j / 2] & 0xf
                 : data[j / 2] >> 4;

@@ -12,7 +12,7 @@ internal static class TexConvert
 
     static void MainSingle(string[] args)
     {
-        ConvertToPNG(@"C:\dev\Pitfall\game\wii\textures\a_kg_fernleaf01", "out.png");
+        ConvertToPNG(@"C:\dev\Pitfall\game\gc\textures\themole_head", "out.png");
     }
 
     static void MainScan(string[] args)
@@ -33,7 +33,7 @@ internal static class TexConvert
             })
             .ToLookup(t => t.format, t => t.path);
 
-        foreach (var path in distinctFormats[0x8304])
+        foreach (var path in distinctFormats[0x8104])
             Console.WriteLine(path);
     }
 
@@ -127,12 +127,13 @@ internal static class TexConvert
         0x208C => new Formats.RGBA32(), // PC
         0x0120 => new Formats.NintendoRGBA32(),
         0x8304 => new Formats.NintendoC4(),
+        0x8104 => new Formats.NintendoCMPR(),
 
         // not ready
         0x8904 => new Formats.NibblePalette(), // Nintendo
         0x8804 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // Nintendo: some block compression with effective 8 bit, CMPR with mipmaps?
         0x8408 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // Nintendo: maybe C8?
-        0x8104 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // Nintendo: looks very CMPR 
+        
         0x8A08 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // Nintendo: also C8, a bit more confident with the palette though
         0x0800 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // PS2: patterns like RGBA32 but size like RGB24. weird trailing zero block
         0x0400 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // PS2: looks like 4 bit palette with 32 bit colors (and alpha is max 0x80)
@@ -159,7 +160,7 @@ internal static class TexConvert
     // https://stackoverflow.com/questions/12157685/z-order-curve-coordinates
     static readonly uint[] B = { 0x55555555, 0x33333333, 0x0F0F0F0F, 0x00FF00FF };
     static readonly int[] S = { 1, 2, 4, 8 };
-    public static uint zorder2D(uint x, uint y)
+    public static uint ZOrder2D(uint x, uint y)
     {
 
         x = (x | (x << S[3])) & B[3];
@@ -174,26 +175,26 @@ internal static class TexConvert
         return x | (y << 1);
     }
 
-    public static uint zorder2DIndex(int i, in TextureHeader hdr) => zorder2DIndex(i, hdr.Width, hdr.Height);
-    public static uint zorder2DIndex(int i, int width, int height)
+    public static uint ZOrder2DIndex(int i, in TextureHeader hdr) => ZOrder2DIndex(i, hdr.Width, hdr.Height);
+    public static uint ZOrder2DIndex(int i, int width, int height)
     {
         int x = i % width;
         int y = i / width;
         if (height > width)
             (x, y) = (y, x);
-        return zorder2D((uint)x, (uint)y);
+        return ZOrder2D((uint)x, (uint)y);
     }
 
-    public static int block2DIndex(int i, in TextureHeader header, int blockSize)
+    public static int Block2DIndex(int i, int texW, int blockW, int blockH)
     {
-        int texX = i % header.Width;
-        int texY = i / header.Width;
-        int blockX = texX / blockSize;
-        int blockY = texY / blockSize;
-        int innerX = texX % blockSize;
-        int innerY = texY % blockSize;
-        int blockWidth = (header.Width + blockSize - 1) / blockSize;
-        return (blockY * blockWidth + blockX) * blockSize * blockSize + innerY * blockSize + innerX;
+        int texX = i % texW;
+        int texY = i / texW;
+        int blockX = texX / blockW;
+        int blockY = texY / blockH;
+        int innerX = texX % blockW;
+        int innerY = texY % blockH;
+        int texBlockW = (texW + blockW - 1) / blockW;
+        return (blockY * texBlockW + blockX) * blockW * blockH + innerY * blockW + innerX;
     }
 
     public static byte Expand(byte b, int fromBits)
@@ -240,5 +241,12 @@ internal static class TexConvert
     }
 
     public static ushort Swap(ushort raw) => (ushort) ((raw << 8) | (raw >> 8));
+
+    public static uint Swap(uint raw)
+    {
+        raw = (raw >> 16) | (raw << 16);
+        raw = ((raw & 0xFF00FF00) >> 8) | ((raw & 0x00FF00FF) << 8);
+        return raw;
+    }
 
 }
