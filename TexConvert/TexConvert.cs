@@ -8,7 +8,7 @@ namespace TexConvert;
 
 internal static class TexConvert
 {
-    static void Main(string[] args) => MainScan(args);
+    static void Main(string[] args) => MainSingle(args);
 
     static void MainSingle(string[] args)
     {
@@ -33,7 +33,7 @@ internal static class TexConvert
             })
             .ToLookup(t => t.format, t => t.path);
 
-        foreach (var path in distinctFormats[0x8804])
+        foreach (var path in distinctFormats[0x8304])
             Console.WriteLine(path);
     }
 
@@ -120,25 +120,23 @@ internal static class TexConvert
     private static IPixelFormat SelectPixelFormat(in TextureHeader hdr) => hdr.FormatId switch
     {
         // done
-        0x048E => new Formats.DXT1(),
-        0x0890 => new Formats.DXT2(),
-        0x088D when hdr.HasMipmaps => new Formats.MipMappedBytePalette((int)hdr.Mipmaps),
-        0x088D => new Formats.BytePalette(),
-        0x208C => new Formats.RGBA32(),
+        0x048E => new Formats.DXT1(), // PC
+        0x0890 => new Formats.DXT2(), // PC
+        0x088D when hdr.HasMipmaps => new Formats.MipMappedBytePalette((int)hdr.Mipmaps), // PC
+        0x088D => new Formats.BytePalette(), // PC
+        0x208C => new Formats.RGBA32(), // PC
+        0x0120 => new Formats.NintendoRGBA32(),
+        0x8304 => new Formats.NintendoC4(),
 
         // not ready
-        0x8904 => new Formats.NibblePalette(),
-
-        // unknown
-        0x8804 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // some block compression with effective 8 bit, CMPR with mipmaps?
-        0x8408 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"),
-        0x8104 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"),
-        0x8A08 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"),
-        0x0120 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"),
-        0x8304 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"),
-        0x0800 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"),
-        0x0400 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"),
-        0x2001 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"),
+        0x8904 => new Formats.NibblePalette(), // Nintendo
+        0x8804 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // Nintendo: some block compression with effective 8 bit, CMPR with mipmaps?
+        0x8408 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // Nintendo: maybe C8?
+        0x8104 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // Nintendo: looks very CMPR 
+        0x8A08 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // Nintendo: also C8, a bit more confident with the palette though
+        0x0800 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // PS2: patterns like RGBA32 but size like RGB24. weird trailing zero block
+        0x0400 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // PS2: looks like 4 bit palette with 32 bit colors (and alpha is max 0x80)
+        0x2001 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // PS2: RGBA32 (probably just with max alpha 0x80)
         _ => throw new Exception($"Unknown format {hdr.FormatId:X4}")
     };
 
@@ -203,7 +201,8 @@ internal static class TexConvert
         if (fromBits < 4 || fromBits > 7)
             throw new ArgumentOutOfRangeException("Does not support this bit count for expansion");
         var bitsLeft = 8 - fromBits;
-        return (byte)((b << bitsLeft) | ((b >> (4 - bitsLeft)) & ((1 << bitsLeft) -1)));
+        b &= (byte)((1 << fromBits) - 1);
+        return (byte)((b << bitsLeft) | (b >> (4 - bitsLeft)));
     }
 
     public static byte Expand1(byte b) => (byte)(((b & 1) == 0) ? 0 : 0xff);
@@ -224,9 +223,9 @@ internal static class TexConvert
         0xff);
 
     public static Rgba32 Convert5551(ushort c) => new Rgba32(
-        Expand5((byte)(c >> 0)),
-        Expand6((byte)(c >> 5)),
         Expand5((byte)(c >> 10)),
+        Expand5((byte)(c >> 5)),
+        Expand5((byte)(c >> 0)),
         Expand1((byte)(c >> 15)));
 
     public static Rgba32 Convert5553(ushort c)

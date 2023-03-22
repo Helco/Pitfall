@@ -53,18 +53,15 @@ class NibblePalette : IPixelFormat
 
         //data = data.SelectMany(b => new[] { (byte)(b & 0xf), (byte)(b >> 4) }).ToArray();
 
-        for (int i = 0; i < 32; i++)
-            Console.WriteLine(Convert5553(Swap(palette[i])));
-
         for (int i = 0; i < header.PixelCount; i++)
         {
             var index = data[block2DIndex(i, header, 8) / 2];
-            if (i % 2 == 0)
+            if (i % 2 == 1)
                 index &= 0xf;
             else
                 index >>= 4;
 
-            pixels[i] = Convert5551(palette[index * 2 + ((i % 2))]);
+            pixels[i] = Convert5553(Swap(palette[index + 16])); //+ (1 - (i % 2))]));
         }
         return Image.LoadPixelData(pixels, header.Width, header.Height);
     }
