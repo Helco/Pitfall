@@ -3,16 +3,17 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 
 namespace TexConvert;
 
 internal static class TexConvert
 {
-    static void Main(string[] args) => MainSingle(args);
+    static void Main(string[] args) => MainCLI(args);
 
     static void MainSingle(string[] args)
     {
-        ConvertToPNG(@"C:\dev\Pitfall\game\gc\textures\themole_head", "out.png");
+        ConvertToPNG(@"C:\dev\Pitfall\game\wii\textures\a_kg_plantwall01", "out.png");
     }
 
     static void MainScan(string[] args)
@@ -33,11 +34,11 @@ internal static class TexConvert
             })
             .ToLookup(t => t.format, t => t.path);
 
-        foreach (var path in distinctFormats[0x8104])
+        foreach (var path in distinctFormats[0x8A08])
             Console.WriteLine(path);
     }
 
-    static void Main2(string[] args)
+    static void MainCLI(string[] args)
     {
         if (args.Length < 1 || args.Length > 2)
         {
@@ -52,17 +53,20 @@ internal static class TexConvert
         if (!Directory.Exists(output))
             Directory.CreateDirectory(output);
         
-        foreach (var inFile in inputFiles)
+        foreach (var inFile in inputFiles.Where(f => !f.EndsWith("files.list")))
         {
             var name = Path.GetFileName(inFile);
             Console.Write("Converting " + name);
             try
             {
-                Convert(inFile, Path.Join(output, name + ".dds"));
+                ConvertToPNG(inFile, Path.Join(output, name + ".png"));
             }
             catch(Exception e)
             {
                 Console.Write(" - " + e.Message);
+#if DEBUG
+                throw;
+#endif
             }
             Console.WriteLine();
         }   
@@ -73,7 +77,7 @@ internal static class TexConvert
         using var reader = new EndianReader(new FileStream(inFile, FileMode.Open, FileAccess.Read));
         var header = new TextureHeader(reader);
         IPixelFormat format = SelectPixelFormat(header);
-        var size = format.GetSize(header);
+        var size = format.GetDataSize(header);
         var data = reader.ReadBytes(size);
         if (data.Length != size)
             throw new InvalidDataException($"Could only read {data.Length} out of {size} expected bytes");
@@ -81,48 +85,16 @@ internal static class TexConvert
         using var image = format.Convert(header, data);
         if (image == null)
             throw new NotSupportedException("Pixel format does not support proper conversion yet");
+        image.Mutate(p => p.Flip(FlipMode.Vertical));
         image.SaveAsPng(outFile);
-    }
-
-    private static void Convert(string inFile, string outFile)
-    {
-        using var reader = new EndianReader(new FileStream(inFile, FileMode.Open, FileAccess.Read));
-        var header = new TextureHeader(reader);
-        IPixelFormat format = SelectPixelFormat(header);
-        var size = format.GetSize(header);
-        var data = reader.ReadBytes(size);
-        if (data.Length != size)
-            throw new InvalidDataException($"Could only read {data.Length} out of {size} expected bytes");
-
-        using BinaryWriter writer = WriteDDS(outFile, header, format, data);
-    }
-
-    private static BinaryWriter WriteDDS(string outFile, in TextureHeader header, IPixelFormat format, byte[] data)
-    {
-        var dds = new DDSHeader()
-        {
-            magic = 0x20534444,
-            dwSize = 124,
-            dwFlags = 1 | 2 | 4 | 0x1000 | format.Flag,
-            dwHeight = header.Height,
-            dwWidth = header.Width,
-            dwMipMapCount = 1,
-            dwPitchOrLinearSize = format.GetPitchOrLinear(header),
-            ddspf = format.PixelFormat
-        };
-        var ddsSpan = MemoryMarshal.CreateSpan(ref dds, 1);
-        var writer = new BinaryWriter(new FileStream(outFile, FileMode.Create, FileAccess.Write));
-        writer.Write(MemoryMarshal.Cast<DDSHeader, byte>(ddsSpan));
-        writer.Write(format.Transform(header, data));
-        return writer;
     }
 
     private static IPixelFormat SelectPixelFormat(in TextureHeader hdr) => hdr.FormatId switch
     {
         // done
         0x048E => new Formats.DXT1(), // PC
-        0x0890 => new Formats.DXT2(), // PC
-        0x088D when hdr.HasMipmaps => new Formats.MipMappedBytePalette((int)hdr.Mipmaps), // PC
+        0x0890 => new Formats.DXT3(), // PC
+        0x088D when hdr.HasMipmaps => new Formats.MipMappedBytePalette(), // PC
         0x088D => new Formats.BytePalette(), // PC
         0x208C => new Formats.RGBA32(), // PC
         0x0120 => new Formats.NintendoRGBA32(),
@@ -130,11 +102,10 @@ internal static class TexConvert
         0x8104 => new Formats.NintendoCMPR(),
 
         // not ready
-        0x8904 => new Formats.NibblePalette(), // Nintendo
+        0x8904 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // new Formats.NibblePalette(), // Nintendo
         0x8804 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // Nintendo: some block compression with effective 8 bit, CMPR with mipmaps?
         0x8408 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // Nintendo: maybe C8?
-        
-        0x8A08 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // Nintendo: also C8, a bit more confident with the palette though
+        0x8A08 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // new Formats.NintendoC8(), // Nintendo: also C8, a bit more confident with the palette though
         0x0800 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // PS2: patterns like RGBA32 but size like RGB24. weird trailing zero block
         0x0400 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // PS2: looks like 4 bit palette with 32 bit colors (and alpha is max 0x80)
         0x2001 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // PS2: RGBA32 (probably just with max alpha 0x80)
@@ -239,6 +210,29 @@ internal static class TexConvert
             Expand4((byte)(c >> 0)),
             Expand3((byte)(c >> 12)));
     }
+
+    public static Rgba32 Convert5551___(ushort c) => new Rgba32(
+        Expand5((byte)(c >> 0)),
+        Expand5((byte)(c >> 5)),
+        Expand5((byte)(c >> 10)),
+        Expand1((byte)(c >> 15)));
+
+    public static Rgba32 Convert5553___(ushort c)
+    {
+        //if ((c & 0x8000) > 0)
+          //  return Convert5551___(c);
+        return new Rgba32(
+            Expand4((byte)(c >> 4)),
+            Expand4((byte)(c >> 8)),
+            Expand4((byte)(c >> 12)),
+            Expand4((byte)(c >> 0)));
+    }
+
+    public static Rgba32 Convert4444_(ushort c) => new Rgba32(
+        Expand4((byte)(c >> 4)),
+        Expand4((byte)(c >> 0)),
+        Expand4((byte)(c >> 12)),
+        Expand4((byte)(c >> 8)));
 
     public static ushort Swap(ushort raw) => (ushort) ((raw << 8) | (raw >> 8));
 

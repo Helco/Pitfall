@@ -25,7 +25,7 @@ readonly struct TextureHeader
         Height = reader.ReadUInt16();
         reader.Skip(4);
         Flags = reader.ReadUInt32();
-        Mipmaps = reader.ReadUInt32();
-        reader.Skip(2);
+        Mipmaps = reader.ReadUInt16();
+        reader.Skip(4);
     }
 }

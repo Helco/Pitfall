@@ -7,37 +7,7 @@ namespace TexConvert.Formats;
 
 class NibblePalette : IPixelFormat
 {
-    public DDSPixelFormat PixelFormat => new()
-    {
-        dwSize = 32,
-        dwFlags = DDSPixelFlags.RGB,
-        dwRGBBitCount = 16,
-        dwRBitMask = ((1 << 5) - 1) << 0,
-        dwGBitMask = ((1 << 6) - 1) << 5,
-        dwBBitMask = ((1 << 5) - 1) << 11,
-        dwABitMask = 0x00_00_00_00,
-    };
-    public uint Flag => 8;
-    public virtual int GetSize(int width, int height) => width * height / 2 + 32 * 2;
-    public uint GetPitchOrLinear(int width, int height) => (uint)(width * 2);
-    public byte[] Transform(int width, int height, byte[] data)
-    {
-        var palette = data[^(32 * 2)..];
-        var output = new byte[width * height * 2];
-        for (int i = 0; i < width * height; i++)
-        {
-            uint j = (uint)i;//zorder2DIndex(i, width, height);
-            var index = data[i / 2];
-            if (i % 2 == 0)
-                index &= 0xf;
-            else
-                index >>= 4;
-
-            output[i * 2 + 0] = palette[index * 2 + 0];
-            output[i * 2 + 1] = palette[index * 2 + 1];
-        }
-        return output;
-    }
+    public int GetDataSize(in TextureHeader header) => header.PixelCount / 2 + 32 * 2;
 
     public Image<Rgba32> Convert(in TextureHeader header, byte[] data)
     {

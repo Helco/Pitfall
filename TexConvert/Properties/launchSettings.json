@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TexConvert": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\dev\\Pitfall\\game\\pc\\textures\r\nC:\\dev\\Pitfall\\game\\pc\\textures_out"
+    }
+  }
+}
