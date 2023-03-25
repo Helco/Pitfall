@@ -9,7 +9,7 @@ namespace TexConvert;
 
 internal static class TexConvert
 {
-    static void Main(string[] args) => MainCLI(args);
+    static void Main(string[] args) => MainSingle(args);
 
     static void MainSingle(string[] args)
     {
@@ -100,12 +100,12 @@ internal static class TexConvert
         0x0120 => new Formats.NintendoRGBA32(),
         0x8304 => new Formats.NintendoC4(),
         0x8104 => new Formats.NintendoCMPR(),
+        0x8904 => new Formats.TwoPalette4(), // Nintendo
+        0x8A08 => new Formats.TwoPalette8(), // Nintendo
 
         // not ready
-        0x8904 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // new Formats.NibblePalette(), // Nintendo
         0x8804 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // Nintendo: some block compression with effective 8 bit, CMPR with mipmaps?
         0x8408 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // Nintendo: maybe C8?
-        0x8A08 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // new Formats.NintendoC8(), // Nintendo: also C8, a bit more confident with the palette though
         0x0800 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // PS2: patterns like RGBA32 but size like RGB24. weird trailing zero block
         0x0400 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // PS2: looks like 4 bit palette with 32 bit colors (and alpha is max 0x80)
         0x2001 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // PS2: RGBA32 (probably just with max alpha 0x80)
@@ -211,28 +211,11 @@ internal static class TexConvert
             Expand3((byte)(c >> 12)));
     }
 
-    public static Rgba32 Convert5551___(ushort c) => new Rgba32(
-        Expand5((byte)(c >> 0)),
-        Expand5((byte)(c >> 5)),
-        Expand5((byte)(c >> 10)),
-        Expand1((byte)(c >> 15)));
-
-    public static Rgba32 Convert5553___(ushort c)
-    {
-        //if ((c & 0x8000) > 0)
-          //  return Convert5551___(c);
-        return new Rgba32(
-            Expand4((byte)(c >> 4)),
-            Expand4((byte)(c >> 8)),
-            Expand4((byte)(c >> 12)),
-            Expand4((byte)(c >> 0)));
-    }
-
-    public static Rgba32 Convert4444_(ushort c) => new Rgba32(
-        Expand4((byte)(c >> 4)),
-        Expand4((byte)(c >> 0)),
-        Expand4((byte)(c >> 12)),
-        Expand4((byte)(c >> 8)));
+    public static Rgba32 ConvertTwoPal8888(ushort c0, ushort c1) => new Rgba32(
+        (byte)(c0 >> 8),
+        (byte)(c0 >> 0),
+        (byte)(c1 >> 8),
+        (byte)(c1 >> 0));
 
     public static ushort Swap(ushort raw) => (ushort) ((raw << 8) | (raw >> 8));
 
