@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
+using TexConvert.Formats;
 
 namespace TexConvert;
 
@@ -13,7 +14,7 @@ internal static class TexConvert
 
     static void MainSingle(string[] args)
     {
-        ConvertToPNG(@"C:\dev\Pitfall\game\wii\textures\a_kg_plantwall01", "out.png");
+        ConvertToPNG(@"C:\dev\Pitfall\game\wii\textures\a_figleaf3", "out.png");
     }
 
     static void MainScan(string[] args)
@@ -34,7 +35,7 @@ internal static class TexConvert
             })
             .ToLookup(t => t.format, t => t.path);
 
-        foreach (var path in distinctFormats[0x8A08])
+        foreach (var path in distinctFormats[0x8408])
             Console.WriteLine(path);
     }
 
@@ -105,7 +106,7 @@ internal static class TexConvert
 
         // not ready
         0x8804 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // Nintendo: some block compression with effective 8 bit, CMPR with mipmaps?
-        0x8408 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // Nintendo: maybe C8?
+        0x8408 => new NintendoC8(), // Nintendo: maybe C8?
         0x0800 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // PS2: patterns like RGBA32 but size like RGB24. weird trailing zero block
         0x0400 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // PS2: looks like 4 bit palette with 32 bit colors (and alpha is max 0x80)
         0x2001 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // PS2: RGBA32 (probably just with max alpha 0x80)
