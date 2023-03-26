@@ -25,11 +25,13 @@ class NintendoC8 : IPixelFormat
     public Image<Rgba32> Convert(in TextureHeader header, byte[] data)
     {
         var pixels = new Rgba32[header.PixelCount];
-        var palette = MemoryMarshal.Cast<byte, ushort>(data[^(256 * 2)..]);
+        var paletteWords = MemoryMarshal.Cast<byte, ushort>(data[^(256 * 2)..]);
+        var palette = ConvertNintendoPalette(header.SubFormat, paletteWords);
+
         for (int i = 0; i < header.PixelCount; i++)
         {
             var j = Block2DIndex(i, header.Width, 8, 4);
-            pixels[i] = Convert5553(Swap(palette[data[j]]));
+            pixels[i] = palette[data[j]];
         }
         return Image.LoadPixelData(pixels, header.Width, header.Height);
     }

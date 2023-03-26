@@ -7,7 +7,17 @@ namespace TexConvert.Formats;
 
 class TwoPalette4 : IPixelFormat
 {
-    public int GetDataSize(in TextureHeader header) => header.PixelCount / 2 + 32 * 2;
+    public int GetDataSize(in TextureHeader header)
+    {
+        var curPixelCount = header.PixelCount;
+        var result = 32 * 2;
+        for (int i = 0; i < Math.Max(1, header.Mipmaps); i++)
+        {
+            result += curPixelCount / 2;
+            curPixelCount /= 4;
+        }
+        return result;
+    }
 
     public Image<Rgba32> Convert(in TextureHeader header, byte[] data)
     {

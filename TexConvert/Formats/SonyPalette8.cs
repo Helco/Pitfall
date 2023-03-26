@@ -6,7 +6,17 @@ namespace TexConvert.Formats;
 
 class SonyPalette8 : IPixelFormat
 {
-    public virtual int GetDataSize(in TextureHeader header) => header.PixelCount + 256 * 4;
+    public virtual int GetDataSize(in TextureHeader header)
+    {
+        var curPixelCount = header.PixelCount;
+        var result = 256 * 4;
+        for (int i = 0; i < Math.Max(1, header.Mipmaps); i++)
+        {
+            result += curPixelCount;
+            curPixelCount /= 4;
+        }
+        return result;
+    }
 
     public Image<Rgba32> Convert(in TextureHeader header, byte[] data)
     {

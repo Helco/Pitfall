@@ -18,6 +18,7 @@ internal class EndianReader : IDisposable
     }
 
     public void Skip(int bytes) => reader.BaseStream.Seek(bytes, SeekOrigin.Current);
+    public byte ReadByte() => reader.ReadByte();
     public byte[] ReadBytes(int bytes) => reader.ReadBytes(bytes);
     public ushort ReadUInt16() => Swap(reader.ReadUInt16());
     public uint ReadUInt32() => Swap(reader.ReadUInt32());

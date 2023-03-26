@@ -6,7 +6,18 @@ namespace TexConvert.Formats;
 
 class BytePalette : IPixelFormat
 {
-    public virtual int GetDataSize(in TextureHeader header) => header.PixelCount + 256 * 4;
+    public int GetDataSize(in TextureHeader header)
+    {
+        int result = 256 * 4;
+        var (width, height) = (header.Width, header.Height);
+        for (int i = 0; i < Math.Max(1, header.Mipmaps); i++)
+        {
+            result += width * height;
+            width /= 2;
+            height /= 2;
+        }
+        return result;
+    }
 
     public Image<Rgba32> Convert(in TextureHeader header, byte[] data)
     {

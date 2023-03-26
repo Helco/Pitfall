@@ -4,6 +4,7 @@ readonly struct TextureHeader
 {
     public string Name { get; init; }
     public ushort FormatId { get; init; }
+    public byte SubFormat { get; init; }
     public ushort Width { get; init; }
     public ushort Height { get; init; }
     public int PixelCount => Width * Height;
@@ -23,7 +24,8 @@ readonly struct TextureHeader
         FormatId = reader.ReadUInt16();
         Width = reader.ReadUInt16();
         Height = reader.ReadUInt16();
-        reader.Skip(4);
+        SubFormat = reader.ReadByte();
+        reader.Skip(3); // not the correct layout but it is effective for our purposes
         Flags = reader.ReadUInt32();
         Mipmaps = reader.ReadUInt16();
         reader.Skip(4);

@@ -9,11 +9,22 @@ namespace TexConvert;
 
 internal static class TexConvert
 {
-    static void Main(string[] args) => MainSingle(args);
+    static void Main(string[] args) => MainAll(args);
 
     static void MainSingle(string[] args)
     {
-        ConvertToPNG(@"C:\dev\Pitfall\game\ps2\textures\a_figleaf3", "out.png");
+        ConvertToPNG(@"C:\dev\Pitfall\game\pc\textures\water 01", "out.png");
+    }
+
+    static void MainAll(string[] args)
+    {
+        var baseDir = @"C:\dev\Pitfall\game";
+        var dirs = new[] { "pc", "wii", "gc", "ps2" };
+        var texDir = "textures";
+        var texOutDir = "textures_out";
+
+        foreach (var dir in dirs)
+            MainCLI(new[] { Path.Combine(baseDir, dir, texDir), Path.Combine(baseDir, dir, texOutDir) });
     }
 
     static void MainScan(string[] args)
@@ -34,7 +45,7 @@ internal static class TexConvert
             })
             .ToLookup(t => t.format, t => t.path);
 
-        foreach (var path in distinctFormats[0x0800])
+        foreach (var path in distinctFormats[0x8408])
             Console.WriteLine(path);
     }
 
@@ -46,30 +57,42 @@ internal static class TexConvert
             return;
         }
 
-        var inputFiles = Directory.Exists(args[0])
+        var inputFiles = (Directory.Exists(args[0])
             ? Directory.GetFiles(args[0])
-            : new[] { args[0] };
+            : new[] { args[0] })
+            .Where(f => !f.EndsWith("files.list"));
         var output = args.Length > 1 ? args[1] : ".";
         if (!Directory.Exists(output))
             Directory.CreateDirectory(output);
-        
-        foreach (var inFile in inputFiles.Where(f => !f.EndsWith("files.list")))
-        {
-            var name = Path.GetFileName(inFile);
-            Console.Write("Converting " + name);
-            try
-            {
-                ConvertToPNG(inFile, Path.Join(output, name + ".png"));
-            }
-            catch(Exception e)
-            {
-                Console.Write(" - " + e.Message);
-#if DEBUG
-                throw;
+
+#if SYNC_CONVERSION
+        foreach (var inFile in inputFiles)
+            Convert(inFile, output);
+#else
+        Parallel.ForEach(inputFiles, inFile => Convert(inFile, output));
 #endif
-            }
-            Console.WriteLine();
-        }   
+    }
+
+    private static object OutputMutex = new();
+
+    private static void Convert(string inFile, string outputDir)
+    {
+        var name = Path.GetFileName(inFile);
+        var message = "Converting " + name;
+        try
+        {
+            ConvertToPNG(inFile, Path.Join(outputDir, name + ".png"));
+        }
+        catch (Exception e)
+        {
+            message += " - " + e.Message;
+#if DEBUG
+            throw;
+#endif
+        }
+
+        lock (OutputMutex)
+            Console.WriteLine(message);
     }
 
     private static void ConvertToPNG(string inFile, string outFile)
@@ -94,7 +117,6 @@ internal static class TexConvert
         // done
         0x048E => new Formats.DXT1(), // PC
         0x0890 => new Formats.DXT3(), // PC
-        0x088D when hdr.HasMipmaps => new Formats.MipMappedBytePalette(), // PC
         0x088D => new Formats.BytePalette(), // PC
         0x208C => new Formats.RGBA32(), // PC
         0x0120 => new Formats.NintendoRGBA32(),
@@ -109,7 +131,7 @@ internal static class TexConvert
         0x0800 => new Formats.SonyPalette8(),
         _ => throw new Exception($"Unknown format {hdr.FormatId:X4}")
     };
-
+     
     // https://www.codeproject.com/Articles/10613/C-RIFF-Parser
     public static uint ToFourCC(string FourCC)
     {
@@ -207,6 +229,28 @@ internal static class TexConvert
             Expand4((byte)(c >> 4)),
             Expand4((byte)(c >> 0)),
             Expand3((byte)(c >> 12)));
+    }
+
+    public static Rgba32[] ConvertNintendoPalette(byte subFormat, ReadOnlySpan<ushort> words)
+    {
+        var colors = new Rgba32[words.Length];
+        if (subFormat == 5)
+        {
+            for (int i = 0; i < colors.Length; i++)
+                colors[i] = Convert5553(Swap(words[i]));
+        }
+        else if (subFormat == 6)
+        {
+            for (int i = 0; i < colors.Length; i++)
+            {
+                var a = (byte)(words[i] & 0xFF);
+                var l = (byte)(words[i] >> 8);
+                colors[i] = new(l, l, l, a);
+            }
+        }
+        else
+            throw new NotSupportedException($"Unsupported sub format: {subFormat:X2}");
+        return colors;
     }
 
     public static byte ExpandSony(byte b) => (byte)Math.Clamp(b * 255 / 0x80, 0, 255);

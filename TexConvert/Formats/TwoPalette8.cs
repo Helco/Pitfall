@@ -10,7 +10,7 @@ class TwoPalette8 : IPixelFormat
     public int GetDataSize(in TextureHeader header)
     {
         var (width, height) = (header.Width, header.Height);
-        int result = 256 * 2 * Math.Max(1, (int)header.Mipmaps);
+        int result = 256 * 2 * 2;
         for (int i = 0; i < Math.Max(1, header.Mipmaps); i++)
         {
             result += width * height;
