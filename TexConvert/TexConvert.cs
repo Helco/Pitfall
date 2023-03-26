@@ -13,7 +13,7 @@ internal static class TexConvert
 
     static void MainSingle(string[] args)
     {
-        ConvertToPNG(@"C:\dev\Pitfall\game\ps2\textures\aj_vine_leaf", "out.png");
+        ConvertToPNG(@"C:\dev\Pitfall\game\ps2\textures\a_figleaf3", "out.png");
     }
 
     static void MainScan(string[] args)
@@ -34,7 +34,7 @@ internal static class TexConvert
             })
             .ToLookup(t => t.format, t => t.path);
 
-        foreach (var path in distinctFormats[0x0400])
+        foreach (var path in distinctFormats[0x0800])
             Console.WriteLine(path);
     }
 
@@ -106,9 +106,7 @@ internal static class TexConvert
         0x8A08 => new Formats.TwoPalette8(), // Nintendo
         0x2001 => new Formats.SonyRGBA32(),
         0x0400 => new Formats.SonyPalette4(),
-
-        // not ready
-        0x0800 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // PS2: patterns like RGBA32 but size like RGB24. weird trailing zero block
+        0x0800 => new Formats.SonyPalette8(),
         _ => throw new Exception($"Unknown format {hdr.FormatId:X4}")
     };
 
