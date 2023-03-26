@@ -1,87 +1,104 @@
-﻿using System.Linq;
-using System.Runtime.CompilerServices;
+﻿using System.CommandLine;
+using System.CommandLine.NamingConventionBinder;
 using System.Runtime.InteropServices;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.ImageSharp.Processing;
 
 namespace TexConvert;
 
 internal static class TexConvert
 {
-    static void Main(string[] args) => MainAll(args);
-
-    static void MainSingle(string[] args)
+    private enum OutputFormat
     {
-        ConvertToPNG(@"C:\dev\Pitfall\game\pc\textures\water 01", "out.png");
+        Bmp,
+        Pbm,
+        Png,
+        Jpg,
+        Jpeg,
+        Gif,
+        Tiff,
+        Tga,
+        Webp,
+        Dds,
     }
 
-    static void MainAll(string[] args)
+    static void Main(string[] args)
     {
-        var baseDir = @"C:\dev\Pitfall\game";
-        var dirs = new[] { "pc", "wii", "gc", "ps2" };
-        var texDir = "textures";
-        var texOutDir = "textures_out";
+        var inputOption = new Option<FileInfo>("--input", "The path to a texture or directory containing texture files")
+            .LegalFilePathsOnly();
+        var outputOption = new Option<FileInfo?>("--output", "The output directory [default: current directory]")
+            .LegalFilePathsOnly();
+        outputOption.IsRequired = false;
+        var formatOption = new Option<OutputFormat>("--format", "The output image format");
+        formatOption.SetDefaultValue(OutputFormat.Png);
+        var vflipOption = new Option<bool>("--vflip", "Flips the image for human consumption");
+        vflipOption.SetDefaultValue(true);
 
-        foreach (var dir in dirs)
-            MainCLI(new[] { Path.Combine(baseDir, dir, texDir), Path.Combine(baseDir, dir, texOutDir) });
-    }
-
-    static void MainScan(string[] args)
-    {
-        var baseDir = @"C:\dev\Pitfall\game";
-        var dirs = new[] { "pc", "wii", "gc", "ps2" };
-        var texDir = "textures";
-
-        var distinctFormats = dirs
-            .Select(d => Path.Combine(baseDir, d, texDir))
-            .SelectMany(Directory.GetFiles)
-            .Where(f => Path.GetFileName(f) != "files.list")
-            .Select(f =>
-            {
-                using var reader = new EndianReader(new FileStream(f, FileMode.Open, FileAccess.Read));
-                var header = new TextureHeader(reader);
-                return (path: f, format: header.FormatId);
-            })
-            .ToLookup(t => t.format, t => t.path);
-
-        foreach (var path in distinctFormats[0x8408])
-            Console.WriteLine(path);
-    }
-
-    static void MainCLI(string[] args)
-    {
-        if (args.Length < 1 || args.Length > 2)
+        var root = new RootCommand("Convert Pitfall textures")
         {
-            Console.WriteLine("usage: TexConvert.exe <input directory or file> [output directory]");
-            return;
-        }
+            inputOption,
+            outputOption,
+            formatOption,
+            vflipOption
+        };
 
-        var inputFiles = (Directory.Exists(args[0])
-            ? Directory.GetFiles(args[0])
-            : new[] { args[0] })
+        root.TreatUnmatchedTokensAsErrors = true;
+        root.Handler = CommandHandler.Create<ConvertOptions>(HandleConvertCommand);
+        root.Invoke(args);
+    }
+
+    private class ConvertOptions
+    {
+        public FileInfo Input { get; set; } = null!;
+        public FileInfo? Output { get; set; }
+        public OutputFormat Format { get; set; }
+        public bool VFlip { get; set; }
+    }
+
+    private static void HandleConvertCommand(ConvertOptions options)
+    {
+        var inputFiles = (Directory.Exists(options.Input.FullName)
+            ? Directory.GetFiles(options.Input.FullName)
+            : new[] { options.Input.FullName })
             .Where(f => !f.EndsWith("files.list"));
-        var output = args.Length > 1 ? args[1] : ".";
-        if (!Directory.Exists(output))
-            Directory.CreateDirectory(output);
+
+        var outputDir = options.Output?.FullName ?? ".";
+        if (!Directory.Exists(outputDir))
+            Directory.CreateDirectory(outputDir);
 
 #if SYNC_CONVERSION
         foreach (var inFile in inputFiles)
             Convert(inFile, output);
 #else
-        Parallel.ForEach(inputFiles, inFile => Convert(inFile, output));
+        Parallel.ForEach(inputFiles, inFile => Convert(inFile, outputDir, options));
 #endif
     }
 
     private static object OutputMutex = new();
 
-    private static void Convert(string inFile, string outputDir)
+    private static void Convert(string inFile, string outputDir, ConvertOptions options)
     {
         var name = Path.GetFileName(inFile);
+        var outFile = Path.Join(outputDir, name);
         var message = "Converting " + name;
         try
         {
-            ConvertToPNG(inFile, Path.Join(outputDir, name + ".png"));
+            var image = ReadTexture(inFile);
+            switch(options.Format)
+            {
+                case OutputFormat.Bmp: image.SaveAsBmp(outFile + ".bmp"); break;
+                case OutputFormat.Pbm: image.SaveAsPbm(outFile + ".pbm"); break;
+                case OutputFormat.Png: image.SaveAsPng(outFile + ".png"); break;
+                case OutputFormat.Jpg:
+                case OutputFormat.Jpeg: image.SaveAsJpeg(outFile + ".jpg"); break;
+                case OutputFormat.Gif: image.SaveAsGif(outFile + ".gif"); break;
+                case OutputFormat.Tiff: image.SaveAsTiff(outFile + ".tiff"); break;
+                case OutputFormat.Tga: image.SaveAsTga(outFile + ".tga"); break;
+                case OutputFormat.Webp: image.SaveAsWebp(outFile + ".webp"); break;
+                case OutputFormat.Dds: SaveAsDds(image, outFile + ".dds"); break;
+                default:
+                    throw new NotImplementedException($"Unimplemented output format: " + options.Format);
+            }
         }
         catch (Exception e)
         {
@@ -95,7 +112,7 @@ internal static class TexConvert
             Console.WriteLine(message);
     }
 
-    private static void ConvertToPNG(string inFile, string outFile)
+    private static Image<Rgba32> ReadTexture(string inFile)
     {
         using var reader = new EndianReader(new FileStream(inFile, FileMode.Open, FileAccess.Read));
         var header = new TextureHeader(reader);
@@ -105,11 +122,10 @@ internal static class TexConvert
         if (data.Length != size)
             throw new InvalidDataException($"Could only read {data.Length} out of {size} expected bytes");
 
-        using var image = format.Convert(header, data);
+        var image = format.Convert(header, data);
         if (image == null)
             throw new NotSupportedException("Pixel format does not support proper conversion yet");
-        image.Mutate(p => p.Flip(FlipMode.Vertical));
-        image.SaveAsPng(outFile);
+        return image;
     }
 
     private static IPixelFormat SelectPixelFormat(in TextureHeader hdr) => hdr.FormatId switch
@@ -270,4 +286,36 @@ internal static class TexConvert
         return raw;
     }
 
+    private static void SaveAsDds(Image<Rgba32> image, string outFile)
+    {
+        var dds = new DDSHeader()
+        {
+            magic = 0x20534444,
+            dwSize = 124,
+            dwFlags = 1 | 2 | 4 | 8 | 0x1000,
+            dwHeight = (uint)image.Height,
+            dwWidth = (uint)image.Width,
+            dwMipMapCount = 1,
+            dwPitchOrLinearSize = (uint)(image.Width * 4),
+            ddspf = new()
+            {
+                dwSize = 32,
+                dwFlags = DDSPixelFlags.AlphaPixels | DDSPixelFlags.RGB,
+                dwRGBBitCount = 32,
+                dwRBitMask = 0x00_00_00_FF,
+                dwGBitMask = 0x00_00_FF_00,
+                dwBBitMask = 0x00_FF_00_00,
+                dwABitMask = 0xFF_00_00_00,
+            }
+        };
+        var ddsSpan = MemoryMarshal.CreateSpan(ref dds, 1);
+        
+        using var writer = new BinaryWriter(new FileStream(outFile, FileMode.Create, FileAccess.Write));
+        writer.Write(MemoryMarshal.Cast<DDSHeader, byte>(ddsSpan));
+        for (int y = 0; y < image.Height; y++)
+        {
+            var rowSpan = image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y);
+            writer.Write(MemoryMarshal.AsBytes(rowSpan));
+        }
+    }
 }
