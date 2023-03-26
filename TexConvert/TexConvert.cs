@@ -13,7 +13,7 @@ internal static class TexConvert
 
     static void MainSingle(string[] args)
     {
-        ConvertToPNG(@"C:\dev\Pitfall\game\ps2\textures\kg_tree_branch01", "out.png");
+        ConvertToPNG(@"C:\dev\Pitfall\game\ps2\textures\aj_vine_leaf", "out.png");
     }
 
     static void MainScan(string[] args)
@@ -34,7 +34,7 @@ internal static class TexConvert
             })
             .ToLookup(t => t.format, t => t.path);
 
-        foreach (var path in distinctFormats[0x2001])
+        foreach (var path in distinctFormats[0x0400])
             Console.WriteLine(path);
     }
 
@@ -99,16 +99,16 @@ internal static class TexConvert
         0x208C => new Formats.RGBA32(), // PC
         0x0120 => new Formats.NintendoRGBA32(),
         0x8304 => new Formats.NintendoC4(),
+        0x8408 => new Formats.NintendoC8(),
         0x8104 => new Formats.NintendoCMPR(),
         0x8804 => new Formats.NintendoCMPRAlpha(),
         0x8904 => new Formats.TwoPalette4(), // Nintendo
         0x8A08 => new Formats.TwoPalette8(), // Nintendo
-        0x8408 => new Formats.NintendoC8(), // Nintendo
         0x2001 => new Formats.SonyRGBA32(),
+        0x0400 => new Formats.SonyPalette4(),
 
         // not ready
         0x0800 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // PS2: patterns like RGBA32 but size like RGB24. weird trailing zero block
-        0x0400 => throw new NotSupportedException($"Known but unsupported format {hdr.FormatId:X4}"), // PS2: looks like 4 bit palette with 32 bit colors (and alpha is max 0x80)
         _ => throw new Exception($"Unknown format {hdr.FormatId:X4}")
     };
 
@@ -211,7 +211,7 @@ internal static class TexConvert
             Expand3((byte)(c >> 12)));
     }
 
-    public static byte ExpandSony(byte b) => (byte)(b * 255 / 0x80);
+    public static byte ExpandSony(byte b) => (byte)Math.Clamp(b * 255 / 0x80, 0, 255);
 
     public static Rgba32 ConvertTwoPal8888(ushort c0, ushort c1) => new Rgba32(
         (byte)(c0 >> 8),
