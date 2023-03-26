@@ -3,6 +3,7 @@ using System.CommandLine.NamingConventionBinder;
 using System.Runtime.InteropServices;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 
 namespace TexConvert;
 
@@ -84,6 +85,8 @@ internal static class TexConvert
         try
         {
             var image = ReadTexture(inFile);
+            if (options.VFlip)
+                image.Mutate(img => img.Flip(FlipMode.Vertical));
             switch(options.Format)
             {
                 case OutputFormat.Bmp: image.SaveAsBmp(outFile + ".bmp"); break;

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -8,7 +8,15 @@
     <WarningsAsErrors>nullable</WarningsAsErrors>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>preview</LangVersion>
+    <Version>$(VersionPrefix)1.2</Version>
+    <Title>TexConvert</Title>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Trimmer.xml" />
+    <Content Include="Trimmer.xml" />
+    <TrimmerRootDescriptor Include="Trimmer.xml" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="BCnEncoder.Net.ImageSharp" Version="1.1.1" />

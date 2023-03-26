@@ -2,7 +2,7 @@
   "profiles": {
     "TexConvert": {
       "commandName": "Project",
-      "commandLineArgs": "--input\r\nC:\\dev\\Pitfall\\game\\gc\\textures\r\n--output\r\nC:\\dev\\Pitfall\\game\\gc\\textures_out\r\n--format dds"
+      "commandLineArgs": " --input C:/dev/Pitfall/game/pc/textures/a_kg_plantwall01"
     }
   }
 }
