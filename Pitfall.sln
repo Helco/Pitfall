@@ -5,7 +5,12 @@ VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TexConvert", "TexConvert\TexConvert.csproj", "{690A288B-72BF-4B39-8E9E-DA93F2B69184}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelConvert", "ModelConvert\ModelConvert.csproj", "{BCE174C4-15CF-4104-82CA-BA302FE8BCF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelConvert", "ModelConvert\ModelConvert.csproj", "{BCE174C4-15CF-4104-82CA-BA302FE8BCF7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{24E5D8F8-BB92-4628-A8EE-B0C7F793ECB9}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
