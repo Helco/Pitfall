@@ -13,6 +13,6 @@ class DXT3 : IPixelFormat
     public Image<Rgba32> Convert(in TextureHeader header, byte[] data)
     {
         var dec = new BcDecoder();
-        return dec.DecodeRawToImageRgba32(data, header.Width, header.Height, CompressionFormat.Bc3);
+        return dec.DecodeRawToImageRgba32(data, header.Width, header.Height, CompressionFormat.Bc2);
     }
 }
