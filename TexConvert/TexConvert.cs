@@ -34,13 +34,16 @@ internal static class TexConvert
         formatOption.SetDefaultValue(OutputFormat.Png);
         var vflipOption = new Option<bool>("--vflip", "Flips the image for human consumption");
         vflipOption.SetDefaultValue(true);
+        var combineTexturesOption = new Option<bool>("--combine-textures", "Combines natively-split textures into single image");
+        combineTexturesOption.SetDefaultValue(true);
 
         var root = new RootCommand("Convert Pitfall textures")
         {
             inputOption,
             outputOption,
             formatOption,
-            vflipOption
+            vflipOption,
+            combineTexturesOption
         };
 
         root.TreatUnmatchedTokensAsErrors = true;
@@ -54,6 +57,7 @@ internal static class TexConvert
         public FileInfo? Output { get; set; }
         public OutputFormat Format { get; set; }
         public bool VFlip { get; set; }
+        public bool CombineTextures { get; set; }
     }
 
     private static void HandleConvertCommand(ConvertOptions options)
@@ -84,24 +88,21 @@ internal static class TexConvert
         var message = "Converting " + name;
         try
         {
-            var image = ReadTexture(inFile);
-            if (options.VFlip)
-                image.Mutate(img => img.Flip(FlipMode.Vertical));
-            switch(options.Format)
+            var image = ReadTexture(inFile, out var format);
+            if (!options.CombineTextures && format is ISplitAlphaPixelFormat)
             {
-                case OutputFormat.Bmp: image.SaveAsBmp(outFile + ".bmp"); break;
-                case OutputFormat.Pbm: image.SaveAsPbm(outFile + ".pbm"); break;
-                case OutputFormat.Png: image.SaveAsPng(outFile + ".png"); break;
-                case OutputFormat.Jpg:
-                case OutputFormat.Jpeg: image.SaveAsJpeg(outFile + ".jpg"); break;
-                case OutputFormat.Gif: image.SaveAsGif(outFile + ".gif"); break;
-                case OutputFormat.Tiff: image.SaveAsTiff(outFile + ".tiff"); break;
-                case OutputFormat.Tga: image.SaveAsTga(outFile + ".tga"); break;
-                case OutputFormat.Webp: image.SaveAsWebp(outFile + ".webp"); break;
-                case OutputFormat.Dds: SaveAsDds(image, outFile + ".dds"); break;
-                default:
-                    throw new NotImplementedException($"Unimplemented output format: " + options.Format);
+                var (color, alpha) = SplitAlphaTexture(image);
+                SaveImage(options, outFile, color);
+                SaveImage(options, outFile + "_alpha", alpha);
             }
+            else if (!options.CombineTextures && format is ISplitBAPixelFormat)
+            {
+                var (rg, ba) = SplitBATexture(image);
+                SaveImage(options, outFile, rg);
+                SaveImage(options, outFile + "_ba", ba);
+            }
+            else
+                SaveImage(options, outFile, image);
         }
         catch (Exception e)
         {
@@ -115,11 +116,32 @@ internal static class TexConvert
             Console.WriteLine(message);
     }
 
-    private static Image<Rgba32> ReadTexture(string inFile)
+    private static void SaveImage(ConvertOptions options, string outFile, Image<Rgba32> image)
+    {
+        if (options.VFlip)
+            image.Mutate(img => img.Flip(FlipMode.Vertical));
+        switch (options.Format)
+        {
+            case OutputFormat.Bmp: image.SaveAsBmp(outFile + ".bmp"); break;
+            case OutputFormat.Pbm: image.SaveAsPbm(outFile + ".pbm"); break;
+            case OutputFormat.Png: image.SaveAsPng(outFile + ".png"); break;
+            case OutputFormat.Jpg:
+            case OutputFormat.Jpeg: image.SaveAsJpeg(outFile + ".jpg"); break;
+            case OutputFormat.Gif: image.SaveAsGif(outFile + ".gif"); break;
+            case OutputFormat.Tiff: image.SaveAsTiff(outFile + ".tiff"); break;
+            case OutputFormat.Tga: image.SaveAsTga(outFile + ".tga"); break;
+            case OutputFormat.Webp: image.SaveAsWebp(outFile + ".webp"); break;
+            case OutputFormat.Dds: SaveAsDds(image, outFile + ".dds"); break;
+            default:
+                throw new NotImplementedException($"Unimplemented output format: " + options.Format);
+        }
+    }
+
+    private static Image<Rgba32> ReadTexture(string inFile, out IPixelFormat format)
     {
         using var reader = new EndianReader(new FileStream(inFile, FileMode.Open, FileAccess.Read));
         var header = new TextureHeader(reader);
-        IPixelFormat format = SelectPixelFormat(header);
+        format = SelectPixelFormat(header);
         var size = format.GetDataSize(header);
         var data = reader.ReadBytes(size);
         if (data.Length != size)
@@ -320,5 +342,37 @@ internal static class TexConvert
             var rowSpan = image.Frames.RootFrame.PixelBuffer.DangerousGetRowSpan(y);
             writer.Write(MemoryMarshal.AsBytes(rowSpan));
         }
+    }
+
+    private static (Image<Rgba32>, Image<Rgba32>) SplitAlphaTexture(Image<Rgba32> image)
+    {
+        var colorPixels = new Rgba32[image.Width * image.Height];
+        var alphaPixels = new Rgba32[image.Width * image.Height];
+        image.CopyPixelDataTo(colorPixels);
+        image.CopyPixelDataTo(alphaPixels);
+        for (int i = 0; i < colorPixels.Length; i++)
+        {
+            colorPixels[i].A = 255;
+            alphaPixels[i] = new Rgba32(0, alphaPixels[i].A, 0, 255);
+        }
+        return (
+            Image.LoadPixelData(colorPixels, image.Width, image.Height),
+            Image.LoadPixelData(alphaPixels, image.Width, image.Height));
+    }
+
+    private static (Image<Rgba32>, Image<Rgba32>) SplitBATexture(Image<Rgba32> image)
+    {
+        var rgPixels = new Rgba32[image.Width * image.Height];
+        var baPixels = new Rgba32[image.Width * image.Height];
+        image.CopyPixelDataTo(rgPixels);
+        image.CopyPixelDataTo(baPixels);
+        for (int i = 0; i < rgPixels.Length; i++)
+        {
+            rgPixels[i] = new Rgba32(rgPixels[i].R, rgPixels[i].R, rgPixels[i].R, rgPixels[i].G);
+            baPixels[i] = new Rgba32(baPixels[i].B, baPixels[i].B, baPixels[i].B, baPixels[i].A);
+        }
+        return (
+            Image.LoadPixelData(rgPixels, image.Width, image.Height),
+            Image.LoadPixelData(baPixels, image.Width, image.Height));
     }
 }

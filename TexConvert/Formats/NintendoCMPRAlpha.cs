@@ -9,7 +9,7 @@ using static TexConvert.TexConvert;
 
 namespace TexConvert.Formats;
 
-class NintendoCMPRAlpha : IPixelFormat
+class NintendoCMPRAlpha : ISplitAlphaPixelFormat
 {
     private int GetCMPRDataSize(in TextureHeader header) => GetCMPRDataSize(header.PixelCount);
     private int GetCMPRDataSize(int pixelCount) => pixelCount * 8 / 16;

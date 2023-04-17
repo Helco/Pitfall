@@ -8,3 +8,6 @@ interface IPixelFormat
     int GetDataSize(in TextureHeader header);
     Image<Rgba32>? Convert(in TextureHeader header, byte[] data) => null;    
 }
+
+interface ISplitAlphaPixelFormat : IPixelFormat { }
+interface ISplitBAPixelFormat : IPixelFormat { }

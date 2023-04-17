@@ -5,7 +5,7 @@ using static TexConvert.TexConvert;
 
 namespace TexConvert.Formats;
 
-class TwoPalette4 : IPixelFormat
+class TwoPalette4 : ISplitBAPixelFormat
 {
     public int GetDataSize(in TextureHeader header)
     {
