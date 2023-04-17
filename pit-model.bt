@@ -29,15 +29,13 @@ byte zero[6];
 string name;
 byte zero; // no model in models.arc that has that one set
 float floatOne;
-
 int subModelCount; // just a guess. _camera has none, most have 1, higher ups are characters and level models
-int i2; // most -1, some higher ups, one negative outlier
-int variantCount; // most 1 lesser the higher up it goes, cameras have 0
 
-//int lodCount; // more creatures have values != 1 but all 0- characters are 1
-
-struct LOD(ushort vertexFlags)
+struct Variant
 {
+    uint id <format=hex>; // bits are distributed too regularly to have meaningful data
+    uint vertexFlags <format=binary>; // only a few bits but very few outliers...
+       
     byte b1; // either 0 1 2 4 - no bone count
     if (b1 == 0) {}
     else if (b1 == 1)
@@ -62,34 +60,20 @@ struct LOD(ushort vertexFlags)
       uint indexCount;
       ushort indices[indexCount];
     }
-};
-
-struct Variant
-{
-    uint id <format=hex>; // bits are distributed too regularly to have meaningful data
-    uint vertexFlags <format=binary>; // only a few bits but very few outliers...
-
-    local int i;
-    //for (i = 0; i < lodCount; i++)
-    //{        
-      LOD lod(vertexFlags);
-    //}
 
     byte materialType; // just a guess that this is material related
 };
 
 struct SubModel
 {
+    int i2; // most -1, some higher ups, one negative outlier
+    int variantCount; // most 1 lesser the higher up it goes, cameras have 0
     Variant variants[variantCount] <optimize=false>;
-    float matrix[16];
-    uint unknown[5];
 } subModels[subModelCount] <optimize=false>;
+
+float matrix[16];
+uint unknown[5];
 
 local int64 pos = FTell();
 local int64 left = FileSize() - pos;
 Printf("Got %d bytes left\n", left);
-
-
-//ushort faceCount;
-//byte unk2;
-//Vec3f normals[faceCount];
