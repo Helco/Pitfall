@@ -3,6 +3,13 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+ModelViewer/Library
+ModelViewer/Logs
+ModelViewer/obj
+ModelViewer/bin
+ModelViewer/Temp
+ModelViewer/UserSettings
+ModelViewer/Assets/models
 game
 
 # User-specific files
