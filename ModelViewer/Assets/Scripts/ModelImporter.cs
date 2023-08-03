@@ -47,7 +47,7 @@ public class SubModel
 public enum VertexFlags
 {
     HasUV = 2,
-    HasAttr4B1 = 4,
+    HasColors = 4,
     HasAttr4B2 = 8,
     HasAttr4B3 = 0x40,
     HasIndices = 0x20
@@ -65,7 +65,7 @@ public class Variant
 
     public readonly Vector4[] vertices;
     public readonly Vector2[] uvs;
-    public readonly uint[] attr4b1;
+    public readonly uint[] colors;
     public readonly uint[] attr4b2;
     public readonly uint[] attr4b3;
     public readonly ushort[] indices;
@@ -94,12 +94,12 @@ public class Variant
         if (Flags.HasFlag(VertexFlags.HasUV))
             uvs = Enumerable.Repeat(0, vertexCount).Select(_ => new Vector2(
                 reader.ReadSingle(), reader.ReadSingle())).ToArray();
-        if (Flags.HasFlag(VertexFlags.HasAttr4B1))
-            attr4b1 = Enumerable.Repeat(0, vertexCount).Select(_ => reader.ReadUInt32()).ToArray();
+        if (Flags.HasFlag(VertexFlags.HasColors))
+            colors = Enumerable.Repeat(0, vertexCount).Select(_ => reader.ReadUInt32()).ToArray();
         if (Flags.HasFlag(VertexFlags.HasAttr4B2))
             attr4b2 = Enumerable.Repeat(0, vertexCount).Select(_ => reader.ReadUInt32()).ToArray();
-        if (Flags.HasFlag(VertexFlags.HasAttr4B3))
-            attr4b3 = Enumerable.Repeat(0, vertexCount).Select(_ => reader.ReadUInt32()).ToArray();
+        //if (Flags.HasFlag(VertexFlags.HasAttr4B3))
+            //attr4b3 = Enumerable.Repeat(0, vertexCount).Select(_ => reader.ReadUInt32()).ToArray();
 
         if (Flags.HasFlag(VertexFlags.HasIndices))
         {
@@ -134,6 +134,13 @@ public class ModelImporter : ScriptedImporter
                 CreateVariant(ctx, subModelGO, subModels[i].variants[j], j);
         }
 
+        var allVariants = subModels.SelectMany(m => m.variants);
+        var a1 = allVariants.Count(v => v.Flags.HasFlag(VertexFlags.HasColors));
+        var a2 = allVariants.Count(v => v.Flags.HasFlag(VertexFlags.HasAttr4B2));
+        var a3 = allVariants.Count(v => v.Flags.HasFlag(VertexFlags.HasAttr4B3));
+        var c = allVariants.Count();
+        Debug.Log($"Got {c} with {a1} - {a2} - {a3}");
+
         ctx.AddObjectToAsset(mainGO.name, mainGO);
         ctx.SetMainObject(mainGO);
     }
@@ -147,7 +154,22 @@ public class ModelImporter : ScriptedImporter
         mesh.subMeshCount = 1;
         if (variant.indices == null)
         {
-            mesh.SetIndices(Enumerable.Range(0, mesh.vertexCount).ToArray(), MeshTopology.Triangles, 0);
+            if (false)
+                mesh.SetIndices(Enumerable.Range(0, mesh.vertexCount).ToArray(), MeshTopology.Triangles, 0);
+            else
+            {
+                List<int> newIndices = new List<int>(mesh.vertexCount * 6);
+                for (int i = 0; i < variant.vertices.Length / 4; i++)
+                {
+                    newIndices.Add(i * 4 + 0);
+                    newIndices.Add(i * 4 + 2);
+                    newIndices.Add(i * 4 + 1);
+                    newIndices.Add(i * 4 + 1);
+                    newIndices.Add(i * 4 + 2);
+                    newIndices.Add(i * 4 + 3);
+                }
+                mesh.SetIndices(newIndices, MeshTopology.Triangles, 0);
+            }
         }
         else
         {
@@ -163,15 +185,46 @@ public class ModelImporter : ScriptedImporter
             }
             mesh.SetIndices(newIndices, MeshTopology.Triangles, 0);
         }
+        if (variant.Flags.HasFlag(VertexFlags.HasAttr4B2))
+            mesh.colors32 = variant.attr4b2.Select(i =>
+            {
+                var x = (i >> 0) & ((1 << 10) - 1);
+                var y = (i >> 10) & ((1 << 10) - 1);
+                var z = (i >> 20) & ((1 << 10) - 1);
+                var xyz = new Vector3(x, y, z) / (1 << 10);
+
+
+                return new Color32((byte)(xyz.x * 255f), (byte)(xyz.y * 255f), (byte)(xyz.z * 255f), 0xff);
+            }).ToArray();
+        /*mesh.colors32 = variant.attr4b2.Select(i =>
+        {
+            var bytes = BitConverter.GetBytes(i);
+            var x = BitConverter.ToInt16(bytes, 0);
+            var y = BitConverter.ToInt16(bytes, 2);
+            var xy = new Vector2(x, y) / short.MaxValue;
+            //xy = xy * 2 - Vector2.one;
+            var xyz = new Vector3(xy.x, xy.y, Mathf.Sqrt(1f - xy.sqrMagnitude));
+            xyz = xyz + Vector3.one / 2;
+
+            return new Color32((byte)(xyz.x * 255f), (byte)(xyz.y * 255f), (byte)(xyz.z * 255f), 0xff);
+        }).ToArray();*/
+        /*mesh.colors32 = variant.attr4b2.Select(i =>
+        {
+            var bytes = BitConverter.GetBytes(i);
+            return new Color32(bytes[0], bytes[1], bytes[2], bytes[3]);
+        }).ToArray();*/
         mesh.RecalculateBounds();
-        mesh.RecalculateNormals();
+        //mesh.RecalculateNormals();
         mesh.name = $"Mesh {index} {variant.ID:X8}";
         ctx.AddObjectToAsset(mesh.name, mesh);
 
         var variantGO = new GameObject($"{index} {variant.ID:X8}");
         variantGO.transform.parent = subModelGO.transform;
         variantGO.AddComponent<MeshFilter>().sharedMesh = mesh;
-        variantGO.AddComponent<MeshRenderer>().sharedMaterial = material;
+        var ren = variantGO.AddComponent<MeshRenderer>();
+        ren.sharedMaterial = material;
+        ren.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        ren.receiveShadows = false;
     }
 }
 

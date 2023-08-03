@@ -50,7 +50,7 @@ struct Variant
     if (vertexFlags & 2)
       Vec2f uv[vertexCount];
     if (vertexFlags & 4)
-      uint attr4B_1[vertexCount] <format=hex>;
+      uint colors[vertexCount] <format=hex>;
     if (vertexFlags & 8)
       uint attr4B_2[vertexCount] <format=hex>;
     //if (vertexFlags & 0x40)
