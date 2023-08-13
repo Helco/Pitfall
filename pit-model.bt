@@ -31,52 +31,69 @@ byte zero; // no model in models.arc that has that one set
 float floatOne;
 int subModelCount; // just a guess. _camera has none, most have 1, higher ups are characters and level models
 
-struct VariantMesh;
-struct VariantMesh
-{
-    byte b1; // either 0 1 2 4 - no bone count
-    if (b1 == 0) {}
-    else if (b1 == 1)
-      int cflags1;
-    else if (b1 == 2) {
-      byte weirdstuff[12];
-      return;
-    }
-    else if (b1 == 3)
-     byte weirdstufff[5];
-    else if (b1 == 4)
-      byte cbyte1;
-    else if (b1 > 4)
-      byte weirdstuff[8];
-
+struct GeometryPart(uint flags, byte addDataEnabled) {
     uint vertexCount;
-    Vec4f pos[vertexCount];
-    if (vertexFlags & 2)
-      Vec2f uv[vertexCount];
-    if (vertexFlags & 4)
-      uint colors[vertexCount] <format=hex>;
-    if (vertexFlags & 8)
-      uint attr4B_2[vertexCount] <format=hex>;
-    //if (vertexFlags & 0x40)
-    //  uint attr4B_3[vertexCount] <format=hex>;
-    if (vertexFlags & 0x20)
-    {
-      uint indexCount;
-      ushort indices[indexCount];
+
+    if (flags & 0x10) {
+        Printf("Maybe half precision floats? Better check this\n");
+        Exit(-2);
     }
-    //byte materialType; // just a guess that this is material related
+    else {
+        Vec4f pos[vertexCount];
+        if (flags & 0x02)
+            Vec2f uv[vertexCount];
+        if (flags & 0x04)
+            uint colors[vertexCount];
+        if (vertexFlags & 0x08)
+            uint normals[vertexCount]; // TODO: Reverse packed format
+        if (addDataEnabled)
+            uint fourNormComponents[vertexCount];
+        if ((flags & 0x20) && !(flags & 0x10000000)) {
+            uint indexCount;
+            ushort indices[indexCount];
+        }
+    }
 
-    if (b1 > 1)
-        VariantMesh children[b1 - 1] <optimize=false>;
+};
 
+struct SetBytePart {
+  ushort idx;
+  byte value;
 };
 
 struct Variant
 {
     uint id <format=hex>; // bits are distributed too regularly to have meaningful data
     uint vertexFlags <format=binary>; // only a few bits but very few outliers...
-       
-    VariantMesh mesh;
+    uint someCount;
+    local uint i;
+    local byte addDataEnabled = 0;
+    while(true)
+    {
+        byte type <hidden=true>;
+        if (type == 0)
+            GeometryPart part(vertexFlags, addDataEnabled);
+        else if (type == 1)
+            SetBytePart part;
+        else if (type == 2) {
+            Printf("Part 2\n");
+            addDataEnabled = 1;
+        }
+        else if (type == 3) {
+            Printf("Part 3\n");
+            addDataEnabled = 0;
+        }
+        else if (type == 4)
+            addDataEnabled = 1;
+        else if (type == 5)
+            addDataEnabled = 0;
+        else if (type == 6)
+            break;
+        else {
+            Printf("Unknown part type");
+            Exit(-1);
+        }
+    }
 };
 
 struct SubModel
