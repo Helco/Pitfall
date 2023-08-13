@@ -108,6 +108,7 @@ public class Variant
         }
 
         materialType = reader.ReadByte();
+        Debug.Log(materialType);
     }
 }
 
@@ -154,30 +155,27 @@ public class ModelImporter : ScriptedImporter
         mesh.subMeshCount = 1;
         if (variant.indices == null)
         {
-            if (false)
-                mesh.SetIndices(Enumerable.Range(0, mesh.vertexCount).ToArray(), MeshTopology.Triangles, 0);
-            else
+            // looping quad strip
+            List<int> newIndices = new List<int>(mesh.vertexCount * 6);
+            for (int i = 0; i < variant.vertices.Length - 2; i += 2)
             {
-                List<int> newIndices = new List<int>(mesh.vertexCount * 6);
-                for (int i = 0; i < variant.vertices.Length / 4; i++)
-                {
-                    newIndices.Add(i * 4 + 0);
-                    newIndices.Add(i * 4 + 2);
-                    newIndices.Add(i * 4 + 1);
-                    newIndices.Add(i * 4 + 1);
-                    newIndices.Add(i * 4 + 2);
-                    newIndices.Add(i * 4 + 3);
-                }
-                mesh.SetIndices(newIndices, MeshTopology.Triangles, 0);
+                newIndices.Add(i + 0);
+                newIndices.Add((i + 2) % mesh.vertexCount);
+                newIndices.Add(i + 1);
+                newIndices.Add(i + 1);
+                newIndices.Add((i + 2) % mesh.vertexCount);
+                newIndices.Add((i + 3) % mesh.vertexCount);
             }
+            mesh.SetIndices(newIndices, MeshTopology.Triangles, 0);
         }
         else
         {
+            // triangle strip
             List<ushort> newIndices = new List<ushort>(variant.indices.Length * 3);
             newIndices.Add(variant.indices[0]);
             newIndices.Add(variant.indices[1]);
             newIndices.Add(variant.indices[2]);
-            for (int i = 3; i < variant.indices.Length; i++)
+            for (int i = 2; i < variant.indices.Length; i++)
             {
                 newIndices.Add(variant.indices[i - 1 - (i % 2)]);
                 newIndices.Add(variant.indices[i - 2 + (i % 2)]);
@@ -185,7 +183,7 @@ public class ModelImporter : ScriptedImporter
             }
             mesh.SetIndices(newIndices, MeshTopology.Triangles, 0);
         }
-        if (variant.Flags.HasFlag(VertexFlags.HasAttr4B2))
+        /*if (variant.Flags.HasFlag(VertexFlags.HasAttr4B2))
             mesh.colors32 = variant.attr4b2.Select(i =>
             {
                 var x = (i >> 0) & ((1 << 10) - 1);
@@ -195,7 +193,7 @@ public class ModelImporter : ScriptedImporter
 
 
                 return new Color32((byte)(xyz.x * 255f), (byte)(xyz.y * 255f), (byte)(xyz.z * 255f), 0xff);
-            }).ToArray();
+            }).ToArray();*/
         /*mesh.colors32 = variant.attr4b2.Select(i =>
         {
             var bytes = BitConverter.GetBytes(i);
@@ -208,11 +206,12 @@ public class ModelImporter : ScriptedImporter
 
             return new Color32((byte)(xyz.x * 255f), (byte)(xyz.y * 255f), (byte)(xyz.z * 255f), 0xff);
         }).ToArray();*/
-        /*mesh.colors32 = variant.attr4b2.Select(i =>
-        {
-            var bytes = BitConverter.GetBytes(i);
-            return new Color32(bytes[0], bytes[1], bytes[2], bytes[3]);
-        }).ToArray();*/
+        if (variant.colors != null)
+            mesh.colors32 = variant.colors.Select(i =>
+            {
+                var bytes = BitConverter.GetBytes(i);
+                return new Color32(bytes[0], bytes[1], bytes[2], bytes[3]);
+            }).ToArray();
         mesh.RecalculateBounds();
         //mesh.RecalculateNormals();
         mesh.name = $"Mesh {index} {variant.ID:X8}";

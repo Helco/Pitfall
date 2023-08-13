@@ -1,10 +1,91 @@
 ﻿namespace ModelConvert;
 using System;
 using System.IO;
+using System.Reflection.PortableExecutable;
 
 internal class Program
 {
-    static void Main(string[] args) => MainMatch(args);
+    static void Main(string[] args) => MainFindVertexBlocks(args);
+
+    static void MainCheckBoneCounts(string[] args)
+    {
+        var files = Directory.GetFiles(@"C:\Users\Helco\Downloads\PITFALL The Lost Expedition PC\PITFALL The Lost Expedition\Game\data\models");
+        foreach (var file in files)
+        {
+            if (file.Contains("files.list"))
+                continue;
+            var name = Path.GetFileName(file);
+            using var fileStream = new FileStream(file, FileMode.Open, FileAccess.Read);
+            using var reader = new BinaryReader(fileStream);
+            var bytes = reader.ReadBytes(6);
+            while (reader.ReadByte() != 0) ;
+            reader.ReadByte(); // these two properties are
+            reader.ReadSingle(); // constant over all models
+
+            int subModelCount = reader.ReadInt32();
+            reader.ReadInt32();
+            int variantCount = reader.ReadInt32();
+            reader.ReadUInt32(); // id
+            reader.ReadUInt32(); // vertexFlags
+
+            if (subModelCount == 0 || variantCount == 0)
+                continue;
+
+            var boneCount = reader.ReadByte();
+            if (boneCount != 1)
+            Console.WriteLine($"{boneCount:d3} - {name}");
+        }
+    }
+
+    static void MainFindVertexBlocks(string[] args)
+    {
+        var bytes = File.ReadAllBytes(@"C:\Users\Helco\Downloads\PITFALL The Lost Expedition PC\PITFALL The Lost Expedition\Game\data\models\leechmodel");
+        var zeroWords = Enumerable
+            .Range(16, bytes.Length - 4 - 16)
+            .Where(i => bytes[i] < 4 && bytes[i + 1] == 0 && bytes[i + 2] == 0 && bytes[i + 3] == 0)
+            .Where(i => isGoodFloat(i - 12) && isGoodFloat(i - 8) && isGoodFloat(i - 4))
+            .Where(i => BitConverter.ToSingle(bytes, i - 12) != 0f || BitConverter.ToSingle(bytes, i - 8) != 0f || BitConverter.ToSingle(bytes, i - 4) != 0f)
+            .Select(i => i - 12)
+            .ToArray();
+
+        var blocks = new List<(int start, int size)>();
+        var curStart = zeroWords.First();
+        var curEnd = curStart;
+        foreach (var i in zeroWords.Skip(1))
+        {
+            if (i < curEnd + 16)
+                continue;
+            if (i == curEnd + 16)
+                curEnd = i;
+            else
+            {
+                while (Array.BinarySearch(zeroWords, curStart - 16) >= 0)
+                    curStart -= 16;
+                blocks.Add((curStart, curEnd - curStart + 16));
+                curStart = curEnd = i;
+            }
+        }
+        blocks.Add((curStart, curEnd - curStart + 16));
+
+        var plausibleBlocks = blocks.Where(b => b.size >= 2 * 16);
+        foreach (var block in plausibleBlocks)
+            Console.WriteLine($"{block.start:X8} - {block.size:X4} - {block.size / 16:X4} vertices");
+
+        var firstVariant = plausibleBlocks.Where(b => b.start < 0x17C47);
+        Console.WriteLine($"There are {firstVariant.Count()} blocks before 0x17C47");
+
+        foreach (var block in firstVariant)
+            Console.WriteLine($"{block.start:X8} -> " + NicerHexString(block.start - 16, 16));
+
+        bool isGoodFloat(int i)
+        {
+            float f = BitConverter.ToSingle(bytes, i);
+            return float.IsFinite(f) && MathF.Abs(f) < 1000f;
+        }
+
+        string NicerHexString(int start, int count) => string.Join(" ",
+            Enumerable.Range(0, count / 4).Select(i => Convert.ToHexString(bytes, start + i * 4, 4)));
+    }
 
     static void MainMatch(string[] args)
     {

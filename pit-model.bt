@@ -31,15 +31,19 @@ byte zero; // no model in models.arc that has that one set
 float floatOne;
 int subModelCount; // just a guess. _camera has none, most have 1, higher ups are characters and level models
 
-struct Variant
+struct VariantMesh;
+struct VariantMesh
 {
-    uint id <format=hex>; // bits are distributed too regularly to have meaningful data
-    uint vertexFlags <format=binary>; // only a few bits but very few outliers...
-       
     byte b1; // either 0 1 2 4 - no bone count
     if (b1 == 0) {}
     else if (b1 == 1)
       int cflags1;
+    else if (b1 == 2) {
+      byte weirdstuff[12];
+      return;
+    }
+    else if (b1 == 3)
+     byte weirdstufff[5];
     else if (b1 == 4)
       byte cbyte1;
     else if (b1 > 4)
@@ -60,8 +64,19 @@ struct Variant
       uint indexCount;
       ushort indices[indexCount];
     }
+    //byte materialType; // just a guess that this is material related
 
-    byte materialType; // just a guess that this is material related
+    if (b1 > 1)
+        VariantMesh children[b1 - 1] <optimize=false>;
+
+};
+
+struct Variant
+{
+    uint id <format=hex>; // bits are distributed too regularly to have meaningful data
+    uint vertexFlags <format=binary>; // only a few bits but very few outliers...
+       
+    VariantMesh mesh;
 };
 
 struct SubModel
