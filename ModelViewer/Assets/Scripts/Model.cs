@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using System.Numerics;
-using System.Reflection.Metadata.Ecma335;
-using System.Net.WebSockets;
-using static Pitfall.Utils;
+using static Utils;
 using System.Runtime.InteropServices;
-
-namespace Pitfall;
 
 internal static class Utils
 {
@@ -25,8 +21,18 @@ internal static class Utils
 public interface IModelPart { }
 
 [StructLayout(LayoutKind.Sequential, Pack = 1, Size = 4)]
-public readonly record struct Byte4(byte R, byte G, byte B, byte A)
+public readonly struct Byte4
 {
+    public readonly byte R, G, B, A;
+
+    public Byte4(byte r, byte g, byte b, byte a)
+    {
+        R = r;
+        G = g;
+        B = b;
+        A = a;
+    }
+
     public Vector4 AsNormalized => new Vector4(R, G, B, A) / 255f;
 }
 

@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\ModelImporter.cs" />
+    <Compile Include="Assets\Scripts\Model.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\Common.cginc" />
