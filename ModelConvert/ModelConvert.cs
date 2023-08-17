@@ -24,7 +24,7 @@ internal class Program
 
             var model = new Model(reader);
             var gltf = ConvertModel(model);
-            gltf.SaveGLB("out/" + name + ".glb");
+            //gltf.SaveGLB("out/" + name + ".glb");
             //var assimpScene = ConvertModelToAssimp(model);
             //assimp.ExportFile(assimpScene, "out/" + name + ".glb", "glb2");
         }

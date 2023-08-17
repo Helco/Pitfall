@@ -15,11 +15,10 @@ internal static class Utils
     public static T[] ReadArray<T>(BinaryReader reader, int count, Func<BinaryReader, T> readElement) =>
         Enumerable.Repeat(reader, count).Select(readElement).ToArray();
 
-    public static Vector4 ReadVector4(BinaryReader r) => new Vector4(r.ReadSingle(), r.ReadSingle(), r.ReadSingle(), r.ReadSingle());
-    public static Byte4 ReadByte4(BinaryReader r) => new Byte4(r.ReadByte(), r.ReadByte(), r.ReadByte(), r.ReadByte());
-    public static Vector2 ReadVector2(BinaryReader r) => new Vector2(r.ReadSingle(), r.ReadSingle());
-    public static Vector4 ReadUnknownVector4(BinaryReader r) => ReadByte4(r).AsNormalized;
-    public static ushort ReadUShort(BinaryReader r) => r.ReadUInt16();
+    public static Vector4 ReadVector4(this BinaryReader r) => new Vector4(r.ReadSingle(), r.ReadSingle(), r.ReadSingle(), r.ReadSingle());
+    public static Vector3 ReadVector3(this BinaryReader r) => new Vector3(r.ReadSingle(), r.ReadSingle(), r.ReadSingle());
+    public static Byte4 ReadByte4(this BinaryReader r) => new Byte4(r.ReadByte(), r.ReadByte(), r.ReadByte(), r.ReadByte());
+    public static Vector2 ReadVector2(this BinaryReader r) => new Vector2(r.ReadSingle(), r.ReadSingle());    
 }
 
 public interface IModelPart { }
@@ -79,18 +78,21 @@ public class GeometryPart : IModelPart
         return Vector3.Normalize(new Vector3(x, y, z));
     }
 
+    private static Vector4 ReadUnknownVector4(BinaryReader r) => r.ReadByte4().AsNormalized;
+    private static ushort ReadUShort(BinaryReader r) => r.ReadUInt16();
+
     internal GeometryPart(BinaryReader reader, GeometryFlags flags, bool hasUnknownVectors)
     {
         if (flags.HasFlag(GeometryFlags.IsHalfPrecision))
             throw new NotSupportedException("Unsupported half-precision model");
 
         int vertexCount = reader.ReadInt32();
-        Positions = ReadArray(reader, vertexCount, ReadVector4);
+        Positions = ReadArray(reader, vertexCount, Utils.ReadVector4);
         TexCoords = flags.HasFlag(GeometryFlags.HasTexCoords)
-            ? ReadArray(reader, vertexCount, ReadVector2)
+            ? ReadArray(reader, vertexCount, Utils.ReadVector2)
             : null;
         Colors = flags.HasFlag(GeometryFlags.HasColors)
-            ? ReadArray(reader, vertexCount, ReadByte4)
+            ? ReadArray(reader, vertexCount, Utils.ReadByte4)
             : null;
         Normals = flags.HasFlag(GeometryFlags.HasNormals)
             ? ReadArray(reader, vertexCount, ReadNormal)
@@ -188,6 +190,15 @@ public class Model
     public string Name { get; }
     public float UnknownFloat { get; }
     public IReadOnlyList<SubModel> SubModels { get; }
+    public Vector4 UnknownVec4_1 { get; }
+    public (Vector3, Vector3) UnknownVecPair_1 { get; }
+    public (Vector3, Vector3) UnknownVecPair_2 { get; }
+    public bool UnknownFlag0 { get; }
+    public bool UnknownFlag1 { get; }
+    public bool UnknownFlag2 { get; }
+    public bool UnknownFlag3 { get; }
+    public uint UnknownInt { get; }
+    public EStorable? Storable { get; }
 
     public Model(BinaryReader reader)
     {
@@ -211,5 +222,16 @@ public class Model
 
         var subModelCount = reader.ReadInt32();
         SubModels = ReadArray(reader, subModelCount, r => new SubModel(r));
+
+        UnknownVec4_1 = reader.ReadVector4();
+        UnknownVecPair_1 = (reader.ReadVector3(), reader.ReadVector3());
+        UnknownVecPair_2 = (reader.ReadVector3(), reader.ReadVector3());
+        UnknownFlag0 = reader.ReadByte() != 0;
+        UnknownFlag1 = reader.ReadByte() != 0;
+        UnknownFlag2 = reader.ReadByte() != 0;
+        UnknownFlag3 = reader.ReadByte() != 0;
+        UnknownInt = reader.ReadUInt32();
+
+        Storable = reader.ReadStorable();
     }
 }
