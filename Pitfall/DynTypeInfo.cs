@@ -53,10 +53,6 @@ public static class DynTypeInfo
     public static EStorable? ReadStorable(this BinaryReader reader) => reader.ReadStorable(out _);
     public static EStorable? ReadStorable(this BinaryReader reader, out EStorable[] allSubObjects)
     {
-        var asd = KnownTypes.Where((n, i) => KnownTypes.Skip(i + 1).Select(HashName).Contains(HashName(n))).ToArray();
-      if (asd.Any())
-          throw new Exception("wut"!);
-
         allSubObjects = Array.Empty<EStorable>();
         var idOrCount = reader.ReadUInt32();
         if (idOrCount == 0)

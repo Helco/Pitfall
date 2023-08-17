@@ -226,6 +226,47 @@ public class ERModel : EResource
         }
     }
 
+    public struct UnknownStruct
+    {
+        public int a, b, c, d, e;
+
+        public UnknownStruct(BinaryReader reader)
+        {
+            a = reader.ReadInt32();
+            b = reader.ReadInt32();
+            c = reader.ReadInt32();
+            d = reader.ReadInt32();
+            e = reader.ReadInt32();
+        }
+    }
+
+    public struct UnknownSubStruct
+    {
+        public int a, b;
+        public uint ID;
+
+        public UnknownSubStruct(BinaryReader reader)
+        {
+            a = reader.ReadInt32();
+            b = reader.ReadInt32();
+            ID = reader.ReadUInt32();
+        }
+    }
+
+    public class UnknownSection
+    {
+        public EStorable? Storable { get; } = null!;
+        public UnknownSubStruct[] SubStructs { get; } = Array.Empty<UnknownSubStruct>();
+        public int Unknown { get; }
+
+        public UnknownSection(BinaryReader reader)
+        {
+            Storable = reader.ReadStorable();
+            SubStructs = reader.ReadArray(reader.ReadInt32(), r => new UnknownSubStruct(r));
+            Unknown = reader.ReadInt32();
+        }
+    }
+
     public float UnknownFloat { get; private set; }
     public IReadOnlyList<SubModel> SubModels { get; private set; } = Array.Empty<SubModel>();
     public Vector4 UnknownVec4_1 { get; private set; }
@@ -237,6 +278,8 @@ public class ERModel : EResource
     public bool UnknownFlag3 { get; private set; }
     public uint UnknownInt { get; private set; }
     public EStorable? Storable { get; private set; }
+    public UnknownStruct[] UnknownStructs { get; private set; } = Array.Empty<UnknownStruct>();
+    public UnknownSection[] Sections { get; private set; } = Array.Empty<UnknownSection>();
 
     public ERModel() { }
 
@@ -270,5 +313,11 @@ public class ERModel : EResource
         UnknownInt = reader.ReadUInt32();
 
         Storable = reader.ReadStorable();
+
+        var unknownStructCount = reader.ReadInt32();
+        UnknownStructs = reader.ReadArray(unknownStructCount, r => new UnknownStruct(r));
+
+        var cc = reader.ReadInt32();
+        Sections = reader.ReadArray(cc, r => new UnknownSection(r));
     }
 }
