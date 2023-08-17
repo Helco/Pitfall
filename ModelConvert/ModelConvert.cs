@@ -9,6 +9,12 @@ namespace Pitfall;
 
 internal class Program
 {
+    static readonly string[] BannedFiles = new[]
+    {
+        "files.list",
+        "0-evan" // ERHavokWorld(0)
+    };
+
     static void Main(string[] args)
     {
         Directory.CreateDirectory("out");
@@ -16,7 +22,7 @@ internal class Program
         var files = Directory.GetFiles(@"C:\Users\Helco\Downloads\PITFALL The Lost Expedition PC\PITFALL The Lost Expedition\Game\data\models");
         foreach (var file in files)
         {
-            if (file.Contains("files.list"))
+            if (BannedFiles.Any(file.Contains))
                 continue;
             var name = Path.GetFileName(file);
             using var fileStream = new FileStream(file, FileMode.Open, FileAccess.Read);

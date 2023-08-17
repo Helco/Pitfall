@@ -14,7 +14,9 @@ public class EStorable
 [StorableType]
 public class EResource : EStorable
 {
-    public override void Read(BinaryReader reader) => throw new NotImplementedException();
+    public string Name { get; private set; } = "";
+
+    public override void Read(BinaryReader reader) => Name = reader.ReadCString(); 
 }
 
 
@@ -69,10 +71,10 @@ public static class DynTypeInfo
         {
             var typeId = reader.ReadUInt32();
             var readVersion = reader.ReadUInt16();
-            var runLength = reader.ReadUInt32();
+            var untilIndex = i + reader.ReadUInt32();
             var typeCtor = GetTypeCtor(typeId);
-            for (var j = i; j < i + runLength; j++)
-                subObjects[j] = typeCtor();
+            for (; i < untilIndex; i++)
+                subObjects[i] = typeCtor();
         }
 
         foreach (var subObject in subObjects)

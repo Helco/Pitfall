@@ -3,22 +3,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using System.Numerics;
-using System.Reflection.Metadata.Ecma335;
-using System.Net.WebSockets;
-using static Pitfall.Utils;
 using System.Runtime.InteropServices;
+using static Pitfall.Utils;
 
 namespace Pitfall;
 
 internal static class Utils
 {
-    public static T[] ReadArray<T>(BinaryReader reader, int count, Func<BinaryReader, T> readElement) =>
+    public static T[] ReadArray<T>(this BinaryReader reader, int count, Func<BinaryReader, T> readElement) =>
         Enumerable.Repeat(reader, count).Select(readElement).ToArray();
+
+    public static unsafe T[] ReadArray<T>(this BinaryReader reader, int count, int expectedSize) where T : unmanaged
+    {
+        if (!BitConverter.IsLittleEndian || sizeof(T) != expectedSize)
+            throw new NotSupportedException("Fast path is not available on this platform");
+        var result = new T[count];
+        var resultData = MemoryMarshal.AsBytes(result.AsSpan());
+        if (reader.BaseStream.Read(resultData) != resultData.Length)
+            throw new EndOfStreamException();
+        return result;
+    }
 
     public static Vector4 ReadVector4(this BinaryReader r) => new Vector4(r.ReadSingle(), r.ReadSingle(), r.ReadSingle(), r.ReadSingle());
     public static Vector3 ReadVector3(this BinaryReader r) => new Vector3(r.ReadSingle(), r.ReadSingle(), r.ReadSingle());
     public static Byte4 ReadByte4(this BinaryReader r) => new Byte4(r.ReadByte(), r.ReadByte(), r.ReadByte(), r.ReadByte());
-    public static Vector2 ReadVector2(this BinaryReader r) => new Vector2(r.ReadSingle(), r.ReadSingle());    
+    public static Vector2 ReadVector2(this BinaryReader r) => new Vector2(r.ReadSingle(), r.ReadSingle());
+
+    public static string ReadCString(this BinaryReader reader)
+    {
+        var nameBytes = new List<byte>();
+        while (true)
+        {
+            var b = reader.ReadByte();
+            if (b == 0)
+                break;
+            nameBytes.Add(b);
+        }
+        return System.Text.Encoding.UTF8.GetString(nameBytes.ToArray());
+    }
 }
 
 public interface IModelPart { }
@@ -87,23 +109,23 @@ public class GeometryPart : IModelPart
             throw new NotSupportedException("Unsupported half-precision model");
 
         int vertexCount = reader.ReadInt32();
-        Positions = ReadArray(reader, vertexCount, Utils.ReadVector4);
+        Positions = reader.ReadArray<Vector4>(vertexCount, 16);
         TexCoords = flags.HasFlag(GeometryFlags.HasTexCoords)
-            ? ReadArray(reader, vertexCount, Utils.ReadVector2)
+            ? reader.ReadArray<Vector2>(vertexCount, 8)
             : null;
         Colors = flags.HasFlag(GeometryFlags.HasColors)
-            ? ReadArray(reader, vertexCount, Utils.ReadByte4)
+            ? reader.ReadArray<Byte4>(vertexCount, 4)
             : null;
         Normals = flags.HasFlag(GeometryFlags.HasNormals)
-            ? ReadArray(reader, vertexCount, ReadNormal)
+            ? reader.ReadArray(vertexCount, ReadNormal)
             : null;
         UnknownVector = hasUnknownVectors
-            ? ReadArray(reader, vertexCount, ReadUnknownVector4)
+            ? reader.ReadArray(vertexCount, ReadUnknownVector4)
             : null;
         if (flags.HasFlag(GeometryFlags.HasIndices) && !flags.HasFlag(GeometryFlags.DisableIndices))
         {
             var indexCount = reader.ReadInt32();
-            Indices = ReadArray(reader, indexCount, ReadUShort);
+            Indices = reader.ReadArray<ushort>(indexCount, 2);
         }
         else
             Indices = null;
@@ -181,7 +203,7 @@ public class SubModel
     {
         Unknown = reader.ReadInt32();
         var count = reader.ReadInt32();
-        SubSubModels = ReadArray(reader, count, r => new SubSubModel(r));
+        SubSubModels = reader.ReadArray(count, r => new SubSubModel(r));
     }
 }
 
@@ -205,23 +227,14 @@ public class Model
         var zeroBytes = reader.ReadBytes(6);
         if (zeroBytes.Any(b => b != 0))
             throw new InvalidDataException("Expected first six bytes to be zero");
-
-        var nameBytes = new List<byte>();
-        while(true)
-        {
-            var b = reader.ReadByte();
-            if (b == 0)
-                break;
-            nameBytes.Add(b);
-        }
-        Name = System.Text.Encoding.UTF8.GetString(nameBytes.ToArray());
+        Name = reader.ReadCString();
 
         if (reader.ReadByte() != 0)
             throw new InvalidDataException("Expected another zero byte");
         UnknownFloat = reader.ReadSingle();
 
         var subModelCount = reader.ReadInt32();
-        SubModels = ReadArray(reader, subModelCount, r => new SubModel(r));
+        SubModels = reader.ReadArray(subModelCount, r => new SubModel(r));
 
         UnknownVec4_1 = reader.ReadVector4();
         UnknownVecPair_1 = (reader.ReadVector3(), reader.ReadVector3());
