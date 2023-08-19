@@ -1,0 +1,41 @@
+//------------------------------------------------
+//--- 010 Editor v9.0.2 Binary Template
+//
+//      File: 
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: 
+// File Mask: 
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+struct Vec3f
+{
+  float x, y, z;
+};
+
+string name;
+byte flag1;
+uint int1;
+byte flag2;
+uint int2;
+uint int3;
+uint int4;
+
+Vec3f v1, v2;
+
+struct Section {
+  uint textureID;
+  uint int1;
+  uint int2;
+  byte flag1;
+  byte flag2;
+  byte flag3;
+  byte flag4;
+  byte flag5;
+  byte flag6;
+  byte flag7;
+  float float1;
+} sections[flag1];
