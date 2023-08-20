@@ -7,9 +7,18 @@ using Pitfall.Storables;
 
 namespace Pitfall;
 
-public readonly record struct ScriptFunction(string Name, IReadOnlyList<ScriptDataType> Args, int Unknown)
+public readonly record struct ScriptFunction(string Name, IReadOnlyList<ScriptDataType> Args, ScriptDataType ReturnType)
 {
-    public string ArgString => new string(Args.Select(a => (char)a).ToArray());
+    public string ArgString
+    {
+        get
+        {
+            var result = new string(Args.Select(a => (char)a).ToArray());
+            if (ReturnType != ScriptDataType.Invalid)
+                result += $"->{(char)ReturnType}";
+            return result;
+        }
+    }
 }
 
 public static class ScriptFunctions
@@ -18,7 +27,7 @@ public static class ScriptFunctions
     {
         public string name { get; set; }
         public string args { get; set; }
-        public int unk { get; set; }
+        public int returnType { get; set; }
     }
 
     private static IReadOnlyList<IReadOnlyList<ScriptFunction>>? tables = null;
@@ -39,7 +48,10 @@ public static class ScriptFunctions
                 var args = string.IsNullOrEmpty(jsonFunc.args) || jsonFunc.args == "0"
                     ? Array.Empty<ScriptDataType>()
                     : jsonFunc.args.Select(ch => (ScriptDataType)ch).ToArray();
-                return new ScriptFunction(jsonFunc.name, args, jsonFunc.unk);
+                var returnType = jsonFunc.returnType == ' '
+                    ? ScriptDataType.Invalid
+                    : (ScriptDataType)jsonFunc.returnType;
+                return new ScriptFunction(jsonFunc.name, args, returnType);
             }).ToArray() as IReadOnlyList<ScriptFunction>).ToArray();
             return tables;
         }
