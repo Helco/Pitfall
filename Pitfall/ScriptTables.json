@@ -1,0 +1,5239 @@
+[
+    [
+        {
+            "name": "Print",
+            "args": "s",
+            "unk": 32
+        },
+        {
+            "name": "=",
+            "args": "ss",
+            "unk": 32
+        },
+        {
+            "name": "Add",
+            "args": "ss",
+            "unk": 115
+        },
+        {
+            "name": "+",
+            "args": "ss",
+            "unk": 115
+        },
+        {
+            "name": "==",
+            "args": "ss",
+            "unk": 105
+        },
+        {
+            "name": "+=",
+            "args": "ss",
+            "unk": 32
+        },
+        {
+            "name": "Sleep",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "Sleep",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "Random",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "Random",
+            "args": "i",
+            "unk": 105
+        },
+        {
+            "name": "Print",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "=",
+            "args": "ii",
+            "unk": 32
+        },
+        {
+            "name": "+",
+            "args": "ii",
+            "unk": 105
+        },
+        {
+            "name": "-",
+            "args": "ii",
+            "unk": 105
+        },
+        {
+            "name": "*",
+            "args": "ii",
+            "unk": 105
+        },
+        {
+            "name": "/",
+            "args": "ii",
+            "unk": 105
+        },
+        {
+            "name": "%",
+            "args": "ii",
+            "unk": 105
+        },
+        {
+            "name": "+=",
+            "args": "ii",
+            "unk": 105
+        },
+        {
+            "name": "*=",
+            "args": "ii",
+            "unk": 105
+        },
+        {
+            "name": "-=",
+            "args": "ii",
+            "unk": 105
+        },
+        {
+            "name": "/=",
+            "args": "ii",
+            "unk": 105
+        },
+        {
+            "name": "%=",
+            "args": "ii",
+            "unk": 105
+        },
+        {
+            "name": "==",
+            "args": "ii",
+            "unk": 105
+        },
+        {
+            "name": ">",
+            "args": "ii",
+            "unk": 105
+        },
+        {
+            "name": "<",
+            "args": "ii",
+            "unk": 105
+        },
+        {
+            "name": ">=",
+            "args": "ii",
+            "unk": 105
+        },
+        {
+            "name": "<=",
+            "args": "ii",
+            "unk": 105
+        },
+        {
+            "name": "!=",
+            "args": "ii",
+            "unk": 105
+        },
+        {
+            "name": "PreIncrement",
+            "args": "i",
+            "unk": 105
+        },
+        {
+            "name": "PostIncrement",
+            "args": "i",
+            "unk": 105
+        },
+        {
+            "name": "PreDecrement",
+            "args": "i",
+            "unk": 105
+        },
+        {
+            "name": "PostDecrement",
+            "args": "i",
+            "unk": 105
+        },
+        {
+            "name": "-",
+            "args": "i",
+            "unk": 105
+        },
+        {
+            "name": "!",
+            "args": "i",
+            "unk": 105
+        },
+        {
+            "name": "Print",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "=",
+            "args": "ff",
+            "unk": 32
+        },
+        {
+            "name": "+",
+            "args": "ff",
+            "unk": 102
+        },
+        {
+            "name": "-",
+            "args": "ff",
+            "unk": 102
+        },
+        {
+            "name": "*",
+            "args": "ff",
+            "unk": 102
+        },
+        {
+            "name": "/",
+            "args": "ff",
+            "unk": 102
+        },
+        {
+            "name": "+=",
+            "args": "ff",
+            "unk": 102
+        },
+        {
+            "name": "*=",
+            "args": "ff",
+            "unk": 102
+        },
+        {
+            "name": "-=",
+            "args": "ff",
+            "unk": 102
+        },
+        {
+            "name": "/=",
+            "args": "ff",
+            "unk": 102
+        },
+        {
+            "name": "==",
+            "args": "ff",
+            "unk": 105
+        },
+        {
+            "name": ">",
+            "args": "ff",
+            "unk": 105
+        },
+        {
+            "name": "<",
+            "args": "ff",
+            "unk": 105
+        },
+        {
+            "name": ">=",
+            "args": "ff",
+            "unk": 105
+        },
+        {
+            "name": "<=",
+            "args": "ff",
+            "unk": 105
+        },
+        {
+            "name": "!=",
+            "args": "ff",
+            "unk": 105
+        },
+        {
+            "name": "PreIncrement",
+            "args": "f",
+            "unk": 102
+        },
+        {
+            "name": "PostIncrement",
+            "args": "f",
+            "unk": 102
+        },
+        {
+            "name": "PreDecrement",
+            "args": "f",
+            "unk": 102
+        },
+        {
+            "name": "PostDecrement",
+            "args": "f",
+            "unk": 102
+        },
+        {
+            "name": "-",
+            "args": "f",
+            "unk": 102
+        },
+        {
+            "name": "!",
+            "args": "f",
+            "unk": 105
+        },
+        {
+            "name": "Print",
+            "args": "v",
+            "unk": 32
+        },
+        {
+            "name": "=",
+            "args": "vv",
+            "unk": 32
+        },
+        {
+            "name": "==",
+            "args": "vv",
+            "unk": 105
+        },
+        {
+            "name": "SetXYZ",
+            "args": "fff",
+            "unk": 118
+        },
+        {
+            "name": "SetX",
+            "args": "vf",
+            "unk": 32
+        },
+        {
+            "name": "SetY",
+            "args": "vf",
+            "unk": 32
+        },
+        {
+            "name": "SetZ",
+            "args": "vf",
+            "unk": 32
+        },
+        {
+            "name": "GetX",
+            "args": "v",
+            "unk": 102
+        },
+        {
+            "name": "GetY",
+            "args": "v",
+            "unk": 102
+        },
+        {
+            "name": "GetZ",
+            "args": "v",
+            "unk": 102
+        },
+        {
+            "name": "*",
+            "args": "vf",
+            "unk": 118
+        },
+        {
+            "name": "*",
+            "args": "fv",
+            "unk": 118
+        },
+        {
+            "name": "/",
+            "args": "vf",
+            "unk": 118
+        },
+        {
+            "name": "Dot",
+            "args": "vv",
+            "unk": 102
+        },
+        {
+            "name": "Cross",
+            "args": "vv",
+            "unk": 118
+        },
+        {
+            "name": "+",
+            "args": "vv",
+            "unk": 118
+        },
+        {
+            "name": "-",
+            "args": "vv",
+            "unk": 118
+        },
+        {
+            "name": "+",
+            "args": "fv",
+            "unk": 118
+        },
+        {
+            "name": "+",
+            "args": "vf",
+            "unk": 118
+        },
+        {
+            "name": "-",
+            "args": "fv",
+            "unk": 118
+        },
+        {
+            "name": "-",
+            "args": "vf",
+            "unk": 118
+        },
+        {
+            "name": "Mag",
+            "args": "v",
+            "unk": 102
+        },
+        {
+            "name": "MagSq",
+            "args": "v",
+            "unk": 102
+        },
+        {
+            "name": "Normalize",
+            "args": "v",
+            "unk": 118
+        },
+        {
+            "name": "Blend",
+            "args": "vvf",
+            "unk": 118
+        },
+        {
+            "name": "BlendDt",
+            "args": "vvf",
+            "unk": 118
+        },
+        {
+            "name": "Print",
+            "args": "m",
+            "unk": 32
+        },
+        {
+            "name": "=",
+            "args": "mm",
+            "unk": 32
+        },
+        {
+            "name": "Zero",
+            "args": "m",
+            "unk": 32
+        },
+        {
+            "name": "Identity",
+            "args": "m",
+            "unk": 32
+        },
+        {
+            "name": "*",
+            "args": "mm",
+            "unk": 109
+        },
+        {
+            "name": "Normalize",
+            "args": "m",
+            "unk": 32
+        },
+        {
+            "name": "Transpose",
+            "args": "m",
+            "unk": 32
+        },
+        {
+            "name": "Scale",
+            "args": "mf",
+            "unk": 32
+        },
+        {
+            "name": "ScaleX",
+            "args": "mf",
+            "unk": 32
+        },
+        {
+            "name": "ScaleY",
+            "args": "mf",
+            "unk": 32
+        },
+        {
+            "name": "ScaleZ",
+            "args": "mf",
+            "unk": 32
+        },
+        {
+            "name": "TranslateX",
+            "args": "mf",
+            "unk": 32
+        },
+        {
+            "name": "TranslateY",
+            "args": "mf",
+            "unk": 32
+        },
+        {
+            "name": "TranslateZ",
+            "args": "mf",
+            "unk": 32
+        },
+        {
+            "name": "Invert",
+            "args": "m",
+            "unk": 105
+        },
+        {
+            "name": "Print",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "=",
+            "args": "rr",
+            "unk": 32
+        },
+        {
+            "name": "==",
+            "args": "rr",
+            "unk": 105
+        },
+        {
+            "name": "Print",
+            "args": "p",
+            "unk": 32
+        },
+        {
+            "name": "=",
+            "args": "pp",
+            "unk": 32
+        },
+        {
+            "name": "==",
+            "args": "if",
+            "unk": 105
+        },
+        {
+            "name": "==",
+            "args": "fi",
+            "unk": 105
+        },
+        {
+            "name": ">",
+            "args": "if",
+            "unk": 105
+        },
+        {
+            "name": ">",
+            "args": "fi",
+            "unk": 105
+        },
+        {
+            "name": "<",
+            "args": "if",
+            "unk": 105
+        },
+        {
+            "name": "<",
+            "args": "fi",
+            "unk": 105
+        },
+        {
+            "name": "<=",
+            "args": "if",
+            "unk": 105
+        },
+        {
+            "name": "<=",
+            "args": "fi",
+            "unk": 105
+        },
+        {
+            "name": ">=",
+            "args": "if",
+            "unk": 105
+        },
+        {
+            "name": ">=",
+            "args": "fi",
+            "unk": 105
+        },
+        {
+            "name": "!=",
+            "args": "if",
+            "unk": 105
+        },
+        {
+            "name": "!=",
+            "args": "fi",
+            "unk": 105
+        },
+        {
+            "name": "&&",
+            "args": "ff",
+            "unk": 105
+        },
+        {
+            "name": "&&",
+            "args": "ii",
+            "unk": 105
+        },
+        {
+            "name": "&&",
+            "args": "if",
+            "unk": 105
+        },
+        {
+            "name": "&&",
+            "args": "fi",
+            "unk": 105
+        },
+        {
+            "name": "||",
+            "args": "ff",
+            "unk": 105
+        },
+        {
+            "name": "||",
+            "args": "ii",
+            "unk": 105
+        },
+        {
+            "name": "||",
+            "args": "if",
+            "unk": 105
+        },
+        {
+            "name": "||",
+            "args": "fi",
+            "unk": 105
+        },
+        {
+            "name": "ViewLevel",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "SetResourceGlobal",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "ClearResourceGlobal",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "Name",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "StringToResource",
+            "args": "s",
+            "unk": 114
+        },
+        {
+            "name": "IntToString",
+            "args": "i",
+            "unk": 115
+        },
+        {
+            "name": "FloatToString",
+            "args": "f",
+            "unk": 115
+        },
+        {
+            "name": "Floor",
+            "args": "f",
+            "unk": 105
+        },
+        {
+            "name": "Ceiling",
+            "args": "f",
+            "unk": 105
+        },
+        {
+            "name": "GetContextId",
+            "args": "0",
+            "unk": 114
+        },
+        {
+            "name": "RandomFloat",
+            "args": "f",
+            "unk": 102
+        },
+        {
+            "name": "RunScript",
+            "args": "e",
+            "unk": 32
+        },
+        {
+            "name": "RunScript",
+            "args": "er",
+            "unk": 32
+        },
+        {
+            "name": "Print",
+            "args": "t",
+            "unk": 32
+        },
+        {
+            "name": "=",
+            "args": "tr",
+            "unk": 32
+        },
+        {
+            "name": "=",
+            "args": "tt",
+            "unk": 32
+        },
+        {
+            "name": "IsParticleTypeLoaded",
+            "args": "t",
+            "unk": 105
+        },
+        {
+            "name": "IsParticleTypeLoaded",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "Print",
+            "args": "e",
+            "unk": 32
+        },
+        {
+            "name": "=",
+            "args": "er",
+            "unk": 32
+        },
+        {
+            "name": "=",
+            "args": "ee",
+            "unk": 32
+        },
+        {
+            "name": "IsScriptLoaded",
+            "args": "e",
+            "unk": 105
+        },
+        {
+            "name": "IsScriptLoaded",
+            "args": "e",
+            "unk": 105
+        },
+        {
+            "name": "Print",
+            "args": "a",
+            "unk": 32
+        },
+        {
+            "name": "=",
+            "args": "ar",
+            "unk": 32
+        },
+        {
+            "name": "=",
+            "args": "aa",
+            "unk": 32
+        },
+        {
+            "name": "IsAnimationLoaded",
+            "args": "a",
+            "unk": 105
+        },
+        {
+            "name": "IsAnimationLoaded",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "Print",
+            "args": "w",
+            "unk": 32
+        },
+        {
+            "name": "=",
+            "args": "wr",
+            "unk": 32
+        },
+        {
+            "name": "=",
+            "args": "ww",
+            "unk": 32
+        },
+        {
+            "name": "IsModelLoaded",
+            "args": "w",
+            "unk": 105
+        },
+        {
+            "name": "IsModelLoaded",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "Print",
+            "args": "h",
+            "unk": 32
+        },
+        {
+            "name": "=",
+            "args": "hr",
+            "unk": 32
+        },
+        {
+            "name": "=",
+            "args": "hh",
+            "unk": 32
+        },
+        {
+            "name": "IsShaderLoaded",
+            "args": "h",
+            "unk": 105
+        },
+        {
+            "name": "IsShaderLoaded",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "FloatToInt",
+            "args": "f",
+            "unk": 105
+        },
+        {
+            "name": "IntToFloat",
+            "args": "i",
+            "unk": 102
+        },
+        {
+            "name": "ComposeResource",
+            "args": "sii",
+            "unk": 114
+        },
+        {
+            "name": "ComposeResource",
+            "args": "ss",
+            "unk": 114
+        },
+        {
+            "name": "Print",
+            "args": "o",
+            "unk": 32
+        },
+        {
+            "name": "=",
+            "args": "or",
+            "unk": 32
+        },
+        {
+            "name": "=",
+            "args": "oo",
+            "unk": 32
+        },
+        {
+            "name": "MatrixSet",
+            "args": "miif",
+            "unk": 32
+        },
+        {
+            "name": "MatrixGet",
+            "args": "mii",
+            "unk": 102
+        },
+        {
+            "name": "*=",
+            "args": "vf",
+            "unk": 32
+        },
+        {
+            "name": "IsGameCube",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsPS2",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsXBox",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsPC",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "SetShaderScrollSpeed",
+            "args": "hffii",
+            "unk": 32
+        },
+        {
+            "name": "SetShaderVelocity",
+            "args": "hvf",
+            "unk": 32
+        },
+        {
+            "name": "MatrixSet",
+            "args": "mif",
+            "unk": 32
+        },
+        {
+            "name": "MatrixGet",
+            "args": "mi",
+            "unk": 102
+        },
+        {
+            "name": "!",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "GetParamMatrix",
+            "args": "0",
+            "unk": 109
+        },
+        {
+            "name": "GetParamPos",
+            "args": "0",
+            "unk": 118
+        },
+        {
+            "name": "CinemaViewerAdd",
+            "args": "rrr",
+            "unk": 32
+        }
+    ],
+    [
+        {
+            "name": "SendEvent",
+            "args": "rr",
+            "unk": 32
+        },
+        {
+            "name": "SendSelfEvent",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "SendDelayedEvent",
+            "args": "rrf",
+            "unk": 32
+        },
+        {
+            "name": "SendDelayedSelfEvent",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "AddListener",
+            "args": "rre",
+            "unk": 32
+        },
+        {
+            "name": "AddListeningInstance",
+            "args": "rrre",
+            "unk": 32
+        },
+        {
+            "name": "AddSelfToListeners",
+            "args": "rre",
+            "unk": 32
+        },
+        {
+            "name": "RemoveListener",
+            "args": "rre",
+            "unk": 32
+        },
+        {
+            "name": "RemoveListeningInstance",
+            "args": "rrre",
+            "unk": 32
+        },
+        {
+            "name": "RemoveSelfFromListeners",
+            "args": "rre",
+            "unk": 32
+        },
+        {
+            "name": "SuspendListener",
+            "args": "rref",
+            "unk": 32
+        },
+        {
+            "name": "SuspendSelfListener",
+            "args": "rref",
+            "unk": 32
+        },
+        {
+            "name": "SuspendListeningInstance",
+            "args": "rrref",
+            "unk": 32
+        },
+        {
+            "name": "GetGameTime",
+            "args": "0",
+            "unk": 102
+        },
+        {
+            "name": "GetSenderId",
+            "args": "0",
+            "unk": 114
+        }
+    ],
+    [
+        {
+            "name": "Show",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "Hide",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "Show",
+            "args": "p",
+            "unk": 32
+        },
+        {
+            "name": "Hide",
+            "args": "p",
+            "unk": 32
+        },
+        {
+            "name": "ShowSelf",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "HideSelf",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "IsVisible",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsVisible",
+            "args": "p",
+            "unk": 105
+        },
+        {
+            "name": "EffectorGetNormal",
+            "args": "0",
+            "unk": 118
+        },
+        {
+            "name": "EffectorGetTriggeringInstance",
+            "args": "0",
+            "unk": 114
+        },
+        {
+            "name": "SetWavePatchActive",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "SetWavePatchPos",
+            "args": "rv",
+            "unk": 32
+        },
+        {
+            "name": "ChangeWavePatchElevationRelative",
+            "args": "rffff",
+            "unk": 32
+        },
+        {
+            "name": "ChangeWavePatchElevation",
+            "args": "rff",
+            "unk": 32
+        },
+        {
+            "name": "GetWavePatchHeight",
+            "args": "r",
+            "unk": 102
+        },
+        {
+            "name": "SetInstanceWaterPatch",
+            "args": "rr",
+            "unk": 32
+        },
+        {
+            "name": "GetInstancePos",
+            "args": "r",
+            "unk": 118
+        },
+        {
+            "name": "ModifyInstanceFadeDistance",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetInstanceVisible",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "SetInstanceVisible",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "SetInstanceCollidable",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "SetInstanceCollidable",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "SetInstanceUpdate",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "SetInstanceUpdate",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "SetInstanceFlags",
+            "args": "riii",
+            "unk": 32
+        },
+        {
+            "name": "SetInstanceFlags",
+            "args": "iii",
+            "unk": 32
+        },
+        {
+            "name": "BlendInstanceAlpha",
+            "args": "rff",
+            "unk": 32
+        },
+        {
+            "name": "SetInstanceAlpha",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetInstanceAlpha",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "GetInstanceAlpha",
+            "args": "r",
+            "unk": 102
+        },
+        {
+            "name": "GetInstanceAlpha",
+            "args": "0",
+            "unk": 102
+        },
+        {
+            "name": "EnableWireFrame",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "SetInstanceFadeDistance",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "PauseShaderScrolling",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "GetCurLevel",
+            "args": "0",
+            "unk": 114
+        },
+        {
+            "name": "EnableLightModifier",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "SetAlternateShader",
+            "args": "hh",
+            "unk": 32
+        },
+        {
+            "name": "ClearAlternateShader",
+            "args": "h",
+            "unk": 32
+        },
+        {
+            "name": "SetCameraCollisionFlags",
+            "args": "rii",
+            "unk": 32
+        },
+        {
+            "name": "SetCameraCollisionFlags",
+            "args": "ii",
+            "unk": 32
+        }
+    ],
+    [
+        {
+            "name": "PlatformMoveTo",
+            "args": "vf",
+            "unk": 32
+        },
+        {
+            "name": "PlatformMoveToRelative",
+            "args": "vf",
+            "unk": 32
+        },
+        {
+            "name": "PlatformRotateTo",
+            "args": "v",
+            "unk": 32
+        },
+        {
+            "name": "PlatformRotateToRelative",
+            "args": "vf",
+            "unk": 32
+        },
+        {
+            "name": "PlatformScaleTo",
+            "args": "vf",
+            "unk": 32
+        },
+        {
+            "name": "PlatformScaleToRelative",
+            "args": "vf",
+            "unk": 32
+        },
+        {
+            "name": "StartPlatformAnimation",
+            "args": "afff",
+            "unk": 32
+        },
+        {
+            "name": "StopPlatformAnimation",
+            "args": "a",
+            "unk": 32
+        },
+        {
+            "name": "ChangePlatformAnimSpeed",
+            "args": "af",
+            "unk": 32
+        },
+        {
+            "name": "ChangePlatformAnimIntensity",
+            "args": "af",
+            "unk": 32
+        },
+        {
+            "name": "CheckPlatformId",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "AddInstanceToPlatform",
+            "args": "p",
+            "unk": 32
+        },
+        {
+            "name": "GetPlatformPos",
+            "args": "0",
+            "unk": 118
+        },
+        {
+            "name": "GetPlatformRot",
+            "args": "0",
+            "unk": 118
+        },
+        {
+            "name": "GetPlatformScale",
+            "args": "0",
+            "unk": 118
+        },
+        {
+            "name": "IsPlatformMoving",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsPlatformRotating",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsPlatformScaling",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsPlatformAnimPlaying",
+            "args": "a",
+            "unk": 105
+        },
+        {
+            "name": "PlatformLastAnim",
+            "args": "0",
+            "unk": 114
+        },
+        {
+            "name": "PlatformSetSpline",
+            "args": "pffi",
+            "unk": 32
+        },
+        {
+            "name": "PlatformSetSpline",
+            "args": "p",
+            "unk": 32
+        },
+        {
+            "name": "PlatformSetSplineSpeed",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "PlatformSetSplineBlend",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "PlatformSetSplineDir",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "PlatformSetSplineLoop",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "PlatformSetSplineNormal",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "PlatformSetSplineTeleport",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "PlatformGetSpline",
+            "args": "0",
+            "unk": 112
+        },
+        {
+            "name": "PlatformGetSplineDir",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "PlatformGetSplineSpeed",
+            "args": "0",
+            "unk": 102
+        },
+        {
+            "name": "PlatformGetSplineBlend",
+            "args": "0",
+            "unk": 102
+        },
+        {
+            "name": "PlatformGetSplineTime",
+            "args": "0",
+            "unk": 102
+        },
+        {
+            "name": "IsPlatformSplineEnd",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsPlatformSplineEndTravel",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "PlatformSetSpline",
+            "args": "rffi",
+            "unk": 32
+        },
+        {
+            "name": "PlatformSetSpline",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "PlatformGetAnimLength",
+            "args": "a",
+            "unk": 102
+        },
+        {
+            "name": "PlatformSetSplineMode",
+            "args": "r",
+            "unk": 32
+        }
+    ],
+    [
+        {
+            "name": "SpawnParticle",
+            "args": "t",
+            "unk": 32
+        },
+        {
+            "name": "KillParticle",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "SpawnEmitter",
+            "args": "tf",
+            "unk": 32
+        },
+        {
+            "name": "SpawnEmitter",
+            "args": "tvf",
+            "unk": 32
+        },
+        {
+            "name": "SpawnEmitter",
+            "args": "tvvf",
+            "unk": 32
+        },
+        {
+            "name": "SpawnEmitterFromEvent",
+            "args": "tfi",
+            "unk": 32
+        },
+        {
+            "name": "SpawnEmitterFromEvent",
+            "args": "tfii",
+            "unk": 32
+        },
+        {
+            "name": "SpawnEmitterFromInstance",
+            "args": "tfr",
+            "unk": 32
+        },
+        {
+            "name": "SpawnEmitterFromInstance",
+            "args": "tfri",
+            "unk": 32
+        },
+        {
+            "name": "IsEmitterActive",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "SpawnLimpetEmitter",
+            "args": "stfrrii",
+            "unk": 114
+        },
+        {
+            "name": "ActivateEmitter",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "DeactivateEmitter",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "ActivateEmitter",
+            "args": "s",
+            "unk": 32
+        },
+        {
+            "name": "DeactivateEmitter",
+            "args": "s",
+            "unk": 32
+        },
+        {
+            "name": "ActivateLimpetEmitter",
+            "args": "sr",
+            "unk": 32
+        },
+        {
+            "name": "DeactivateLimpetEmitter",
+            "args": "sr",
+            "unk": 32
+        },
+        {
+            "name": "KillLimpetEmitter",
+            "args": "sr",
+            "unk": 32
+        },
+        {
+            "name": "SpawnLimpetEmitter",
+            "args": "stfrii",
+            "unk": 114
+        },
+        {
+            "name": "ActivateEmitter",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "DeactivateEmitter",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "SpawnLimpetEmitterAnim",
+            "args": "stfrriiiv",
+            "unk": 114
+        },
+        {
+            "name": "SpawnLimpetEmitterAnim",
+            "args": "stfriiiv",
+            "unk": 114
+        },
+        {
+            "name": "SpawnLimpetEmitterAnim",
+            "args": "stfrriiivv",
+            "unk": 114
+        },
+        {
+            "name": "SpawnLimpetEmitterAnim",
+            "args": "stfriiivv",
+            "unk": 114
+        },
+        {
+            "name": "EmitSetSpline",
+            "args": "rrffi",
+            "unk": 32
+        },
+        {
+            "name": "EmitSetSpline",
+            "args": "rr",
+            "unk": 32
+        },
+        {
+            "name": "EmitSetSplineSpeed",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "EmitSetSplineBlend",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "EmitSetSplineDir",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "EmitSetSplineLoop",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "EmitSetSplineNormal",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "EmitSetSplineMode",
+            "args": "rr",
+            "unk": 32
+        },
+        {
+            "name": "EmitSetSplineTeleport",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "EmitGetSplineDir",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "EmitGetSplineSpeed",
+            "args": "r",
+            "unk": 102
+        },
+        {
+            "name": "EmitGetSplineBlend",
+            "args": "r",
+            "unk": 102
+        },
+        {
+            "name": "EmitGetSplineTime",
+            "args": "r",
+            "unk": 102
+        },
+        {
+            "name": "IsEmitSplineEnd",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "IsEmitSplineEndTravel",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "PauseEmitters",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "EnableWaterPatchWaves",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "SetWaveScale",
+            "args": "rf",
+            "unk": 32
+        }
+    ],
+    [
+        {
+            "name": "PlaySfx",
+            "args": "o",
+            "unk": 114
+        },
+        {
+            "name": "PlaySfx",
+            "args": "ov",
+            "unk": 114
+        },
+        {
+            "name": "PlaySfx",
+            "args": "ovf",
+            "unk": 114
+        },
+        {
+            "name": "PlaySfx",
+            "args": "or",
+            "unk": 114
+        },
+        {
+            "name": "PlaySfx",
+            "args": "orf",
+            "unk": 114
+        },
+        {
+            "name": "PlaySfxWithRef",
+            "args": "o",
+            "unk": 114
+        },
+        {
+            "name": "PlaySfxWithRef",
+            "args": "of",
+            "unk": 114
+        },
+        {
+            "name": "IsSfxPlaying",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "StopSfx",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "PlaySfxFromEventPos",
+            "args": "o",
+            "unk": 114
+        },
+        {
+            "name": "StopAllSfx",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "StopSfxOnInstance",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "PrintAudioState",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "PlaySfx",
+            "args": "orff",
+            "unk": 114
+        },
+        {
+            "name": "PlaySfx",
+            "args": "ovff",
+            "unk": 114
+        }
+    ],
+    [
+        {
+            "name": "ResetCharacterPosition",
+            "args": "pv",
+            "unk": 105
+        },
+        {
+            "name": "GetSpline",
+            "args": "0",
+            "unk": 112
+        },
+        {
+            "name": "ShowBackground",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "HideBackground",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "AddBackground",
+            "args": "w",
+            "unk": 32
+        },
+        {
+            "name": "SetFarPlane",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "GetHarryPointer",
+            "args": "0",
+            "unk": 112
+        },
+        {
+            "name": "TurnOnLeaves",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "TurnOffLeaves",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "StartSnow",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "StartSnow",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "StopSnow",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "StartRain",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "StartRain",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "StopRain",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "SetSnowIntensity",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetRainIntensity",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetSnowFluffiness",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetWind",
+            "args": "fff",
+            "unk": 32
+        },
+        {
+            "name": "ChangeFOV",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "PlatformMoveTo",
+            "args": "rvf",
+            "unk": 32
+        },
+        {
+            "name": "PlatformMoveToRelative",
+            "args": "rvf",
+            "unk": 32
+        },
+        {
+            "name": "PlatformRotateTo",
+            "args": "rv",
+            "unk": 32
+        },
+        {
+            "name": "PlatformRotateToRelative",
+            "args": "rvf",
+            "unk": 32
+        },
+        {
+            "name": "PlatformScaleTo",
+            "args": "rvf",
+            "unk": 32
+        },
+        {
+            "name": "PlatformScaleToRelative",
+            "args": "rvf",
+            "unk": 32
+        },
+        {
+            "name": "StartPlatformAnimation",
+            "args": "rafff",
+            "unk": 32
+        },
+        {
+            "name": "StopPlatformAnimation",
+            "args": "ra",
+            "unk": 32
+        },
+        {
+            "name": "ChangePlatformAnimSpeed",
+            "args": "raf",
+            "unk": 32
+        },
+        {
+            "name": "ChangePlatformAnimIntensity",
+            "args": "raf",
+            "unk": 32
+        },
+        {
+            "name": "AddInstanceToPlatform",
+            "args": "rp",
+            "unk": 32
+        },
+        {
+            "name": "GetPlatformPos",
+            "args": "r",
+            "unk": 118
+        },
+        {
+            "name": "GetPlatformRot",
+            "args": "r",
+            "unk": 118
+        },
+        {
+            "name": "GetPlatformScale",
+            "args": "r",
+            "unk": 118
+        },
+        {
+            "name": "IsPlatformMoving",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "IsPlatformRotating",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "IsPlatformScaling",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "IsPlatformAnimPlaying",
+            "args": "ra",
+            "unk": 105
+        },
+        {
+            "name": "PlatformLastAnim",
+            "args": "r",
+            "unk": 114
+        },
+        {
+            "name": "IsHarryOnPlatform",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "IsHarryOnPlatform",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "PlatformGetAnimLength",
+            "args": "ra",
+            "unk": 102
+        },
+        {
+            "name": "PlatformSetSplineMode",
+            "args": "rr",
+            "unk": 32
+        },
+        {
+            "name": "PlatformSetEmitterActive",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "PlatformSetEmitterActive",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "PlatformSetSpline",
+            "args": "rrffi",
+            "unk": 32
+        },
+        {
+            "name": "PlatformSetSpline",
+            "args": "rr",
+            "unk": 32
+        },
+        {
+            "name": "AnimPlatformBoundBoxDraw",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "StartScriptAnim",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "IsHarryJumping",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsHarrySneaking",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsHarryIdle",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsHarryIdleAnim",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsHarryWalkRun",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsHarryClimbing",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsHarryFalling",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsHarryLanding",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsHarryFlailing",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsHarryReaching",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsHarrySlinging",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsHarryHanging",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsHarrySwinging",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsHarryRolling",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsHarryHit",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "GetHarryPos",
+            "args": "0",
+            "unk": 118
+        },
+        {
+            "name": "GetHarryHandPos",
+            "args": "0",
+            "unk": 118
+        },
+        {
+            "name": "GetHarryHeading",
+            "args": "0",
+            "unk": 102
+        },
+        {
+            "name": "GetHarrySpeed",
+            "args": "0",
+            "unk": 102
+        },
+        {
+            "name": "HitHarry",
+            "args": "vf",
+            "unk": 32
+        },
+        {
+            "name": "HarryQueueInventoryItem",
+            "args": "s",
+            "unk": 105
+        },
+        {
+            "name": "MoveHarryToStartInstance",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "MoveHarryToLastStartInstance",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "HarryGetTorchPos",
+            "args": "0",
+            "unk": 118
+        },
+        {
+            "name": "GetCurrentInventoryItemType",
+            "args": "0",
+            "unk": 114
+        },
+        {
+            "name": "IsHarryRisingStrike",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsHarryJumpStrike",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsHarryCrouchStrike",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsHarryHeroicStrike",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "HarryEnterQuickSand",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "HarryExitQuickSand",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "IsHarryDying",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsHarryInTikiBall",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "HarryGetLastSafePos",
+            "args": "0",
+            "unk": 118
+        },
+        {
+            "name": "HitHarry",
+            "args": "vff",
+            "unk": 32
+        },
+        {
+            "name": "HarryLookAtTarget",
+            "args": "v",
+            "unk": 32
+        },
+        {
+            "name": "HarryLookAtOff",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "IsHarryState",
+            "args": "s",
+            "unk": 105
+        },
+        {
+            "name": "HarryIsInInventory",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "HarryAddInventoryItem",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "HarryRemoveInventoryItem",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "SetSuperRunMeterSpeed",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "LoadLevel",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "StartLevel",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "SetLevelUpdateRegion",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "HarryVisible",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "HarryHeading",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "AmbientLight",
+            "args": "v",
+            "unk": 32
+        },
+        {
+            "name": "DirectionalLight",
+            "args": "vff",
+            "unk": 32
+        },
+        {
+            "name": "CrocEatingHarry",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "PlatformSetSpline",
+            "args": "rpffi",
+            "unk": 32
+        },
+        {
+            "name": "PlatformSetSpline",
+            "args": "rp",
+            "unk": 32
+        },
+        {
+            "name": "PlatformSetSplineSpeed",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "PlatformSetSplineBlend",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "PlatformSetSplineDir",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "PlatformSetSplineLoop",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "PlatformSetSplineNormal",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "PlatformSetSplineTeleport",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "PlatformGetSpline",
+            "args": "r",
+            "unk": 112
+        },
+        {
+            "name": "PlatformGetSplineDir",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "PlatformGetSplineSpeed",
+            "args": "r",
+            "unk": 102
+        },
+        {
+            "name": "PlatformGetSplineBlend",
+            "args": "r",
+            "unk": 102
+        },
+        {
+            "name": "IsPlatformSplineEnd",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "IsPlatformSplineEndTravel",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "SetTorchGlowRadius",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "IsHarryStriking",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "KillHarry",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "GetMarkerPos",
+            "args": "r",
+            "unk": 118
+        },
+        {
+            "name": "TestMarkerRadius",
+            "args": "rv",
+            "unk": 105
+        },
+        {
+            "name": "GetMarkerPos",
+            "args": "0",
+            "unk": 118
+        },
+        {
+            "name": "TestMarkerRadius",
+            "args": "v",
+            "unk": 105
+        },
+        {
+            "name": "FindInstance",
+            "args": "r",
+            "unk": 112
+        },
+        {
+            "name": "SetHarryState",
+            "args": "s",
+            "unk": 32
+        },
+        {
+            "name": "HarryEnterWater",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "HarryExitWater",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "HarryRemoveItem",
+            "args": "s",
+            "unk": 32
+        },
+        {
+            "name": "GetCurrentTime",
+            "args": "0",
+            "unk": 102
+        },
+        {
+            "name": "SetRainSplashiness",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetMarkerVis",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "SetSunPosition",
+            "args": "ff",
+            "unk": 32
+        },
+        {
+            "name": "SetSunWashColor",
+            "args": "ffff",
+            "unk": 32
+        },
+        {
+            "name": "ActivateSunWashout",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "DeactivateSunWashout",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "ActivateLensFlare",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "DeactivateLensFlare",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "ActivatePlayerBreath",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "DeactivatePlayerBreath",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "SetPlayerRespiratoryRate",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetPlayerInRain",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "SetPlayerSplashIntensity",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "GetHarryHeadingVector",
+            "args": "0",
+            "unk": 118
+        },
+        {
+            "name": "ActivateWaterfallSplash",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "DeactivateWaterfallSplash",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "SetHarryWalkToTarget",
+            "args": "v",
+            "unk": 32
+        },
+        {
+            "name": "LockControllers",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "ReleaseControllers",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "SetSaveLastPos",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "ObjectSetNoFade",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "SetWaterfallSplashIntensity",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetWaterfallSplashParticle",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "ActivateSwimEffects",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "DeactivateSwimEffects",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "InitSwimEffects",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "InitSwimEffects",
+            "args": "ffffffff",
+            "unk": 32
+        },
+        {
+            "name": "QueueDialog",
+            "args": "s",
+            "unk": 32
+        },
+        {
+            "name": "QueueDialogOnce",
+            "args": "s",
+            "unk": 32
+        },
+        {
+            "name": "SetMapIconState",
+            "args": "si",
+            "unk": 32
+        },
+        {
+            "name": "ActivateEffector",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "DeactivateEffector",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "ActivateEffector",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "DeactivateEffector",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "ActivateEffectorFront",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "DeactivateEffectorFront",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "ActivateEffectorFront",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "DeactivateEffectorFront",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "ActivateEffectorBack",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "DeactivateEffectorBack",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "ActivateEffectorBack",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "DeactivateEffectorBack",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "DrawDebugSphere",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "PreFetchLevel",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "GetHarryVertSpeed",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "StartCinematic",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "StartCinematic",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "IsCinematicPlaying",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "IsCinematicPlaying",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsCinematicActivated",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "IsCinematicActivated",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "SetCinematicActive",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "SetCinematicActive",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "HasCinematicPlayed",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "HasCinematicPlayed",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "SetDangerZoneActive",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "SetDangerZoneActive",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "SetCameraPos",
+            "args": "v",
+            "unk": 32
+        },
+        {
+            "name": "SetCameraRadius",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetCameraPitch",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetCameraTilt",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetCameraLeftRightLead",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetCameraFrontBackLead",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "StartShakingCamera",
+            "args": "ff",
+            "unk": 32
+        },
+        {
+            "name": "SetCameraToPath",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "CameraTransitionToLast",
+            "args": "fr",
+            "unk": 32
+        },
+        {
+            "name": "CameraTransitionToFixed",
+            "args": "vvfr",
+            "unk": 32
+        },
+        {
+            "name": "CameraTransitionToFollow",
+            "args": "fr",
+            "unk": 32
+        },
+        {
+            "name": "CameraTransitionToFollowTargetOnly",
+            "args": "vfr",
+            "unk": 32
+        },
+        {
+            "name": "CameraTransitionToPath",
+            "args": "rrfr",
+            "unk": 32
+        },
+        {
+            "name": "CameraTransitionToPathFollow",
+            "args": "rfr",
+            "unk": 32
+        },
+        {
+            "name": "CameraTransitionToLookAround",
+            "args": "fr",
+            "unk": 32
+        },
+        {
+            "name": "CameraTransitionToTether",
+            "args": "rfr",
+            "unk": 32
+        },
+        {
+            "name": "CameraTransitionToWatch",
+            "args": "vrfr",
+            "unk": 32
+        },
+        {
+            "name": "CameraTransitionToPredefined",
+            "args": "rfr",
+            "unk": 32
+        },
+        {
+            "name": "CameraSetModeDuration",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "CameraRecomputeFollowParameters",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "CameraRecomputeFollowAzimuth",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "CameraSetFade",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetCameraToPath",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "SetCameraToPath",
+            "args": "p",
+            "unk": 32
+        },
+        {
+            "name": "SetCameraToFollow",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "SetCameraToDefault",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "LockCamera",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "UnlockCamera",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "CameraTransitionToLast",
+            "args": "frr",
+            "unk": 32
+        },
+        {
+            "name": "CameraTransitionToFixed",
+            "args": "vvfrr",
+            "unk": 32
+        },
+        {
+            "name": "CameraTransitionToFollow",
+            "args": "frr",
+            "unk": 32
+        },
+        {
+            "name": "CameraTransitionToFollowTargetOnly",
+            "args": "vfrr",
+            "unk": 32
+        },
+        {
+            "name": "CameraTransitionToPath",
+            "args": "rrfrr",
+            "unk": 32
+        },
+        {
+            "name": "CameraTransitionToPathFollow",
+            "args": "rfrr",
+            "unk": 32
+        },
+        {
+            "name": "CameraTransitionToTether",
+            "args": "rfrr",
+            "unk": 32
+        },
+        {
+            "name": "CameraTransitionToWatch",
+            "args": "vrfrr",
+            "unk": 32
+        },
+        {
+            "name": "CameraTransitionToPredefined",
+            "args": "rfrr",
+            "unk": 32
+        },
+        {
+            "name": "CameraMoveFollowToCurrent",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "CameraMoveFollowToPredefined",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "CameraActivateOcclusionFade",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "CameraDeactivateOcclusionFade",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "LockNamedCamera",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "UnlockNamedCamera",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "CameraSetSpinRate",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "CameraSetClimbCeiling",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "CameraSetFollowFallFloor",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "CameraClearFollowFallFloor",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "CameraResetDefaultFollowMode",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "SetDefaultCamera",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "CameraActivatePredefined",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "CameraMovePredefinedToPredefined",
+            "args": "rr",
+            "unk": 32
+        },
+        {
+            "name": "CameraSetUpPredefined",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "CameraMovePredefinedToFollow",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "CameraFixOnInstance",
+            "args": "rvff",
+            "unk": 105
+        },
+        {
+            "name": "CameraTransitionToFixed",
+            "args": "fr",
+            "unk": 32
+        },
+        {
+            "name": "CameraQueueTransitionToPredefined",
+            "args": "rfr",
+            "unk": 32
+        },
+        {
+            "name": "CameraQueueTransitionToPathFollow",
+            "args": "rfr",
+            "unk": 32
+        },
+        {
+            "name": "CameraQueueTransitionToPath",
+            "args": "rrfr",
+            "unk": 32
+        },
+        {
+            "name": "CameraQueueTransitionToTether",
+            "args": "rfr",
+            "unk": 32
+        },
+        {
+            "name": "CameraQueueTransitionToLookAround",
+            "args": "fr",
+            "unk": 32
+        },
+        {
+            "name": "CameraQueueTransitionToFollow",
+            "args": "fr",
+            "unk": 32
+        },
+        {
+            "name": "CameraQueueTransitionToWatch",
+            "args": "vrfr",
+            "unk": 32
+        },
+        {
+            "name": "CameraQueueTransitionToFixed",
+            "args": "vvfr",
+            "unk": 32
+        },
+        {
+            "name": "CameraQueueTransitionToFollowTargetOnly",
+            "args": "vfr",
+            "unk": 32
+        },
+        {
+            "name": "CameraBeginQueuedTransitions",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "CameraTransitionToDefault",
+            "args": "fr",
+            "unk": 32
+        },
+        {
+            "name": "CameraQueueTransitionToDefault",
+            "args": "fr",
+            "unk": 32
+        },
+        {
+            "name": "CameraGetEyePosition",
+            "args": "0",
+            "unk": 118
+        },
+        {
+            "name": "CameraSetFollowWatchInstance",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "CameraSetFollowWatchInstance",
+            "args": "p",
+            "unk": 32
+        },
+        {
+            "name": "CameraSkipCurrentQueuedTransition",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "CameraLockFollowXY",
+            "args": "ff",
+            "unk": 32
+        },
+        {
+            "name": "CameraUnlockFollowXY",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "CameraLockFollowTargetXY",
+            "args": "ff",
+            "unk": 32
+        },
+        {
+            "name": "CameraUnlockFollowTargetXY",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "CameraGetTarget",
+            "args": "r",
+            "unk": 118
+        },
+        {
+            "name": "CameraSetTarget",
+            "args": "rv",
+            "unk": 32
+        },
+        {
+            "name": "CameraLockSnapBehindPlayer",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "CameraQueueScript",
+            "args": "e",
+            "unk": 32
+        },
+        {
+            "name": "CameraGetCurrentPosition",
+            "args": "0",
+            "unk": 118
+        },
+        {
+            "name": "CameraActivateSwimAutoPitch",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "CameraDeactivateSwimAutoPitch",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "GetGasRegionActive",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "SetGasRegionActive",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "GetLookAtPointActive",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "SetLookAtPointActive",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "PlayMusic",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "MusicTransition",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "MusicTransition",
+            "args": "rfo",
+            "unk": 32
+        },
+        {
+            "name": "StopMusic",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "StopMusic",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "StopMusic",
+            "args": "fo",
+            "unk": 32
+        },
+        {
+            "name": "HarryAddHeroic",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "HarryRemoveHeroic",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "HarryHasHeroic",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "HarryDamage",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "HarryDamage",
+            "args": "rvff",
+            "unk": 32
+        },
+        {
+            "name": "DamageInstance",
+            "args": "rrf",
+            "unk": 32
+        },
+        {
+            "name": "DamageInstance",
+            "args": "rrvff",
+            "unk": 32
+        },
+        {
+            "name": "DamageInstance",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "DamageInstance",
+            "args": "rvff",
+            "unk": 32
+        },
+        {
+            "name": "HarrySetQuickItem",
+            "args": "ir",
+            "unk": 32
+        },
+        {
+            "name": "HarryRightHandInWater",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "HarryLeftHandInWater",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "PrintAnimPlatformNodes",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "HarrySinkDepth",
+            "args": "0",
+            "unk": 102
+        },
+        {
+            "name": "ActivateAreaBox",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "ActivateAreaBox",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "DeactivateAreaBox",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "DeactivateAreaBox",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "GetHarryCurHealth",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "GetHarryMaxHealth",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "PlatformFadeTo",
+            "args": "rff",
+            "unk": 32
+        },
+        {
+            "name": "PlatformFadeTo",
+            "args": "ff",
+            "unk": 32
+        },
+        {
+            "name": "SetMotionBlur",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "BreakableSetState",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "BreakableSetState",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "HarryShootFromWater",
+            "args": "v",
+            "unk": 32
+        },
+        {
+            "name": "CameraStartWideScreen",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "CameraEndWideScreen",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "OPMDemoQuit",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "OPMDemoGotAllTreasures",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "SetBestiaryState",
+            "args": "si",
+            "unk": 32
+        },
+        {
+            "name": "SetJournalState",
+            "args": "si",
+            "unk": 32
+        },
+        {
+            "name": "IsOPMBuild",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "PlayRumble",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "ActivateFog",
+            "args": "v",
+            "unk": 32
+        },
+        {
+            "name": "DeactivateFog",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "TriggerOlympicsMenu",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "SetBossMeterInstance",
+            "args": "s",
+            "unk": 32
+        },
+        {
+            "name": "SetBossMeterVisibility",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "SetHarryCurHealth",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "HarrySetCollisionRadius",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "HarrySetMaxLife",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "StartSaveUi",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "HarrySetRaftAlwaysSlide",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "HarryGetState",
+            "args": "0",
+            "unk": 114
+        },
+        {
+            "name": "QueueDialogAlways",
+            "args": "s",
+            "unk": 32
+        },
+        {
+            "name": "CrowdRaiseTimed",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "CrowdRaise",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "CrowdLower",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "UseBubbleLifeMeterShader",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "HarrySetHurtFromScriptOnly",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "CrowdSectionRaiseTimed",
+            "args": "fr",
+            "unk": 32
+        },
+        {
+            "name": "CrowdSectionRaise",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "CrowdSectionLower",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "SetDisallowInvRemapping",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "BreakableGetState",
+            "args": "r",
+            "unk": 114
+        },
+        {
+            "name": "BreakableGetState",
+            "args": "0",
+            "unk": 114
+        },
+        {
+            "name": "HarryBlockAction",
+            "args": "s",
+            "unk": 32
+        },
+        {
+            "name": "HarryUnBlockAction",
+            "args": "s",
+            "unk": 32
+        },
+        {
+            "name": "RunEmulator",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "AreAnyCinematicsPlaying",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "TriggerCredits",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "QueueEmulatorDialog",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "GetCanPlayEmulator",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "GetNativeGameDifficulty",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "SetHarryIdolCount",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "CharacterPrintNodes",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "AnimPlatDrawCollision",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "CameraSetSlopeTiltModifier",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetHarrySafePosition",
+            "args": "v",
+            "unk": 32
+        },
+        {
+            "name": "CameraSetCinematicControlLock",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "AnimPlatformSetOverrideBounds",
+            "args": "rvfff",
+            "unk": 32
+        },
+        {
+            "name": "AnimPlatformSetOverrideBounds",
+            "args": "vfff",
+            "unk": 32
+        },
+        {
+            "name": "CameraSetSpinRate",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetGameSpeed",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "CameraOverrideQueueInterrupt",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "CameraRestoreQueueInterrupt",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "QueueDialogHint",
+            "args": "s",
+            "unk": 32
+        },
+        {
+            "name": "DismissDialogHint",
+            "args": "s",
+            "unk": 32
+        },
+        {
+            "name": "EnablePrefetchMeter",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "GetDialogHintVisible",
+            "args": "s",
+            "unk": 105
+        },
+        {
+            "name": "GetRumbleFloat",
+            "args": "0",
+            "unk": 102
+        },
+        {
+            "name": "GetRumbleInt",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "GetRumbleClass",
+            "args": "0",
+            "unk": 114
+        },
+        {
+            "name": "SetMapConnectionState",
+            "args": "si",
+            "unk": 32
+        },
+        {
+            "name": "SetMiniBossCheckpoint",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "GetMiniBossCheckpoint",
+            "args": "0",
+            "unk": 114
+        },
+        {
+            "name": "TriggerMapEvent",
+            "args": "s",
+            "unk": 32
+        },
+        {
+            "name": "HarryTogglePowerGloves",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "ClearLevelVisited",
+            "args": "s",
+            "unk": 32
+        },
+        {
+            "name": "CameraSetFadeColor",
+            "args": "fff",
+            "unk": 32
+        },
+        {
+            "name": "SetBackgroundFillColor",
+            "args": "v",
+            "unk": 32
+        },
+        {
+            "name": "RestoreBackgroundFillColor",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "QueueDialogHint",
+            "args": "sf",
+            "unk": 32
+        },
+        {
+            "name": "DismissDialogHint",
+            "args": "sf",
+            "unk": 32
+        },
+        {
+            "name": "CameraStartWideScreen",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "IncHarryIdolCount",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "ActivateDoorTimer",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "SetDoorTimer",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "PauseDoorTimer",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "ShowDoorTimer",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "GetDoorTimer",
+            "args": "0",
+            "unk": 102
+        },
+        {
+            "name": "ModifyMikayScore",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "ModifyButtScore",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "SetMikayScore",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "ShowButtScores",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "CameraForceTunnelMode",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "CameraForceTunnelMode",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "CameraSetAllowFollowRotation",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "WebSensorGetState",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "CameraSetRaftLandElevation",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "CameraSetBossZoomOn",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "CameraSetWatchOffset",
+            "args": "rv",
+            "unk": 32
+        },
+        {
+            "name": "HarrySetRaftCanSlide",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "HarryGetIsInWell",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "SetSplashEmitterActive",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "SetInstanceSparkLevel",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "WhatEmulatorJustPlayed",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "PlatformSetHitPlayer",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "PlatformSetHitPlayer",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "AnimPlatformOverrideLightingNode",
+            "args": "rs",
+            "unk": 32
+        },
+        {
+            "name": "AnimPlatformOverrideLightingNode",
+            "args": "s",
+            "unk": 32
+        },
+        {
+            "name": "EnablePlantLodAlpha",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "CinematicSetLightScalar",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetMusicVolumeScale",
+            "args": "f",
+            "unk": 32
+        }
+    ],
+    [
+        {
+            "name": "SetMoveAnim",
+            "args": "ra",
+            "unk": 32
+        },
+        {
+            "name": "SetMoveAnim",
+            "args": "a",
+            "unk": 32
+        },
+        {
+            "name": "SetTurnAnim",
+            "args": "ra",
+            "unk": 32
+        },
+        {
+            "name": "SetTurnAnim",
+            "args": "a",
+            "unk": 32
+        },
+        {
+            "name": "SetTurnRAnim",
+            "args": "ra",
+            "unk": 32
+        },
+        {
+            "name": "SetTurnRAnim",
+            "args": "a",
+            "unk": 32
+        },
+        {
+            "name": "SetTurnLAnim",
+            "args": "ra",
+            "unk": 32
+        },
+        {
+            "name": "SetTurnLAnim",
+            "args": "a",
+            "unk": 32
+        },
+        {
+            "name": "SetIdleAnim",
+            "args": "ra",
+            "unk": 32
+        },
+        {
+            "name": "SetIdleAnim",
+            "args": "a",
+            "unk": 32
+        },
+        {
+            "name": "SetHitPoints",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetHitPoints",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetSlingDamage",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetSlingDamage",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetCollision",
+            "args": "rii",
+            "unk": 32
+        },
+        {
+            "name": "SetCollision",
+            "args": "ii",
+            "unk": 32
+        },
+        {
+            "name": "SetInvulnerable",
+            "args": "rii",
+            "unk": 32
+        },
+        {
+            "name": "SetInvulnerable",
+            "args": "ii",
+            "unk": 32
+        },
+        {
+            "name": "SetNoiseRun",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetNoiseRun",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetNoiseWalk",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetNoiseWalk",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetNoiseSneak",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetNoiseSneak",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetAttack2",
+            "args": "rfa",
+            "unk": 32
+        },
+        {
+            "name": "SetAttack2",
+            "args": "fa",
+            "unk": 32
+        },
+        {
+            "name": "SetAttack3",
+            "args": "rfa",
+            "unk": 32
+        },
+        {
+            "name": "SetAttack3",
+            "args": "fa",
+            "unk": 32
+        },
+        {
+            "name": "SetOverrunDistance",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetOverrunDistance",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetLOSDistance",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetLOSDistance",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetLOSAngle",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetLOSAngle",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "GetCurrentFrameNumber",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "GetCurrentFrameNumber",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "SetTurnAroundAnim",
+            "args": "ra",
+            "unk": 32
+        },
+        {
+            "name": "SetTurnAroundAnim",
+            "args": "a",
+            "unk": 32
+        },
+        {
+            "name": "SetCurrentSpline",
+            "args": "rr",
+            "unk": 32
+        },
+        {
+            "name": "SetCurrentSpline",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "GetCurrentState",
+            "args": "r",
+            "unk": 115
+        },
+        {
+            "name": "GetCurrentState",
+            "args": "0",
+            "unk": 115
+        },
+        {
+            "name": "SetCurrentState",
+            "args": "rs",
+            "unk": 105
+        },
+        {
+            "name": "SetCurrentState",
+            "args": "s",
+            "unk": 105
+        },
+        {
+            "name": "SetHarryAwareOfMe",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "SetHarryAwareOfMe",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "SetBeastDead",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "SetBeastDead",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "SetBeastTarget",
+            "args": "rr",
+            "unk": 32
+        },
+        {
+            "name": "SetBeastTarget",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "MoveBeastToTarget",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "MoveBeastToTarget",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "MoveBeastAlongSpline",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "MoveBeastAlongSpline",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "BeastMoveOnSplineEnter",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "BeastMoveOnSplineEnter",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "SetBeastPosition",
+            "args": "rv",
+            "unk": 32
+        },
+        {
+            "name": "SetBeastPosition",
+            "args": "v",
+            "unk": 32
+        },
+        {
+            "name": "TurnBeastToFaceTarget",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "TurnBeastToFaceTarget",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "GetEndOfBeastsSpline",
+            "args": "r",
+            "unk": 118
+        },
+        {
+            "name": "GetEndOfBeastsSpline",
+            "args": "0",
+            "unk": 118
+        },
+        {
+            "name": "GetStartOfBeastsSpline",
+            "args": "r",
+            "unk": 118
+        },
+        {
+            "name": "GetStartOfBeastsSpline",
+            "args": "0",
+            "unk": 118
+        },
+        {
+            "name": "GetEndOfSpline",
+            "args": "r",
+            "unk": 118
+        },
+        {
+            "name": "GetStartOfSpline",
+            "args": "r",
+            "unk": 118
+        },
+        {
+            "name": "SetBeastSplineMode",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "SetBeastSplineMode",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "SetBeastSplineDirection",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "SetBeastSplineDirection",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "PrintStateHistory",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "GetBeastPosition",
+            "args": "r",
+            "unk": 118
+        },
+        {
+            "name": "GetBeastPositionI",
+            "args": "0",
+            "unk": 118
+        },
+        {
+            "name": "DamageBeast",
+            "args": "rv",
+            "unk": 32
+        },
+        {
+            "name": "DamageBeast",
+            "args": "v",
+            "unk": 32
+        },
+        {
+            "name": "RespawnBeast",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "RespawnBeast",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "SetCurrentStateImmediate",
+            "args": "rs",
+            "unk": 105
+        },
+        {
+            "name": "SetCurrentStateImmediate",
+            "args": "s",
+            "unk": 105
+        },
+        {
+            "name": "SetBeastMaxSplineTurnAngle",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetBeastMaxSplineTurnAngle",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetBeastSplineAnimTurnAngle",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetBeastSplineAnimTurnAngle",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetCoverAvailable",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "SetCoverAvailable",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "DoesBeastHaveSpline",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "DoesBeastHaveSpline",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "SetBeastBehavior",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "SetBeastBehavior",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "SetBeastShotAccuracy",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetBeastShotAccuracy",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetBeastDrawRadius",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "ResetBeastDrawRadius",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "SetBeastDying",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "SetBeastDying",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "SetHarrySafeFromMe",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "SetHarrySafeFromMe",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "DeactivateTurnAnim",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "DeactivateTurnAnim",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "BeastIsNotDeadOrDying",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "BeastIsNotDeadOrDying",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "SetBeastShadowRadius",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetBeastShadowRadius",
+            "args": "f",
+            "unk": 32
+        }
+    ],
+    [
+        {
+            "name": "SetPinned",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "SetActive",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "SetMass",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetRestitution",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetFriction",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetVelocity",
+            "args": "rv",
+            "unk": 32
+        },
+        {
+            "name": "GetRigidPosition",
+            "args": "r",
+            "unk": 118
+        },
+        {
+            "name": "ApplyImpulse",
+            "args": "rv",
+            "unk": 32
+        },
+        {
+            "name": "ApplyImpulseAt",
+            "args": "rvv",
+            "unk": 32
+        },
+        {
+            "name": "ZeroForce",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "DisableCollision",
+            "args": "rr",
+            "unk": 32
+        },
+        {
+            "name": "EnableCollision",
+            "args": "rr",
+            "unk": 32
+        },
+        {
+            "name": "ShiftCenterOfMass",
+            "args": "rv",
+            "unk": 32
+        },
+        {
+            "name": "IsHarryOnHKPlatform",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "ApplyForce",
+            "args": "rv",
+            "unk": 32
+        },
+        {
+            "name": "ApplyForce",
+            "args": "rvv",
+            "unk": 32
+        },
+        {
+            "name": "IsRBCloseToMarker",
+            "args": "rr",
+            "unk": 105
+        },
+        {
+            "name": "GetRBSpeed",
+            "args": "r",
+            "unk": 102
+        },
+        {
+            "name": "SetPhantom",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "GetPhantom",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "GetAngularSpeed",
+            "args": "r",
+            "unk": 102
+        },
+        {
+            "name": "AddToDragAction",
+            "args": "rfff",
+            "unk": 32
+        },
+        {
+            "name": "RemoveFromDragAction",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "SetPtPStrength",
+            "args": "ssf",
+            "unk": 32
+        },
+        {
+            "name": "SetPtPTau",
+            "args": "ssf",
+            "unk": 32
+        },
+        {
+            "name": "IsPinned",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "IsPinned",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "IsActive",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "IsActive",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "VineReleaseRightHand",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "VineReleaseLeftHand",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "VineGrabRightHandUp",
+            "args": "i",
+            "unk": 105
+        },
+        {
+            "name": "VineGrabLeftHandUp",
+            "args": "i",
+            "unk": 105
+        },
+        {
+            "name": "VineGrabRightHandDown",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "VineGrabLeftHandDown",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "SetRigidBodyPos",
+            "args": "rv",
+            "unk": 32
+        },
+        {
+            "name": "SetRigidBodyPos",
+            "args": "v",
+            "unk": 32
+        },
+        {
+            "name": "SetPinned",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "SetActive",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "SetMass",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetRestitution",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetFriction",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetVelocity",
+            "args": "v",
+            "unk": 32
+        },
+        {
+            "name": "GetRigidPosition",
+            "args": "0",
+            "unk": 118
+        },
+        {
+            "name": "ApplyImpulse",
+            "args": "v",
+            "unk": 32
+        },
+        {
+            "name": "ApplyImpulseAt",
+            "args": "vv",
+            "unk": 32
+        },
+        {
+            "name": "ZeroForce",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "ShiftCenterOfMass",
+            "args": "v",
+            "unk": 32
+        },
+        {
+            "name": "IsRBCloseToMarker",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "IsHarryOnHKPlatform",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "ApplyForce",
+            "args": "v",
+            "unk": 32
+        },
+        {
+            "name": "ApplyForce",
+            "args": "vv",
+            "unk": 32
+        },
+        {
+            "name": "GetRBSpeed",
+            "args": "0",
+            "unk": 102
+        },
+        {
+            "name": "SetPhantom",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "GetPhantom",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "GetAngularSpeed",
+            "args": "0",
+            "unk": 102
+        },
+        {
+            "name": "AddToDragAction",
+            "args": "fff",
+            "unk": 32
+        },
+        {
+            "name": "RemoveFromDragAction",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "SetRBEmitterActive",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "SetRBEmitterActive",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "VineClimbAnimFinished",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "VineGrabBothHandsDown",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "AddRBToWindAction",
+            "args": "rvff",
+            "unk": 32
+        },
+        {
+            "name": "AddRBToWindAction",
+            "args": "vff",
+            "unk": 32
+        },
+        {
+            "name": "RemoveRBFromWindAction",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "RemoveRBFromWindAction",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "AddClothToWindAction",
+            "args": "rvff",
+            "unk": 32
+        },
+        {
+            "name": "RemoveClothFromWindAction",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "BreakHavokBreakable",
+            "args": "rvfi",
+            "unk": 32
+        },
+        {
+            "name": "BreakHavokBreakable",
+            "args": "vfi",
+            "unk": 32
+        },
+        {
+            "name": "SetRBEmitterInitialVelocity",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetRBEmitterInitialVelocity",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetRBEmitterDamageProperties",
+            "args": "rff",
+            "unk": 32
+        },
+        {
+            "name": "SetRBEmitterDamageProperties",
+            "args": "ff",
+            "unk": 32
+        },
+        {
+            "name": "SetRBEmitterPosSpread",
+            "args": "rv",
+            "unk": 32
+        },
+        {
+            "name": "SetRBEmitterPosSpread",
+            "args": "v",
+            "unk": 32
+        },
+        {
+            "name": "SetRBEmitterDirSpread",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetRBEmitterDirSpread",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetRBEmitterActive",
+            "args": "rii",
+            "unk": 32
+        },
+        {
+            "name": "SetRBEmitterActive",
+            "args": "ii",
+            "unk": 32
+        },
+        {
+            "name": "SetRigidBodyHitPlayer",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "SetRigidBodyHitPlayer",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "EnableCollisionGroups",
+            "args": "ii",
+            "unk": 32
+        },
+        {
+            "name": "DisableCollisionGroups",
+            "args": "ii",
+            "unk": 32
+        },
+        {
+            "name": "SetClothActive",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "SetClothActive",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "GetHavokBreakableState",
+            "args": "r",
+            "unk": 114
+        },
+        {
+            "name": "GetHavokBreakableState",
+            "args": "0",
+            "unk": 114
+        },
+        {
+            "name": "PuscaRigidBodyDeactivate",
+            "args": "r",
+            "unk": 114
+        },
+        {
+            "name": "PuscaRigidBodyDeactivate",
+            "args": "0",
+            "unk": 114
+        },
+        {
+            "name": "PuscaRigidBodyActivate",
+            "args": "r",
+            "unk": 114
+        },
+        {
+            "name": "PuscaRigidBodyActivate",
+            "args": "0",
+            "unk": 114
+        },
+        {
+            "name": "SetRigidBodyDamping",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetRigidBodyDamping",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetHavokBreakableInvincible",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "SetHavokBreakableInvincible",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "StartClothFadeOut",
+            "args": "rf",
+            "unk": 32
+        }
+    ],
+    [
+        {
+            "name": "SetFlockBeastDistanceFromTarget",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetFlockBeastDistanceFromTarget",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetFlockBeastAngleFromTarget",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetFlockBeastAngleFromTarget",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetMaxFlockBeastSpeed",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetMaxFlockBeastSpeed",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetMinFlockBeastSpeed",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetMinFlockBeastSpeed",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetFlockBeastAccleration",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetFlockBeastAccleration",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetFlockBeastTargetSpeed",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetFlockBeastTargetSpeed",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "SetFlockBeastCollisionSize",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetFlockBeastCollisionSize",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "TurnWallClimbingOff",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "TurnWallClimbingOff",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "TurnWallClimbingOn",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "TurnWallClimbingOn",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "MMGetChildInstance",
+            "args": "r",
+            "unk": 114
+        },
+        {
+            "name": "MMGetChildInstance",
+            "args": "0",
+            "unk": 114
+        },
+        {
+            "name": "EESetShockRadius",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "EESetShockRadius",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "PiranhaSetAttackTimer",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "PiranhaSetAttackTimer",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "MegaMonkeySetActive",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "MegaMonkeySetActive",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "SetHarrySafeFromWaterCrocs",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "PutHowlerToSleep",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "PutHowlerToSleep",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "SetHowlersActive",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "SetHowlersActive",
+            "args": "0",
+            "unk": 32
+        },
+        {
+            "name": "PuscaCanSummonNow",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "SetSupaiFight",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "SetPuscaScale",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetButterflyChaseSpeed",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "SetButterflyChaseSpeed",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "PuscaMinionsToSummon",
+            "args": "r",
+            "unk": 105
+        }
+    ],
+    [
+        {
+            "name": "UseableCheckState",
+            "args": "rr",
+            "unk": 105
+        },
+        {
+            "name": "UseableSetState",
+            "args": "rri",
+            "unk": 32
+        },
+        {
+            "name": "UseableCheckStateC",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "UseableSetStateC",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "PlantSetState",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "PlantSetStateC",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenGetAmmoType",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "ProjGenGetAmmoTypeC",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "ProjGenSetAmmoType",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenSetAmmoTypeC",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenSetActive",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenSetActiveC",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenSetPower",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenSetPowerC",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenSetShotDelta",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenSetShotDeltaC",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenSetvPosSpreadRad",
+            "args": "rv",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenSetvPosSpreadRadC",
+            "args": "v",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenSetTurnSpreadAng",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenSetTurnSpreadAngC",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenSetPitchSpreadAng",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenSetPitchSpreadAngC",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenSetshotDeltaSpread",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenSetshotDeltaSpreadC",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenSetshotPowerSpread",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenSetshotPowerSpreadC",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenSetshotSpeedMin",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenSetshotSpeedMinC",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenSetshotSpeedMax",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenSetshotSpeedMaxC",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenSetPos",
+            "args": "rv",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenSetPosC",
+            "args": "v",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenSetTrackPlayerXY",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenSetTrackPlayerXYC",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenGetPos",
+            "args": "r",
+            "unk": 118
+        },
+        {
+            "name": "ProjGenGetPosC",
+            "args": "0",
+            "unk": 118
+        },
+        {
+            "name": "ProjGenGetTrackPlayerActive",
+            "args": "r",
+            "unk": 105
+        },
+        {
+            "name": "ProjGenGetTrackPlayerActiveC",
+            "args": "0",
+            "unk": 105
+        },
+        {
+            "name": "PointLightSetRefInstance",
+            "args": "rr",
+            "unk": 32
+        },
+        {
+            "name": "PointLightSetRefInstance",
+            "args": "r",
+            "unk": 32
+        },
+        {
+            "name": "PointLightSetOn",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "PointLightSetOn",
+            "args": "i",
+            "unk": 32
+        },
+        {
+            "name": "PointLightSetPos",
+            "args": "rv",
+            "unk": 32
+        },
+        {
+            "name": "PointLightSetPos",
+            "args": "v",
+            "unk": 32
+        },
+        {
+            "name": "PointLightSetPosOff",
+            "args": "rv",
+            "unk": 32
+        },
+        {
+            "name": "PointLightSetPosOff",
+            "args": "v",
+            "unk": 32
+        },
+        {
+            "name": "PointLightSetPosSpread",
+            "args": "rv",
+            "unk": 32
+        },
+        {
+            "name": "PointLightSetPosSpread",
+            "args": "v",
+            "unk": 32
+        },
+        {
+            "name": "PointLightSetColor",
+            "args": "rv",
+            "unk": 32
+        },
+        {
+            "name": "PointLightSetColor",
+            "args": "v",
+            "unk": 32
+        },
+        {
+            "name": "PointLightSetColor1",
+            "args": "rv",
+            "unk": 32
+        },
+        {
+            "name": "PointLightSetColor1",
+            "args": "v",
+            "unk": 32
+        },
+        {
+            "name": "PointLightSetIntensity",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "PointLightSetIntensity",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "PointLightSetIntensity1",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "PointLightSetIntensity1",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "PointLightSetIntensityFreq",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "PointLightSetIntensityFreq",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "PointLightSetIntensityFreqSpread",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "PointLightSetIntensityFreqSpread",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "PointLightSetColorFreq",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "PointLightSetColorFreq",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "PointLightSetColorFreqSpread",
+            "args": "rf",
+            "unk": 32
+        },
+        {
+            "name": "PointLightSetColorFreqSpread",
+            "args": "f",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenSetAlwaysUpdate",
+            "args": "ri",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenSetTargetInstance",
+            "args": "rr",
+            "unk": 32
+        },
+        {
+            "name": "ProjGenGetLastShotDirC",
+            "args": "0",
+            "unk": 118
+        },
+        {
+            "name": "ProjGenGetLastShotPosC",
+            "args": "0",
+            "unk": 118
+        },
+        {
+            "name": "ProjGenGetLastShotDir",
+            "args": "r",
+            "unk": 118
+        },
+        {
+            "name": "ProjGenGetLastShotPos",
+            "args": "r",
+            "unk": 118
+        },
+        {
+            "name": "PointLightSetRefInstance",
+            "args": "rri",
+            "unk": 32
+        },
+        {
+            "name": "PointLightSetAlwaysUpdate",
+            "args": "ri",
+            "unk": 32
+        }
+    ]
+]

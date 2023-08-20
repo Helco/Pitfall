@@ -1,19 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <WarningsAsErrors>nullable</WarningsAsErrors>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ScriptTables.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="ScriptTables.json" />
+    <ProjectReference Include="..\Pitfall\Pitfall.csproj" />
   </ItemGroup>
 
 </Project>

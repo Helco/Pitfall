@@ -4,52 +4,11 @@ using System.Linq;
 using System.IO;
 using System.Numerics;
 using System.Runtime.InteropServices;
-using static Pitfall.Storables.Utils;
+using static Pitfall.Utils;
 
 namespace Pitfall.Storables;
 
-internal static class Utils
-{
-    public static T[] ReadArray<T>(this BinaryReader reader, int count, Func<BinaryReader, T> readElement) =>
-        Enumerable.Repeat(reader, count).Select(readElement).ToArray();
-
-    public static unsafe T[] ReadArray<T>(this BinaryReader reader, int count, int expectedSize) where T : unmanaged
-    {
-        if (!BitConverter.IsLittleEndian || sizeof(T) != expectedSize)
-            throw new NotSupportedException("Fast path is not available on this platform");
-        var result = new T[count];
-        var resultData = MemoryMarshal.AsBytes(result.AsSpan());
-        if (reader.BaseStream.Read(resultData) != resultData.Length)
-            throw new EndOfStreamException();
-        return result;
-    }
-
-    public static Vector4 ReadVector4(this BinaryReader r) => new Vector4(r.ReadSingle(), r.ReadSingle(), r.ReadSingle(), r.ReadSingle());
-    public static Vector3 ReadVector3(this BinaryReader r) => new Vector3(r.ReadSingle(), r.ReadSingle(), r.ReadSingle());
-    public static Byte4 ReadByte4(this BinaryReader r) => new Byte4(r.ReadByte(), r.ReadByte(), r.ReadByte(), r.ReadByte());
-    public static Vector2 ReadVector2(this BinaryReader r) => new Vector2(r.ReadSingle(), r.ReadSingle());
-
-    public static string ReadCString(this BinaryReader reader)
-    {
-        var nameBytes = new List<byte>();
-        while (true)
-        {
-            var b = reader.ReadByte();
-            if (b == 0)
-                break;
-            nameBytes.Add(b);
-        }
-        return System.Text.Encoding.UTF8.GetString(nameBytes.ToArray());
-    }
-}
-
 public interface IModelPart { }
-
-[StructLayout(LayoutKind.Sequential, Pack = 1, Size = 4)]
-public readonly record struct Byte4(byte R, byte G, byte B, byte A)
-{
-    public Vector4 AsNormalized => new Vector4(R, G, B, A) / 255f;
-}
 
 [StorableType]
 public class ERModel : EResource
@@ -288,7 +247,6 @@ public class ERModel : EResource
         var zeroBytes = reader.ReadBytes(6);
         if (zeroBytes.Any(b => b != 0))
             throw new InvalidDataException("Expected first six bytes to be zero");
-        ReadVersion = 0;
         Read(reader);
     }
 

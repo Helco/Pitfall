@@ -12,7 +12,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pitfall", "Pitfall\Pitfall.csproj", "{32A9A9DB-1C72-4F89-A40E-90ACF0B187FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pitfall", "Pitfall\Pitfall.csproj", "{32A9A9DB-1C72-4F89-A40E-90ACF0B187FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptDisassembler", "ScriptDisassembler\ScriptDisassembler.csproj", "{DFE7A822-7DDD-486C-AE92-C1454C8CDE0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,10 @@ Global
 		{32A9A9DB-1C72-4F89-A40E-90ACF0B187FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32A9A9DB-1C72-4F89-A40E-90ACF0B187FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32A9A9DB-1C72-4F89-A40E-90ACF0B187FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFE7A822-7DDD-486C-AE92-C1454C8CDE0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFE7A822-7DDD-486C-AE92-C1454C8CDE0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFE7A822-7DDD-486C-AE92-C1454C8CDE0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFE7A822-7DDD-486C-AE92-C1454C8CDE0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

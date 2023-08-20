@@ -1,14 +1,15 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Text;
-using Pitfall.Storables;
 
 namespace Pitfall;
 
 [StorableType]
 public class EStorable
 {
-    public ushort ReadVersion { get; internal set; }
+    // a bit hacky but the alternative is much more boilerplate
+    public ushort ReadVersion => DynTypeInfo.GetReadVersionFor(new StackFrame(1).GetMethod()!.DeclaringType!);
     public virtual void Read(BinaryReader reader) { }
 }
 
@@ -28,27 +29,43 @@ public class StorableTypeAttribute : Attribute
 public static class DynTypeInfo
 {
     private static IReadOnlyDictionary<uint, Func<EStorable>>? allStorableCtors = null;
+    private static IReadOnlyDictionary<uint, Type>? allStorableTypes = null;
+    public static IReadOnlyDictionary<uint, Type> AllStorableTypes
+    {
+        get
+        {
+            if (allStorableTypes != null)
+                return allStorableTypes;
+            allStorableTypes = typeof(EStorable).Assembly
+                .GetTypes()
+                .Where(t => t.GetCustomAttribute<StorableTypeAttribute>() != null)
+                .ToDictionary(
+                    t => HashName(t.Name),
+                    t => t);
+            return allStorableTypes;
+        }
+    }
     public static IReadOnlyDictionary<uint, Func<EStorable>> AllStorableCtors
     {
         get
         {
             if (allStorableCtors != null)
                 return allStorableCtors;
-            allStorableCtors = typeof(EStorable).Assembly
-                .GetTypes()
-                .Where(t => t.GetCustomAttribute<StorableTypeAttribute>() != null)
-                .ToDictionary<Type, uint, Func<EStorable>>(
-                    t => HashName(t.Name),
-                    t =>
-                    {
-                        var ctor = t.GetConstructor(Array.Empty<Type>());
-                        return () => (EStorable)ctor!.Invoke(null);
-                    });
+            allStorableCtors = AllStorableTypes.ToDictionary<KeyValuePair<uint, Type>, uint, Func<EStorable>>(
+                kv => kv.Key,
+                kv =>
+                {
+                    var ctor = kv.Value.GetConstructor(Array.Empty<Type>());
+                    return () => (EStorable)ctor!.Invoke(null);
+                });
             return allStorableCtors;
         }
     }
 
     private static Dictionary<BinaryReader, EStorable[]> subObjectsPerReader = new();
+    private static Dictionary<Type, ushort> readVersions = new();
+
+    public static ushort GetReadVersionFor(Type type) => readVersions.TryGetValue(type, out var version) ? version : (ushort)0;
 
     public static EStorable? ReadStorable(this BinaryReader reader) => reader.ReadStorable(out _);
     public static EStorable? ReadStorable(this BinaryReader reader, out EStorable[] allSubObjects)
@@ -58,11 +75,12 @@ public static class DynTypeInfo
         if (idOrCount == 0)
             return null;
         else if (subObjectsPerReader.TryGetValue(reader, out var prevSubObjects))
-            return prevSubObjects[idOrCount];
+            return prevSubObjects[idOrCount - 1];
 
         var subObjects = new EStorable[idOrCount];
         allSubObjects = subObjects;
         subObjectsPerReader[reader] = subObjects;
+        readVersions.Clear();
 
         for (var i = 0u; i < idOrCount;)
         {
@@ -70,6 +88,8 @@ public static class DynTypeInfo
             var readVersion = reader.ReadUInt16();
             var untilIndex = i + reader.ReadUInt32();
             var typeCtor = GetTypeCtor(typeId);
+            var type = AllStorableTypes[typeId];
+            readVersions[type] = readVersion;
             for (; i < untilIndex; i++)
                 subObjects[i] = typeCtor();
         }
