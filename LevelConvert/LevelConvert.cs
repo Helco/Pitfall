@@ -1,12 +1,10 @@
-﻿using Pitfall.Storables;
-
-namespace LevelConvert;
+﻿namespace Pitfall;
 
 internal class LevelConvert
 {
     static readonly string[] BannedFiles = new[]
     {
-        "files.list"
+        "files.list",
     };
 
     static void Main(string[] args)
@@ -21,7 +19,7 @@ internal class LevelConvert
             var name = Path.GetFileName(file);
             using var fileStream = new FileStream(file, FileMode.Open, FileAccess.Read);
             using var reader = new BinaryReader(fileStream);
-            var level = ERLevel.ReadLevel(reader);
+            var level = new Level(reader);
             Console.WriteLine(name);
         }
     }

@@ -22,15 +22,6 @@ public class ERLevel : EResource
     public IReadOnlyList<Section> Sections { get; private set; } = Array.Empty<Section>();
     public EStorable? Final { get; private set; }
 
-    public static ERLevel ReadLevel(BinaryReader reader)
-    {
-        reader.ReadUInt32(); // unused int
-        var storable = reader.ReadStorable();
-        if (storable is not ERLevel level)
-            throw new InvalidDataException($"Expected an ERLevel but got {storable?.GetType()?.Name ?? "<null>"}");
-        return level;
-    }
-
     public override void Read(BinaryReader reader)
     {
         if (ReadVersion != 0)

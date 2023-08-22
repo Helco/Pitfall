@@ -31,4 +31,4 @@ public class EInstance : EStorable
 }
 
 [StorableType]
-public class EIGameInstance : EStorable { }
+public class EIGameInstance : EInstance { }
