@@ -16,7 +16,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pitfall", "Pitfall\Pitfall.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScriptDisassembler", "ScriptDisassembler\ScriptDisassembler.csproj", "{DFE7A822-7DDD-486C-AE92-C1454C8CDE0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatasetExtract", "DatasetExtract\DatasetExtract.csproj", "{63F82A02-AD8E-4872-9050-52CAD896C428}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatasetExtract", "DatasetExtract\DatasetExtract.csproj", "{63F82A02-AD8E-4872-9050-52CAD896C428}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LevelConvert", "LevelConvert\LevelConvert.csproj", "{0DE14D25-A034-480C-87DD-D998C479F12C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimationConvert", "AnimationConvert\AnimationConvert.csproj", "{8B27BA76-D975-4B71-B691-6B59628AA118}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +48,14 @@ Global
 		{63F82A02-AD8E-4872-9050-52CAD896C428}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63F82A02-AD8E-4872-9050-52CAD896C428}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63F82A02-AD8E-4872-9050-52CAD896C428}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DE14D25-A034-480C-87DD-D998C479F12C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DE14D25-A034-480C-87DD-D998C479F12C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DE14D25-A034-480C-87DD-D998C479F12C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DE14D25-A034-480C-87DD-D998C479F12C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B27BA76-D975-4B71-B691-6B59628AA118}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B27BA76-D975-4B71-B691-6B59628AA118}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B27BA76-D975-4B71-B691-6B59628AA118}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B27BA76-D975-4B71-B691-6B59628AA118}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

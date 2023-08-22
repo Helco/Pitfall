@@ -98,7 +98,7 @@ public static class DynTypeInfo
         {
             subObject.Read(reader);
             if (reader.ReadByte() != 0xB7)
-                throw new InvalidDataException("Magic byte was not found after EStorable");
+                throw new InvalidDataException($"Magic byte was not found after {subObject.GetType().Name}");
         }
 
         subObjectsPerReader.Remove(reader);
