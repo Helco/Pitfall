@@ -11,16 +11,19 @@ public class ERLevel : EResource
 {
     public class Section
     {
-        public EStorable? Storable1 { get; init; }
-        public EStorable? Storable2 { get; init; }
-        public IReadOnlyList<EStorable?> List1 { get; init; } = Array.Empty<EStorable?>();
-        public IReadOnlyList<EStorable?> List2 { get; init; } = Array.Empty<EStorable?>();
+        // usually EBoundTreeNode to build up a BSP of mostly StaticSubModel(Shader)
+        public EStorable? Storable { get; init; }
+
+        // these are always null/empty for PC files
+        public EStorable? NullStorable { get; init; }
+        public IReadOnlyList<EStorable?> EmptyList1 { get; init; } = Array.Empty<EStorable?>();
+        public IReadOnlyList<EStorable?> EmptyList2 { get; init; } = Array.Empty<EStorable?>();
     }
 
-    public IReadOnlyDictionary<uint, EStorable?> Map { get; private set; } = new Dictionary<uint, EStorable?>();
-    public IReadOnlyList<EStorable?> List { get; private set; } = Array.Empty<EStorable?>();
+    public IReadOnlyDictionary<uint, EStorable?> EmptyMap { get; private set; } = new Dictionary<uint, EStorable?>();
+    public IReadOnlyList<EILight> Lights { get; private set; } = Array.Empty<EILight>();
     public IReadOnlyList<Section> Sections { get; private set; } = Array.Empty<Section>();
-    public EStorable? Final { get; private set; }
+    public ELightOctree? LightOctree { get; private set; }
 
     public override void Read(BinaryReader reader)
     {
@@ -32,18 +35,18 @@ public class ERLevel : EResource
         var map = new Dictionary<uint, EStorable?>();
         for (int i = 0; i < mapCount; i++)
             map.Add(reader.ReadUInt32(), reader.ReadStorable());
-        Map = map;
+        EmptyMap = map;
 
-        List = reader.ReadArray(reader.ReadInt32(), DynTypeInfo.ReadStorable);
+        Lights = reader.ReadArray(reader.ReadInt32(), DynTypeInfo.ExpectStorable<EILight>);
         Sections = reader.ReadArray(reader.ReadInt32(), ReadSection);
-        Final = reader.ReadStorable();
+        LightOctree = reader.ExpectStorable<ELightOctree>();
     }
 
     private static Section ReadSection(BinaryReader reader) => new Section
     {
-        Storable1 = reader.ReadStorable(),
-        Storable2 = reader.ReadStorable(),
-        List1 = reader.ReadArray(reader.ReadInt32(), DynTypeInfo.ReadStorable),
-        List2 = reader.ReadArray(reader.ReadInt32(), DynTypeInfo.ReadStorable)
+        Storable = reader.ReadStorable(),
+        NullStorable = reader.ReadStorable(),
+        EmptyList1 = reader.ReadArray(reader.ReadInt32(), DynTypeInfo.ReadStorable),
+        EmptyList2 = reader.ReadArray(reader.ReadInt32(), DynTypeInfo.ReadStorable)
     };
 }

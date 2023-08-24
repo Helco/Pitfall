@@ -11,23 +11,17 @@ namespace Pitfall;
 
 public class Level
 {
-    public ERLevel storableLevel;
-    public byte[] unknownData; // seems like a rather simple file format containing a BSP
-    public EHavokWorld? havokWorld;
-    public EStorable?[] extendables;
+    public ERLevel LevelData { get; }
+    public byte[] UnknownData { get; } // seems like a rather simple file format containing a BSP
+    public EHavokWorld? HavokWorld { get; }
+    public EStorable?[] Instances { get; }
 
     public Level(BinaryReader reader)
     {
         reader.ReadUInt32(); // unused int
-        var storable = reader.ReadStorable();
-        if (storable is not ERLevel level)
-            throw new InvalidDataException($"Expected an ERLevel but got {storable?.GetType()?.Name ?? "<null>"}");
-        storableLevel = level;
-        unknownData = reader.ReadArray<byte>(reader.ReadInt32(), 1);
-        var havokWorldStorable = reader.ReadStorable();
-        havokWorld = havokWorldStorable as EHavokWorld;
-        if (havokWorldStorable is not null && havokWorld is null)
-            throw new InvalidDataException($"Expected a EHavokWorld but got {havokWorldStorable.GetType()?.Name ?? "<null>"}");
-        extendables = reader.ReadInstanceArray();
+        LevelData = reader.ExpectStorable<ERLevel>();
+        UnknownData = reader.ReadArray<byte>(reader.ReadInt32(), 1);
+        HavokWorld = reader.ReadStorable<EHavokWorld>();
+        Instances = reader.ReadInstanceArray();
     }
 }

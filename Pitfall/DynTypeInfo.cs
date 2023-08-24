@@ -68,6 +68,19 @@ public static class DynTypeInfo
 
     public static ushort GetReadVersionFor(Type type) => readVersions.TryGetValue(type, out var version) ? version : (ushort)0;
 
+    public static T ExpectStorable<T>(this BinaryReader reader) where T : EStorable =>
+        reader.ReadStorable<T>() ?? throw new InvalidDataException($"Expected a {typeof(T).Name} but got nothing");
+
+    public static T? ReadStorable<T>(this BinaryReader reader) where T : EStorable
+    {
+        var storable = ReadStorable(reader);
+        if (storable == null)
+            return null;
+        if (storable is not T t)
+            throw new InvalidDataException($"Expected a {typeof(T).Name} but got a {storable.GetType().Name}");
+        return t;
+    }
+
     public static EStorable? ReadStorable(this BinaryReader reader) => reader.ReadStorable(out _);
     public static EStorable? ReadStorable(this BinaryReader reader, out EStorable[] allSubObjects)
     {
@@ -134,7 +147,6 @@ public static class DynTypeInfo
                     // actuall not so much as override but this is looked up and expected to already be present
                     // in some map I have not looked into much
                     uint overrideID = reader.ReadUInt32();
-
                     allSubObjects[i] = (EInstance)ctor();
                     // not no Storable.Read is done, so a lot of uninitialized data. that is weird
                     allSubObjects[i]!.instanceID = overrideID;
