@@ -133,6 +133,7 @@ public static class DynTypeInfo
             var setTotalSize = reader.ReadUInt32();
             if (!AllStorableCtors.TryGetValue(typeId, out var ctor))
             {
+                Statistics.Add(typeName, setEnd - i, false);
                 reader.BaseStream.Position += setTotalSize;
                 i = setEnd;
                 Console.WriteLine($"Warning: Could not read {typeName}");
@@ -141,6 +142,7 @@ public static class DynTypeInfo
                 throw new InvalidDataException("Instance array contains storable types that are not subclass of EInstance");
             else
             {
+                Statistics.Add(typeName, setEnd - i, true);
                 readVersions[AllStorableTypes[typeId]] = readVersion;
                 for (; i < setEnd; i++)
                 {
@@ -157,6 +159,37 @@ public static class DynTypeInfo
         }
         return allSubObjects;
     }
+
+    public class InstanceStatistics
+    {
+        private Dictionary<string, (int sceneCount, int instanceCount, bool success)> perType = new();
+        public IReadOnlyDictionary<string, (int sceneCount, int instanceCount, bool success)> PerType => perType;
+        public int TotalEntityCount => PerType.Sum(kv => kv.Value.instanceCount);
+        public int ReadEntityCount => PerType.Where(kv => kv.Value.success).Sum(kv => kv.Value.instanceCount);
+        public int IgnoredEntityCount => PerType.Where(kv => !kv.Value.success).Sum(kv => kv.Value.instanceCount);
+
+        public void Add(string type, uint instanceCount, bool success)
+        {
+            perType.TryGetValue(type, out var t);
+            t.sceneCount++;
+            t.instanceCount += (int)instanceCount;
+            t.success = success;
+            perType[type] = t;
+        }
+
+        public void Print()
+        {
+            var unread = PerType.Where(kv => !kv.Value.success);
+            Console.WriteLine($"Read {perType.Count - unread.Count()}/{perType.Count} types with {ReadEntityCount}/{TotalEntityCount} instances ({ReadEntityCount * 100 / TotalEntityCount}%)");
+            if (!unread.Any())
+                return;
+            Console.WriteLine($"{unread.Count()} unread instance types:");
+            foreach (var kv in unread.OrderByDescending(kv => kv.Value.instanceCount))
+                Console.WriteLine($"In {kv.Value.sceneCount:D2} scenes, totalling {kv.Value.instanceCount:D4} instances - {kv.Key}");
+        }
+    }
+
+    public static InstanceStatistics Statistics { get; } = new(); 
 
     private static Func<EStorable> GetTypeCtor(uint typeId)
     {

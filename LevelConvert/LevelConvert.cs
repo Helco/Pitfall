@@ -22,5 +22,6 @@ internal class LevelConvert
             var level = new Level(reader);
             Console.WriteLine(name);
         }
+        DynTypeInfo.Statistics.Print();
     }
 }
