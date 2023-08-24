@@ -10,7 +10,7 @@ namespace Pitfall.Storables;
 [StorableType]
 public class EInstance : EStorable
 {
-    public uint instI1, instI2;
+    public uint instanceID, instI2;
     public EStorable? instanceParent { get; set; }
     public uint instFlags1;
     public Vector3 instV1, instV2;
@@ -19,7 +19,7 @@ public class EInstance : EStorable
 
     public override void Read(BinaryReader reader)
     {
-        instI1 = reader.ReadUInt32();
+        instanceID = reader.ReadUInt32();
         instI2 = reader.ReadUInt32();
         instanceParent = reader.ReadStorable();
         instFlags1 = reader.ReadUInt32();
@@ -27,6 +27,11 @@ public class EInstance : EStorable
         instV2 = reader.ReadVector3();
         instI3 = reader.ReadUInt32();
         instFlags2 = reader.ReadUInt32();
+    }
+
+    public virtual void ReadInstanceData(BinaryReader reader)
+    {
+
     }
 }
 

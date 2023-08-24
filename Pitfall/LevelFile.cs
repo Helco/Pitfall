@@ -13,7 +13,8 @@ public class Level
 {
     public ERLevel storableLevel;
     public byte[] unknownData; // seems like a rather simple file format containing a BSP
-    public EStorable? unkStorable;
+    public EHavokWorld? havokWorld;
+    public EStorable?[] extendables;
 
     public Level(BinaryReader reader)
     {
@@ -23,6 +24,10 @@ public class Level
             throw new InvalidDataException($"Expected an ERLevel but got {storable?.GetType()?.Name ?? "<null>"}");
         storableLevel = level;
         unknownData = reader.ReadArray<byte>(reader.ReadInt32(), 1);
-        unkStorable = reader.ReadStorable();
+        var havokWorldStorable = reader.ReadStorable();
+        havokWorld = havokWorldStorable as EHavokWorld;
+        if (havokWorldStorable is not null && havokWorld is null)
+            throw new InvalidDataException($"Expected a EHavokWorld but got {havokWorldStorable.GetType()?.Name ?? "<null>"}");
+        extendables = reader.ReadInstanceArray();
     }
 }

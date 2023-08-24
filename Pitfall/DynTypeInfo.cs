@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Pitfall.Storables;
 
 namespace Pitfall;
 
@@ -105,6 +106,44 @@ public static class DynTypeInfo
 
         var rootId = reader.ReadUInt32();
         return subObjects[rootId];
+    }
+
+    public static EInstance?[] ReadInstanceArray(this BinaryReader reader)
+    {
+        var allSubObjects = new EInstance?[reader.ReadInt32()];
+        for (var i = 0u; i < allSubObjects.Length;)
+        {
+            var typeName = reader.ReadCString();
+            var typeId = HashName(typeName);
+            ushort readVersion = reader.ReadUInt16();
+            var setEnd = reader.ReadUInt32() + i;
+            var setTotalSize = reader.ReadUInt32();
+            if (!AllStorableCtors.TryGetValue(typeId, out var ctor))
+            {
+                reader.BaseStream.Position += setTotalSize;
+                i = setEnd;
+                Console.WriteLine($"Warning: Could not read {typeName}");
+            }
+            else if (!AllStorableTypes[typeId].IsSubclassOf(typeof(EInstance)))
+                throw new InvalidDataException("Instance array contains storable types that are not subclass of EInstance");
+            else
+            {
+                readVersions[AllStorableTypes[typeId]] = readVersion;
+                for (; i < setEnd; i++)
+                {
+                    // actuall not so much as override but this is looked up and expected to already be present
+                    // in some map I have not looked into much
+                    uint overrideID = reader.ReadUInt32();
+
+                    allSubObjects[i] = (EInstance)ctor();
+                    // not no Storable.Read is done, so a lot of uninitialized data. that is weird
+                    allSubObjects[i]!.instanceID = overrideID;
+                    allSubObjects[i]!.ReadInstanceData(reader);
+                }
+            }
+            reader.BaseStream.Position += 4; // seems to be genuinely ignored
+        }
+        return allSubObjects;
     }
 
     private static Func<EStorable> GetTypeCtor(uint typeId)
