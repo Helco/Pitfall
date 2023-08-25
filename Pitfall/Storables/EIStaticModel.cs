@@ -19,3 +19,6 @@ public class EIStaticModel : EIGameInstance
         Transform = reader.ReadMatrix4x4();
     }
 }
+
+[StorableType]
+public class EIDynamicModel : EIStaticModel { }
