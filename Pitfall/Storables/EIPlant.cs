@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Pitfall.Storables;
 
 [StorableType]
-public class EIPlant : EIStaticModel
+public class EIPlant : EIAnimLod
 {
     public Vector3 plantPos;
     public Quaternion plantRot;

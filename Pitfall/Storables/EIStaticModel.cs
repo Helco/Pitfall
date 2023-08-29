@@ -22,3 +22,7 @@ public class EIStaticModel : EIGameInstance
 
 [StorableType]
 public class EIDynamicModel : EIStaticModel { }
+
+
+[StorableType]
+public class EIAnimLod : EIDynamicModel { }

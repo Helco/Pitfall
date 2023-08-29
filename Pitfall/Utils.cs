@@ -12,6 +12,8 @@ public readonly record struct Byte4(byte R, byte G, byte B, byte A)
 
 public readonly record struct AABB(Vector3 Min, Vector3 Max);
 
+public readonly record struct StringPair(string A = "", string B = "");
+
 internal static class Utils
 {
     public static T[] ReadArray<T>(this BinaryReader reader, int count, Func<BinaryReader, T> readElement) =>
@@ -34,6 +36,7 @@ internal static class Utils
     public static Byte4 ReadByte4(this BinaryReader r) => new Byte4(r.ReadByte(), r.ReadByte(), r.ReadByte(), r.ReadByte());
     public static Vector2 ReadVector2(this BinaryReader r) => new Vector2(r.ReadSingle(), r.ReadSingle());
     public static AABB ReadAABB(this BinaryReader r) => new AABB(r.ReadVector3(), r.ReadVector3());
+    public static StringPair ReadStringPair(this BinaryReader r) => new(r.ReadCString(), r.ReadCString());
 
     public static Matrix4x4 ReadMatrix4x4(this BinaryReader r) => new Matrix4x4(
         r.ReadSingle(), r.ReadSingle(), r.ReadSingle(), r.ReadSingle(),
