@@ -70,12 +70,12 @@ public class ERModel : EResource
                 throw new NotSupportedException("Unsupported half-precision model");
 
             var vertexCount = reader.ReadInt32();
-            Positions = reader.ReadArray<Vector4>(vertexCount, 16);
+            Positions = reader.ReadArray(vertexCount, reader.ReadVector4);
             TexCoords = flags.HasFlag(GeometryFlags.HasTexCoords)
-                ? reader.ReadArray<Vector2>(vertexCount, 8)
+                ? reader.ReadArray(vertexCount, reader.ReadVector2)
                 : null;
             Colors = flags.HasFlag(GeometryFlags.HasColors)
-                ? reader.ReadArray<Byte4>(vertexCount, 4)
+                ? reader.ReadArray(vertexCount, reader.ReadByte4)
                 : null;
             Normals = flags.HasFlag(GeometryFlags.HasNormals)
                 ? reader.ReadArray(vertexCount, ReadNormal)
@@ -86,7 +86,7 @@ public class ERModel : EResource
             if (flags.HasFlag(GeometryFlags.HasIndices) && !flags.HasFlag(GeometryFlags.DisableIndices))
             {
                 var indexCount = reader.ReadInt32();
-                Indices = reader.ReadArray<ushort>(indexCount, 2);
+                Indices = reader.ReadArray(indexCount, reader.ReadUInt16);
             }
             else
                 Indices = null;
@@ -180,8 +180,7 @@ public class ERModel : EResource
         public SubModel(BinaryReader reader)
         {
             Unknown = reader.ReadInt32();
-            var count = reader.ReadInt32();
-            SubSubModels = reader.ReadArray(count, r => new SubSubModel(r));
+            SubSubModels = reader.ReadArray(r => new SubSubModel(r));
         }
     }
 
@@ -221,7 +220,7 @@ public class ERModel : EResource
         public UnknownSection(BinaryReader reader)
         {
             Storable = reader.ReadStorable();
-            SubStructs = reader.ReadArray(reader.ReadInt32(), r => new UnknownSubStruct(r));
+            SubStructs = reader.ReadArray(r => new UnknownSubStruct(r));
             Unknown = reader.ReadInt32();
         }
     }
@@ -258,8 +257,7 @@ public class ERModel : EResource
             throw new InvalidDataException("Expected another zero byte");
         UnknownFloat = reader.ReadSingle();
 
-        var subModelCount = reader.ReadInt32();
-        SubModels = reader.ReadArray(subModelCount, r => new SubModel(r));
+        SubModels = reader.ReadArray(r => new SubModel(r));
 
         UnknownVec4_1 = reader.ReadVector4();
         UnknownVecPair_1 = (reader.ReadVector3(), reader.ReadVector3());
@@ -269,13 +267,8 @@ public class ERModel : EResource
         UnknownFlag2 = reader.ReadByte() != 0;
         UnknownFlag3 = reader.ReadByte() != 0;
         UnknownInt = reader.ReadUInt32();
-
         Storable = reader.ReadStorable();
-
-        var unknownStructCount = reader.ReadInt32();
-        UnknownStructs = reader.ReadArray(unknownStructCount, r => new UnknownStruct(r));
-
-        var cc = reader.ReadInt32();
-        Sections = reader.ReadArray(cc, r => new UnknownSection(r));
+        UnknownStructs = reader.ReadArray(r => new UnknownStruct(r));
+        Sections = reader.ReadArray(r => new UnknownSection(r));
     }
 }

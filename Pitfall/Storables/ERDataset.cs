@@ -43,7 +43,7 @@ public class ERDataset : EResource
     private static FileSet ReadFileSet(BinaryReader reader)
     {
         var name = reader.ReadCString();
-        var files = reader.ReadArray(reader.ReadInt32(), ReadFileMode0);
+        var files = reader.ReadArray(ReadFileMode0);
         return new FileSet { Name = name, Files = files };
     }
 

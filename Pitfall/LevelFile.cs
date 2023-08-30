@@ -20,7 +20,7 @@ public class Level
     {
         reader.ReadUInt32(); // unused int
         LevelData = reader.ExpectStorable<ERLevel>();
-        UnknownData = reader.ReadArray<byte>(reader.ReadInt32(), 1);
+        UnknownData = reader.ReadBytes(reader.ReadInt32());
         HavokWorld = reader.ReadStorable<EHavokWorld>();
         Instances = reader.ReadInstanceArray();
     }

@@ -17,10 +17,9 @@ public class ERHavokModel : EResource
 
         public SubModel(BinaryReader reader)
         {
-            var vertexCount = reader.ReadInt32();
-            Vertices = reader.ReadArray<Vector4>(vertexCount, 16);
+            Vertices = reader.ReadArray(reader.ReadVector4);
             var triangleCount = reader.ReadInt32();
-            Indices = reader.ReadArray<ushort>(triangleCount * 3, 2);
+            Indices = reader.ReadArray(triangleCount * 3, reader.ReadUInt16);
         }
     }
 
@@ -32,8 +31,7 @@ public class ERHavokModel : EResource
         if (ReadVersion != 0)
             throw new NotSupportedException($"Unsupported ERHavokModel version: " + ReadVersion);
 
-        var subModelCount = reader.ReadInt32();
-        SubModels = reader.ReadArray(subModelCount, r => new SubModel(r));
+        SubModels = reader.ReadArray(() => new SubModel(reader));
 
         if (reader.ReadInt32() != 0)
             throw new NotSupportedException($"Second part of ERHavokModel is not supported yet");

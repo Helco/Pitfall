@@ -84,9 +84,8 @@ public class ERScript : EResource
         }
         Instructions = instructions;
 
-        InitialStack = reader.ReadArray(reader.ReadInt32(), r => r.ReadStorable() as EScriptData
-            ?? throw new InvalidDataException($"Invalid data in ERScript"));
-        Strings = reader.ReadArray(reader.ReadInt32(), Utils.ReadCString);
+        InitialStack = reader.ReadArray(DynTypeInfo.ExpectStorable<EScriptData>);
+        Strings = reader.ReadArray(Utils.ReadCString);
     }
 
     private static Instruction ReadInstruction(BinaryReader reader, bool shouldBeExt = false)

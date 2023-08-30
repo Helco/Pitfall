@@ -7,9 +7,6 @@ using System.Threading.Tasks;
 
 namespace Pitfall.Storables;
 
-public readonly record struct uint2(uint X, uint Y);
-public readonly record struct uint4(uint X, uint Y, uint Z, uint W);
-
 [StorableType]
 public class EColOctree : EStorable
 {
@@ -25,10 +22,10 @@ public class EColOctree : EStorable
         if (ReadVersion != 0)
             throw new NotSupportedException($"Unsupported read version for EColOctree: {ReadVersion}");
 
-        Bytes = reader.ReadArray<byte>(reader.ReadInt32(), 1);
-        Ints = reader.ReadArray<uint>(reader.ReadInt32(), 4);
-        Int4s = reader.ReadArray<uint4>(reader.ReadInt32(), 16);
-        Int2s = reader.ReadArray<uint2>(reader.ReadInt32(), 8);
+        Bytes = reader.ReadBytes(reader.ReadInt32());
+        Ints = reader.ReadArray(reader.ReadUInt32);
+        Int4s = reader.ReadArray(reader.ReadUIntVector4);
+        Int2s = reader.ReadArray(reader.ReadUIntVector2);
         Vector1 = reader.ReadVector3();
         Vector2 = reader.ReadVector3();
     }

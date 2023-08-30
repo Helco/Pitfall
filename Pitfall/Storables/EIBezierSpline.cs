@@ -18,6 +18,6 @@ public class EIBezierSpline : EIGameInstance
         base.Read(reader);
         splineI1 = reader.ReadUInt32();
         splineI2 = reader.ReadUInt32();
-        Points = reader.ReadArray(reader.ReadInt32(), Utils.ReadVector3);
+        Points = reader.ReadArray(reader.ReadVector3);
     }
 }

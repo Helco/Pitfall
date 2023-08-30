@@ -65,12 +65,12 @@ public class ERAnimation : EResource
         base.Read(reader);
         Int1 = reader.ReadUInt32();
         Float1 = reader.ReadSingle();
-        Bones = reader.ReadArray(reader.ReadInt32(), ReadBoneInfo);
+        Bones = reader.ReadArray(ReadBoneInfo);
         Float2 = reader.ReadSingle();
-        IntArr1 = reader.ReadArray(reader.ReadInt32(), r => r.ReadUInt32());
+        IntArr1 = reader.ReadArray(reader.ReadUInt32);
         UnalignedIntCount2 = reader.ReadInt32();
         int aligned = ((UnalignedIntCount2 + 31) & ~31) >> 5;
-        IntArr2 = reader.ReadArray(aligned, r => r.ReadUInt32());
+        IntArr2 = reader.ReadArray(aligned, reader.ReadUInt32);
         Info = new()
         {
             v1 = reader.ReadVector3(),
@@ -79,7 +79,7 @@ public class ERAnimation : EResource
             b2 = reader.ReadBoolean(),
             b3 = reader.ReadBoolean()
         };
-        Events = reader.ReadArray(reader.ReadInt32(), ReadFrame);
+        Events = reader.ReadArray(ReadFrame);
     }
 
     private static BoneInfo ReadBoneInfo(BinaryReader reader) => new()

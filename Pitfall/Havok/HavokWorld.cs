@@ -26,7 +26,7 @@ public partial class HavokWorld
     {
         if (binReader.ReadUInt32() != 0x1765ABC2)
             throw new InvalidDataException("Invalid HavokWorld magic");
-        EmbeddedFiles = binReader.ReadArray(binReader.ReadInt32(), r => binReader.ReadBytes(r.ReadInt32()));
+        EmbeddedFiles = binReader.ReadArray(() => binReader.ReadBytes(binReader.ReadInt32()));
         var hkReader = binReader.ReadByte() switch
         {
             (byte)'A' => throw new NotSupportedException("ASCII Havok files are not yet supported"),

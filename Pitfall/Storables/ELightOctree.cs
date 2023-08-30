@@ -23,9 +23,8 @@ public class ELightOctreeSmall : ELightOctree
     public override void Read(BinaryReader reader)
     {
         NodeCount = reader.ReadInt32();
-        NodeChildren = reader.ReadArray<ushort>(NodeCount * 8, 2);
-        Nodes = reader.ReadArray(reader.ReadInt32(),
-            r => r.ReadArray(reader.ReadInt32(), DynTypeInfo.ReadStorable));
+        NodeChildren = reader.ReadArray(NodeCount * 8, reader.ReadUInt16);
+        Nodes = reader.ReadArray(() => reader.ReadArray(reader.ReadStorable));
         Bounds = reader.ReadAABB();
     }
 }

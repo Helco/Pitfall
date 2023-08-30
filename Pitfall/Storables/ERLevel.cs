@@ -37,8 +37,8 @@ public class ERLevel : EResource
             map.Add(reader.ReadUInt32(), reader.ReadStorable());
         EmptyMap = map;
 
-        Lights = reader.ReadArray(reader.ReadInt32(), DynTypeInfo.ExpectStorable<EILight>);
-        Sections = reader.ReadArray(reader.ReadInt32(), ReadSection);
+        Lights = reader.ReadArray(DynTypeInfo.ExpectStorable<EILight>);
+        Sections = reader.ReadArray(ReadSection);
         LightOctree = reader.ExpectStorable<ELightOctree>();
     }
 
@@ -46,7 +46,7 @@ public class ERLevel : EResource
     {
         Storable = reader.ReadStorable(),
         NullStorable = reader.ReadStorable(),
-        EmptyList1 = reader.ReadArray(reader.ReadInt32(), DynTypeInfo.ReadStorable),
-        EmptyList2 = reader.ReadArray(reader.ReadInt32(), DynTypeInfo.ReadStorable)
+        EmptyList1 = reader.ReadArray(DynTypeInfo.ReadStorable),
+        EmptyList2 = reader.ReadArray(DynTypeInfo.ReadStorable)
     };
 }
