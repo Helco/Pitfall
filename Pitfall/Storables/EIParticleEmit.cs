@@ -27,3 +27,6 @@ public class EIParticleEmit : EIGameInstance
         emitI3 = reader.ReadUInt32();
     }
 }
+
+[StorableType]
+public class EIParticleEmitLimpet : EIParticleEmit { }
